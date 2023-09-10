@@ -12,6 +12,19 @@ const loginUser = async (req, res) => {
     res.status(500).send(e);
   }
 };
+
+const logoutUser = async (req, res) => {
+  if (req.user.tokens) {
+    req.user[0].tokens = req.user[0]?.tokens.filter(
+      (token) => token.token !== req.token
+    );
+
+    await req.user[0].save();
+    res.send("You logged out");
+  }
+
+  res.send("the user is not found");
+};
 // JUST FOR ADMIN
 const getUsers = async (req, res) => {
   try {
@@ -64,4 +77,43 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, addUser, deleteUser, loginUser };
+const updateUser = async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ["name", "email", "password"];
+
+  const isValidUpdate = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+
+  if (!isValidUpdate) {
+    return res.status(400).send("No valid Update");
+  }
+
+  try {
+    updates.forEach((update) => (req.user[0][update] = req.body[update]));
+
+    await req.user[0].save();
+    res.send(req.user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};
+
+const getUser = async (req, res) => {
+  try {
+    res.send(req.user);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+module.exports = {
+  getUsers,
+  addUser,
+  deleteUser,
+  loginUser,
+  logoutUser,
+  updateUser,
+  getUser,
+};

@@ -4,14 +4,28 @@ const {
   addUser,
   deleteUser,
   loginUser,
+  logoutUser,
+  updateUser,
+  getUser,
 } = require("../controller/users");
 const auth = require("../middleware/auth");
 
-router.post("/login", loginUser);
+// LOGIN
+router.post("/users/login", loginUser);
 
-router.get("/", auth, getUsers);
+// LOGOUT
+router.post("/users/logout", auth, logoutUser);
 
-router.post("/", auth, addUser);
-router.delete("/:id", auth, deleteUser);
+// FOR ADMIN
+router.get("/users", auth, getUsers);
+
+router.post("/users", auth, addUser);
+router.delete("/users/:id", auth, deleteUser);
+
+// FOR ADMIN AND USERS
+router.patch("/users/:id", auth, updateUser);
+
+// READ SPECIFIC USER
+router.get("/users/me", auth, getUser);
 
 module.exports = router;

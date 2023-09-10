@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Table = require("./table");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -9,6 +10,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    unique: true,
     require: true,
   },
   password: {
@@ -29,6 +31,14 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+// RELATION BETWEEN USERS AND TASKS
+userSchema.virtual("tasks", {
+  ref: "Table",
+  localField: "_id",
+  foreignField: "owner",
+});
+
+// DELETE PRIVATE DATA
 userSchema.methods.toJSON = function () {
   const user = this;
   const userObj = user.toObject();
