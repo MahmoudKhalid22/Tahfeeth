@@ -6,10 +6,17 @@ const loginUser = async (req, res) => {
       req.body.email,
       req.body.password
     );
+
     const token = await user.createAuthToken();
     res.send({ user, token });
-  } catch (e) {
-    res.status(500).send(e);
+  } catch (error) {
+    if (error.message === "الاسم غير موجود") {
+      return res.status(404).json({ error: "الاسم غير موجود" });
+    } else if (error.message === "كلمة السر غير صحيحة") {
+      return res.status(401).json({ error: "كلمة السر غير صحيحة" });
+    } else {
+      return res.status(500).send(error.message);
+    }
   }
 };
 
@@ -44,8 +51,16 @@ const getUsers = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  //   console.log(req.user);
+  if (!req.user) {
+    try {
+      await new User(req.body).save();
+      return res.send("admin added successfully");
+    } catch (e) {
+      res.status(500).send(e);
+    }
+  }
   const admins = req.user.filter((user) => user.isAdmin === true);
+
   if (admins.length > 0) {
     const user = new User(req.body);
     try {
