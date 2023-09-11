@@ -61,7 +61,7 @@ userSchema.methods.createAuthToken = async function () {
 userSchema.statics.findByCredentials = async function (email, password) {
   const user = await User.findOne({ email });
 
-  if (!user) throw new Error("Email is not found");
+  if (!user) throw new Error("الاسم غير موجود");
 
   const isMatch = await bcrypt.compare(password, user.password);
 
