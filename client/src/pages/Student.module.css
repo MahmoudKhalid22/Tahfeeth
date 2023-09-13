@@ -1,0 +1,25 @@
+table {
+  width: fit-content;
+  padding: 0.75rem 0.5rem;
+  margin: 3rem auto;
+  border-collapse: collapse;
+}
+tr {
+  /* border: 1px solid #111142; */
+  display: flex;
+  flex-wrap: wrap;
+}
+tr td {
+  border: 1px solid #9d9dc0;
+  border-collapse: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: #111142;
+  color: #fff;
+  transition: 0.3s ease;
+}
+
+tr td:hover,
+tr td.active {
+  background-color: #a6a6b2;
+}

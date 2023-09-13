@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { GiEntryDoor } from "react-icons/gi";
 import { RxUpdate } from "react-icons/rx";
 import styles from "./Details.module.css";
@@ -163,26 +164,16 @@ function Details() {
                 <span>الايميل / </span>
                 <span>{user.email}</span>
               </div>
-              <div className={styles["student-info"]}>
-                <span>Tables:</span>
-                <ul>
-                  <li className={styles["student-task"]}>
-                    Task 1: Complete Homework
-                  </li>
-                  <li className={styles["student-task"]}>
-                    Task 2: Study for Exam
-                  </li>
-                  <li className={styles["student-task"]}>
-                    Task 3: Submit Project
-                  </li>
-                </ul>
-              </div>
+           
               <div className={styles["action-buttons"]}>
                 <button
                   className={styles["action-button-delete"]}
                   onClick={() => deleteUser(user._id)}
                 >
                   حذف الطالب
+                </button>
+                <button className={styles["action-button-data"]}>
+                  <Link to={`/details/${user._id}`}>بيانات الطالب</Link>
                 </button>
               </div>
             </div>
