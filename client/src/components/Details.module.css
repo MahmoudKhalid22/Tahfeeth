@@ -55,6 +55,18 @@
   justify-content: center;
   margin-bottom: 2.5rem;
 }
+.updateForm {
+  transform: translateY(10%);
+  height: 0;
+  transition: all 0.7s;
+  opacity: 0;
+  overflow-y: hidden;
+}
+.addForm {
+  height: auto;
+  transform: translateY(0);
+  opacity: 1;
+}
 
 .cart {
   border: 1px solid #ccc;
@@ -92,15 +104,9 @@ ul {
   cursor: pointer;
   z-index: 12;
 }
-.updateForm {
-  /* transform: translateY(-10%); */
-  height: 0;
-  transition: all 0.7s;
-  opacity: 0;
-  overflow-y: hidden;
-}
+
 .active {
-  /* transform: translateY(0); */
+  transform: translateY(0);
   opacity: 1;
   height: auto;
   width: 17rem;

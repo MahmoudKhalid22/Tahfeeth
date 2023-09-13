@@ -5,6 +5,12 @@
   flex-direction: column;
   margin-top: 3rem;
   gap: 1.5rem;
+  background-color: #292955;
+  width: fit-content;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
 }
 
 .container input {

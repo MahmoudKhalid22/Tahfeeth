@@ -14,29 +14,31 @@ function AddUserForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
+    try {
       const response = await fetch("http://localhost:5000/users/", {
         method: "POST",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZlZmQ0ZjQxNzA0ZTFiZGMyYmI2N2EiLCJpYXQiOjE2OTQ1OTM0MDR9.W6HsRkI_rzLt2rHiUjilwo9lR0SnKCSD53Xvslzc-v8",
-        },
         body: JSON.stringify({
           name: name,
           password: password,
           email: email,
         }),
+        headers: {
+          "Content-Type": "application/json",
+
+          Authorization: "Bearer " + adminToken,
+        },
       });
 
-    //   if (!response.ok) {
-    //     const errorData = await response.json();
-    //     throw new Error(errorData.error);
-    //   }
-      const returnedData = await response.json();
-    //   console.log(returnedData);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error);
+      }
+      setName("");
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -44,16 +46,19 @@ function AddUserForm() {
       <input
         type="text"
         placeholder="الاسم"
+        value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         type="text"
         placeholder="الايميل"
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
         type="text"
         placeholder="كلمة السر"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <button type="submit">تسجيل</button>

@@ -73,8 +73,8 @@ function Details() {
     const response = await fetch("http://localhost:5000/tables", {
       method: "GET",
       header: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZlZmQ0ZjQxNzA0ZTFiZGMyYmI2N2EiLCJpYXQiOjE2OTQ1OTc3NjJ9.5SJAyhAZaq6jrT3I9S83vXDZDF9Vzzn8dpDxZxGLJsI",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + adminToken,
       },
     });
     const tablesData = await response.json();
@@ -129,7 +129,7 @@ function Details() {
           <div className={styles.btns}>
             <button
               onClick={() => {
-                setUserShow((prev) => !prev);
+                setUserShow(true);
               }}
             >
               إضافة طالب
@@ -138,6 +138,7 @@ function Details() {
               onClick={() => {
                 getUsers();
                 getTables();
+                setUserShow(false);
               }}
             >
               قراءة بيانات الطلاب
@@ -145,42 +146,47 @@ function Details() {
           </div>
         ) : undefined}
 
-        {userShow && <AddUserForm />}
+        <div
+          className={`${styles.updateForm} ${userShow ? styles.addForm : ""}`}
+        >
+          <AddUserForm />
+        </div>
 
-        {usersData?.map((user) => (
-          <div className={styles.cart} key={user._id}>
-            <div className={styles["student-info"]}>
-              <span>الاسم / </span>
-              <span>{user.name}</span>
+        {!userShow &&
+          usersData?.map((user) => (
+            <div className={styles.cart} key={user._id}>
+              <div className={styles["student-info"]}>
+                <span>الاسم / </span>
+                <span>{user.name}</span>
+              </div>
+              <div className={styles["student-info"]}>
+                <span>الايميل / </span>
+                <span>{user.email}</span>
+              </div>
+              <div className={styles["student-info"]}>
+                <span>Tables:</span>
+                <ul>
+                  <li className={styles["student-task"]}>
+                    Task 1: Complete Homework
+                  </li>
+                  <li className={styles["student-task"]}>
+                    Task 2: Study for Exam
+                  </li>
+                  <li className={styles["student-task"]}>
+                    Task 3: Submit Project
+                  </li>
+                </ul>
+              </div>
+              <div className={styles["action-buttons"]}>
+                <button
+                  className={styles["action-button-delete"]}
+                  onClick={() => deleteUser(user._id)}
+                >
+                  حذف الطالب
+                </button>
+              </div>
             </div>
-            <div className={styles["student-info"]}>
-              <span>الايميل / </span>
-              <span>{user.email}</span>
-            </div>
-            <div className={styles["student-info"]}>
-              <span>Tables:</span>
-              <ul>
-                <li className={styles["student-task"]}>
-                  Task 1: Complete Homework
-                </li>
-                <li className={styles["student-task"]}>
-                  Task 2: Study for Exam
-                </li>
-                <li className={styles["student-task"]}>
-                  Task 3: Submit Project
-                </li>
-              </ul>
-            </div>
-            <div className={styles["action-buttons"]}>
-              <button
-                className={styles["action-button-delete"]}
-                onClick={() => deleteUser(user._id)}
-              >
-                حذف الطالب
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
