@@ -14,10 +14,13 @@
   outline: none;
   border-radius: 5px;
   padding: 0.5rem 0.75rem;
-  background-color: #111142;
+  background-color: #58587b;
   color: #fff;
 }
+.container input::placeholder{
 
+  color: #ffffff6e;
+}
 .container button {
   padding: 0.5rem;
   border: none;
@@ -25,19 +28,11 @@
   font-size: 1.25rem;
   cursor: pointer;
   border-radius: 6px;
-  background-color: #111142;
+  background-color: #2a2aac;
   color: rgb(255, 251, 12);
   transition: 0.5s;
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
-}
-.container button:hover {
-  background-color: #292955;
-}
-.error {
-  font-size: 1.5rem;
-  color: #ff3333;
-  font-family: "Tajawal", sans-serif;
 }

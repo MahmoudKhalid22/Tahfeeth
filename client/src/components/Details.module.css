@@ -1,0 +1,123 @@
+.container {
+  margin: 1.5rem 2rem;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+.name h4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btns {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+.btns button,
+.logout {
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #111142;
+  color: #fff;
+  transition: 0.5s;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.logout {
+  fill: rgb(255, 251, 12);
+  font-size: 2.5rem;
+  text-align: center;
+  /* margin: 0 auto 3rem; */
+}
+.container button:hover {
+  background-color: #292955;
+}
+.settings {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.cart {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin: 1rem auto;
+  background-color: #111142;
+  color: #fff;
+}
+
+.student-info {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.student-task {
+  margin-bottom: 5px;
+}
+ul {
+  list-style: none;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-button-delete {
+  padding: 5px 10px;
+  background-color: #ff2233;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 12;
+}
+.updateForm {
+  /* transform: translateY(-10%); */
+  height: 0;
+  transition: all 0.7s;
+  opacity: 0;
+  overflow-y: hidden;
+}
+.active {
+  /* transform: translateY(0); */
+  opacity: 1;
+  height: auto;
+  width: 17rem;
+  background-color: #111142;
+  margin: 1rem auto;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 767px) {
+  .name {
+    font-size: 2rem;
+    gap: 5rem;
+  }
+}
+@media (max-width: 544px) {
+  .cart {
+    width: 95%;
+  }
+}

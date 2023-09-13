@@ -94,6 +94,7 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
+  console.log(req.body);
   const allowedUpdates = ["name", "email", "password"];
 
   const isValidUpdate = updates.every((update) =>
@@ -105,8 +106,11 @@ const updateUser = async (req, res) => {
   }
 
   try {
+    console.log(req.body);
+    console.log(req.body["email"]);
+    console.log(req.body["password"]);
     updates.forEach((update) => (req.user[0][update] = req.body[update]));
-
+    // console.log(req.user[0]);
     await req.user[0].save();
     res.send(req.user);
   } catch (err) {

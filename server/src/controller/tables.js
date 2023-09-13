@@ -1,9 +1,20 @@
 const Table = require("../model/table");
 
 const getTables = async (req, res) => {
+  
   try {
     const tables = await Table.find({});
     res.send(tables);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+const getTable = async (req, res) => {
+  try {
+    const table = await findById(req.params);
+
+    res.send(table);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -81,4 +92,4 @@ const deleteItem = async (req, res) => {
   }
 };
 
-module.exports = { getTables, createItem, updateItem, deleteItem };
+module.exports = { getTables, getTable, createItem, updateItem, deleteItem };

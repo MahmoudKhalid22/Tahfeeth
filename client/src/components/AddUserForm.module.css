@@ -1,13 +1,12 @@
 .container {
-  border: 1px solid #111142;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 3rem;
   gap: 1.5rem;
-  padding: 1rem;
-  border-radius: 12px;
 }
+
 .container input {
   font-size: 1.25rem;
   border: none;
@@ -15,7 +14,7 @@
   border-radius: 5px;
   padding: 0.5rem 0.75rem;
   background-color: #111142;
-  color: #fff;
+  color: rgb(255, 251, 12);
 }
 
 .container button {
@@ -36,8 +35,4 @@
 .container button:hover {
   background-color: #292955;
 }
-.error {
-  font-size: 1.5rem;
-  color: #ff3333;
-  font-family: "Tajawal", sans-serif;
-}
+

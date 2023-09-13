@@ -1,41 +1,44 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { GiExitDoor } from "react-icons/gi";
 import styles from "./Input.module.css";
 
 function Input() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [data, setData] = useState([]);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Clear any previous errors
 
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("http://localhost:5000/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
       });
+      setError(null);
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error);
       }
 
+      const dataUser = await response.json();
+
+      localStorage.setItem("data", JSON.stringify(dataUser));
+      navigate("/details");
+
       // Login successful, handle the response here (e.g., store user data, redirect)
 
       // Reset the form data
-      setFormData({
-        email: "",
-        password: "",
-      });
     } catch (error) {
       setError(error.message);
     }
@@ -47,14 +50,17 @@ function Input() {
         type="text"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        placeholder="الاسم"
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        placeholder="كلمة السر"
       />
-      <p>{`${error ? error : ""}`}</p>
+      <p className={styles.error}>{`${error ? error : ""}`}</p>
       <button>
+        <GiExitDoor />
         <span>دخول</span>
       </button>
     </form>
