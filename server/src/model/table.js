@@ -3,6 +3,10 @@ const User = require("./user");
 
 const tableSchema = new mongoose.Schema(
   {
+    day: {
+      type: String,
+      required: true,
+    },
     quantity: {
       type: String,
       required: true,
@@ -35,7 +39,7 @@ const tableSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    owner: {
+    ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",

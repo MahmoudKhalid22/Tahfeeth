@@ -104,13 +104,11 @@ const updateUser = async (req, res) => {
   }
 
   try {
-    
     updates.forEach((update) => (req.user[0][update] = req.body[update]));
-    
+
     await req.user[0].save();
     res.send(req.user);
   } catch (err) {
-   
     res.status(500).send(err);
   }
 };
@@ -123,6 +121,16 @@ const getUser = async (req, res) => {
   }
 };
 
+const getOneUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};
+
 module.exports = {
   getUsers,
   addUser,
@@ -131,4 +139,5 @@ module.exports = {
   logoutUser,
   updateUser,
   getUser,
+  getOneUser,
 };

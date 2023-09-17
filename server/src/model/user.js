@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // RELATION BETWEEN USERS AND TASKS
-userSchema.virtual("tasks", {
+userSchema.virtual("tables", {
   ref: "Table",
   localField: "_id",
   foreignField: "owner",

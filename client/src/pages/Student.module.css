@@ -1,15 +1,21 @@
+.container {
+  /* margin-top: 2rem; */
+  /* margin-bottom: 5rem; */
+  margin: 2rem 3rem 5rem;
+  /* height: 100vh; */
+}
+h2 {
+  color: #111142;
+  text-align: center;
+}
 table {
   width: fit-content;
   padding: 0.75rem 0.5rem;
   margin: 3rem auto;
   border-collapse: collapse;
 }
-tr {
-  /* border: 1px solid #111142; */
-  display: flex;
-  flex-wrap: wrap;
-}
-tr td {
+
+tr th {
   border: 1px solid #9d9dc0;
   border-collapse: none;
   padding: 0.5rem 1rem;
@@ -19,7 +25,79 @@ tr td {
   transition: 0.3s ease;
 }
 
-tr td:hover,
-tr td.active {
+tr th:hover,
+tr th.active {
   background-color: #a6a6b2;
+}
+tbody tr td {
+  background-color: #9d9dc0;
+  color: #111142;
+  padding: 0.75rem;
+  border: 1px solid #222;
+}
+.container button {
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #111142;
+  color: #fff;
+  transition: 0.5s;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 3rem;
+  transition: 0.5s ease;
+}
+.container button a {
+  color: #fff;
+  text-decoration: none;
+}
+.container button:hover {
+  background-color: #262669;
+}
+.container form {
+  display: flex;
+  flex-direction: column;
+  background-color: #111142;
+  color: #fff;
+  padding: 3rem 2rem 0rem;
+  font-size: 2rem;
+  gap: 1.5rem;
+  width: fit-content;
+  margin: 0 auto;
+  border-radius: 12px;
+  width: 50%;
+}
+.container form input,
+.container form select,
+.container form textarea {
+  font-size: 1.5rem;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  background-color: #58587b;
+  color: #fff;
+  border-radius: 12px;
+}
+.container input::placeholder {
+  color: #ffffff6e;
+}
+.addTable {
+  transform: translateY(10%);
+
+  transition: all 0.7s;
+  opacity: 0;
+  overflow-y: hidden;
+}
+.addTable.active {
+  height: auto;
+  transform: translateY(0);
+  opacity: 1;
+}
+.container form .btn {
+  background-color: #1f1fc7;
 }

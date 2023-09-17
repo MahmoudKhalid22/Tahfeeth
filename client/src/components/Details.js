@@ -6,6 +6,7 @@ import styles from "./Details.module.css";
 import AddUserForm from "./AddUserForm";
 import { useNavigate } from "react-router-dom";
 import UpdateForm from "./UpdateForm";
+import Student from "../pages/Student";
 
 function Details() {
   const [userShow, setUserShow] = useState(false);
@@ -70,18 +71,18 @@ function Details() {
     }
   };
 
-  const getTables = async () => {
-    const response = await fetch("http://localhost:5000/tables", {
-      method: "GET",
-      header: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + adminToken,
-      },
-    });
-    const tablesData = await response.json();
-    setTables(tablesData);
-    console.log(tables);
-  };
+  // const getTables = async () => {
+  //   const response = await fetch("http://localhost:5000/tables", {
+  //     method: "GET",
+  //     header: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + adminToken,
+  //     },
+  //   });
+  //   const tablesData = await response.json();
+  //   setTables(tablesData);
+  //   console.log(tables);
+  // };
 
   const deleteUser = async (id) => {
     try {
@@ -124,7 +125,7 @@ function Details() {
       >
         <UpdateForm userId={data?.user._id} userToken={data?.token} />
       </div>
-
+      {!data?.user.isAdmin && <Student />}
       <div>
         {data?.user.isAdmin ? (
           <div className={styles.btns}>
@@ -138,7 +139,7 @@ function Details() {
             <button
               onClick={() => {
                 getUsers();
-                getTables();
+
                 setUserShow(false);
               }}
             >
@@ -164,7 +165,7 @@ function Details() {
                 <span>الايميل / </span>
                 <span>{user.email}</span>
               </div>
-           
+
               <div className={styles["action-buttons"]}>
                 <button
                   className={styles["action-button-delete"]}

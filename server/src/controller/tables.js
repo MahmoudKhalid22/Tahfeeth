@@ -1,20 +1,10 @@
 const Table = require("../model/table");
 
 const getTables = async (req, res) => {
-  
+  const match = {};
   try {
-    const tables = await Table.find({});
+    const tables = await Table.find({ ownerId: req.params.id });
     res.send(tables);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-};
-
-const getTable = async (req, res) => {
-  try {
-    const table = await findById(req.params);
-
-    res.send(table);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -24,7 +14,7 @@ const createItem = async (req, res) => {
   const admins = req.user.filter((admin) => admin.isAdmin === true);
 
   if (admins.length > 0) {
-    const item = new Table(req.body);
+    const item = new Table({ ...req.body, ownerId: req.body.ownerId });
     try {
       await item.save();
       res.send(item);
@@ -92,4 +82,4 @@ const deleteItem = async (req, res) => {
   }
 };
 
-module.exports = { getTables, getTable, createItem, updateItem, deleteItem };
+module.exports = { getTables, createItem, updateItem, deleteItem };

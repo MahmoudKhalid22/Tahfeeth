@@ -3,9 +3,9 @@ import styles from "./UpdateForm.module.css";
 
 function UpdateForm({ userId, userToken }) {
   const [userDataUpdate, setUserDataUpdate] = useState({
-    name: undefined,
-    email: undefined,
-    password: undefined,
+    name: "",
+    email: "",
+    password: "",
   });
 
   const updateUser = async (e) => {
@@ -38,7 +38,7 @@ function UpdateForm({ userId, userToken }) {
         console.log(response.error);
         throw new Error();
       }
-      // console.log(await response.json());
+
       const updatedData = await response.json();
       console.log(updatedData[0]);
       setUserDataUpdate({
@@ -49,8 +49,6 @@ function UpdateForm({ userId, userToken }) {
       });
       const existingData = localStorage.getItem("data");
       const existingDataParsed = JSON.parse(existingData);
-
-      console.log(existingDataParsed);
 
       existingDataParsed.user.name = updatedData[0].name;
       existingDataParsed.user.email = updatedData[0].email;

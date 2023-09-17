@@ -7,6 +7,7 @@ const {
   logoutUser,
   updateUser,
   getUser,
+  getOneUser,
 } = require("../controller/users");
 const auth = require("../middleware/auth");
 
@@ -18,6 +19,9 @@ router.post("/users/logout", auth, logoutUser);
 
 // FOR ADMIN
 router.get("/users", auth, getUsers);
+
+// GET ONE USER
+router.get("/users/:id", getOneUser);
 
 router.post("/users", auth, addUser);
 router.delete("/users/:id", auth, deleteUser);
