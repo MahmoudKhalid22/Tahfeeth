@@ -50,14 +50,7 @@ const getUsers = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  if (!req.user) {
-    try {
-      await new User(req.body).save();
-      return res.send("admin added successfully");
-    } catch (e) {
-      res.status(500).send(e);
-    }
-  }
+
   const admins = req.user.filter((user) => user.isAdmin === true);
 
   if (admins.length > 0) {

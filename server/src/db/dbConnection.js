@@ -1,13 +1,9 @@
-const mongoose =require('mongoose');
+const mongoose = require("mongoose");
 
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+});
 
+mongoose.connection.once("open", () => console.log("Connected to db"));
 
-mongoose.connect('mongodb://127.0.0.1:27017/Tahfeeth',{
-    useNewUrlParser:true
-})
-
-
-mongoose.connection.once("open",() => console.log("Connected to db"))
-
-
-module.exports = mongoose
+module.exports = mongoose;
