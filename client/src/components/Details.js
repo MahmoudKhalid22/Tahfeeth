@@ -11,7 +11,6 @@ import Student from "../pages/Student";
 function Details() {
   const [userShow, setUserShow] = useState(false);
   const [usersData, setUsersData] = useState([]);
-  const [tables, setTables] = useState([]);
   const [formUpdate, setFormUpdate] = useState(false);
 
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ function Details() {
   // console.log(data.token);
   const logout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/users/logout", {
+      const response = await fetch("https://tahfeeth-system.onrender.com/users/logout", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + data.token,
@@ -41,25 +40,13 @@ function Details() {
     } catch (err) {
       throw new Error(err);
     }
-    // localStorage.clear();
-    // navigate("/");
+
   };
 
-  // const addUser = async () => {
-  //   await fetch("http://localhost:5000/users",{
-  //     method: "POST",
-  //     headers:{
-
-  //     },
-  //     body{
-  //       "name":
-  //     }
-  //   })
-  // }
 
   const getUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://tahfeeth-system.onrender.com/users", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + adminToken,
@@ -71,22 +58,11 @@ function Details() {
     }
   };
 
-  // const getTables = async () => {
-  //   const response = await fetch("http://localhost:5000/tables", {
-  //     method: "GET",
-  //     header: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + adminToken,
-  //     },
-  //   });
-  //   const tablesData = await response.json();
-  //   setTables(tablesData);
-  //   console.log(tables);
-  // };
+  
 
   const deleteUser = async (id) => {
     try {
-      await fetch("http://localhost:5000/users/" + id, {
+      await fetch("https://tahfeeth-system.onrender.com/users/" + id, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + adminToken,

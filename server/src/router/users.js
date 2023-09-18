@@ -23,7 +23,7 @@ router.get("/users", auth, getUsers);
 // GET ONE USER
 router.get("/users/:id", getOneUser);
 
-router.post("/users", addUser);
+router.post("/users", auth, addUser);
 router.delete("/users/:id", auth, deleteUser);
 
 // FOR ADMIN AND USERS

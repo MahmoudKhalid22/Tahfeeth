@@ -14,7 +14,7 @@ function Input() {
     setError(null); // Clear any previous errors
 
     try {
-      const response = await fetch("http://localhost:5000/users/login", {
+      const response = await fetch("https://tahfeeth-system.onrender.com/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,8 +35,6 @@ function Input() {
 
       localStorage.setItem("data", JSON.stringify(dataUser));
       navigate("/details");
-
-      // Login successful, handle the response here (e.g., store user data, redirect)
 
       // Reset the form data
     } catch (error) {

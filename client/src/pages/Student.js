@@ -63,7 +63,7 @@ function Student() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:5000/tables", {
+      await fetch("https://tahfeeth-system.onrender.com/tables", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,8 +82,6 @@ function Student() {
           ownerId: id,
         }),
       });
-      // const d = await response.json();
-      // console.log(d);
       setTableUser({
         day: "السبت",
         quantity: "",

@@ -11,7 +11,7 @@ function UpdateForm({ userId, userToken }) {
   const updateUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/users/${userId}`, {
+      const response = await fetch(`https://tahfeeth-system.onrender.com/users/${userId}`, {
         method: "PATCH",
         body: JSON.stringify({
           name:
