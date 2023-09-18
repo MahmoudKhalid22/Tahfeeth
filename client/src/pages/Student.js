@@ -33,20 +33,25 @@ function Student() {
   useEffect(() => {
     try {
       const getName = async () => {
-        const response = await fetch("http://localhost:5000/users/" + id);
+        const response = await fetch(
+          "https://tahfeeth-system.onrender.com/users/" + id
+        );
 
         const student = await response.json();
         setStdName(student.name);
       };
 
       const getTables = async () => {
-        const response = await fetch("http://localhost:5000/tables/" + stdId, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        });
+        const response = await fetch(
+          "https://tahfeeth-system.onrender.com/tables/" + stdId,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
         const tables = await response.json();
 
         setStudentData(tables);
