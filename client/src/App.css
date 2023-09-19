@@ -13,4 +13,8 @@ body {
   font-size: 1.5rem;
   color: #111142;
   font-weight: 600;
+  text-align: center;
+}
+.loading-details {
+  margin: 1rem auto;
 }

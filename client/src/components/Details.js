@@ -12,6 +12,7 @@ function Details() {
   const [userShow, setUserShow] = useState(false);
   const [usersData, setUsersData] = useState([]);
   const [formUpdate, setFormUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,50 +25,60 @@ function Details() {
   // console.log(data.token);
   const logout = async () => {
     try {
-      const response = await fetch("https://tahfeeth-system.onrender.com/users/logout", {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + data.token,
-        },
-      });
+      setLoading(true);
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/users/logout",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + data.token,
+          },
+        }
+      );
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error);
       }
+      setLoading(false);
 
       localStorage.clear();
       navigate("/");
     } catch (err) {
       throw new Error(err);
     }
-
   };
-
 
   const getUsers = async () => {
     try {
-      const response = await fetch("https://tahfeeth-system.onrender.com/users", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + adminToken,
-        },
-      });
-      setUsersData(await response.json());
+      setLoading(true);
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/users",
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + adminToken,
+          },
+        }
+      );
+      const d = await response.json();
+      setUsersData(d);
+      setLoading(false);
     } catch (err) {
       throw new Error(err);
     }
   };
 
-  
-
   const deleteUser = async (id) => {
     try {
+      setLoading(true);
+
       await fetch("https://tahfeeth-system.onrender.com/users/" + id, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + adminToken,
         },
       });
+      setLoading(false);
 
       window.location.reload();
     } catch (e) {
@@ -79,6 +90,7 @@ function Details() {
     <div className={styles.container}>
       <div className={styles.name}>
         <h3>الاسم</h3>
+
         <h4>
           {data ? data.user.name : ""}
           {data?.user.isAdmin ? <div>(admin)</div> : undefined}
@@ -129,8 +141,9 @@ function Details() {
         >
           <AddUserForm />
         </div>
-
+        {loading && <h4 className="loading loading-details">تحميل ...</h4>}
         {!userShow &&
+          !loading &&
           usersData?.map((user) => (
             <div className={styles.cart} key={user._id}>
               <div className={styles["student-info"]}>

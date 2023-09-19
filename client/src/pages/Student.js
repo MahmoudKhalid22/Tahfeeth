@@ -8,6 +8,7 @@ function Student() {
   const [studentData, setStudentData] = useState([]);
   const [stdName, setStdName] = useState("");
   const [showformTable, setShowFormTable] = useState(false);
+  const [loadingTables, setLoadingTables] = useState(true);
   const [tableUser, setTableUser] = useState({
     day: "السبت",
     quantity: "",
@@ -52,11 +53,12 @@ function Student() {
             },
           }
         );
+
         const tables = await response.json();
 
         setStudentData(tables);
+        setLoadingTables(false);
       };
-      // data?.user.isAdmin ? getName() : undefined;
       if (data?.user.isAdmin) {
         getName();
       }
@@ -114,37 +116,42 @@ function Student() {
         </button>
       )}
       <h2>جدول متابعة الطالب</h2>
+
       {data?.user.isAdmin && <h2>{stdName}</h2>}
-      <table>
-        <thead>
-          <tr>
-            <th>اليوم</th>
-            <th>كمية الحفظ</th>
-            <th>مستوى الحفظ</th>
-            <th>المهام اليومية</th>
-            <th>المهام المكتملة</th>
-            <th>الأسئلة اليومية</th>
-            <th>الإجابات على الأسئلة</th>
-            <th>ملاحظات</th>
-            <th>التقييم</th>
-          </tr>
-        </thead>
-        <tbody>
-          {studentData.map((std) => (
-            <tr key={std._id}>
-              <td>{std.day}</td>
-              <td>{std.quantity}</td>
-              <td>{std.level}</td>
-              <td>{std.tasks}</td>
-              <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
-              <td>{std.questions}</td>
-              <td>{std.answers}</td>
-              <td>{std.notes}</td>
-              <td>{std.rate}</td>
+      {loadingTables ? (
+        <h4 className="loading loading-details">تحميل ...</h4>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>اليوم</th>
+              <th>كمية الحفظ</th>
+              <th>مستوى الحفظ</th>
+              <th>المهام اليومية</th>
+              <th>المهام المكتملة</th>
+              <th>الأسئلة اليومية</th>
+              <th>الإجابات على الأسئلة</th>
+              <th>ملاحظات</th>
+              <th>التقييم</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {studentData?.map((std) => (
+              <tr key={std._id}>
+                <td>{std.day}</td>
+                <td>{std.quantity}</td>
+                <td>{std.level}</td>
+                <td>{std.tasks}</td>
+                <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
+                <td>{std.questions}</td>
+                <td>{std.answers}</td>
+                <td>{std.notes}</td>
+                <td>{std.rate}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       {data?.user.isAdmin && (
         <button onClick={() => setShowFormTable((prev) => !prev)}>
           إضافة جدول
@@ -250,7 +257,7 @@ function Student() {
           <option value={4}>4</option>
           <option value={5}>5</option>
         </select>
-        <input
+        <textarea
           placeholder="ملاحظات"
           value={tableUser.notes}
           onChange={(e) =>
