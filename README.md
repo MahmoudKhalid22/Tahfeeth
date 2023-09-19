@@ -44,6 +44,7 @@ The system provides a user-friendly interface for educators and students to inte
 Contributing:
 Contributions to this project are welcome. Please follow the guidelines in the respective README files in the client and server directories for contribution instructions.
 
+## Live Demo
 [Live Demo](https://teachingquran.netlify.app/)
 
  
