@@ -9,3 +9,8 @@ body {
   background-color: wheat;
   font-family: "Tajawal", sans-serif;
 }
+.loading {
+  font-size: 1.5rem;
+  color: #111142;
+  font-weight: 600;
+}

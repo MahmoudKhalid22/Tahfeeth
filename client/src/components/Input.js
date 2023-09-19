@@ -7,23 +7,29 @@ function Input() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Clear any previous errors
+    setLoading(false);
 
     try {
-      const response = await fetch("https://tahfeeth-system.onrender.com/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
+      setLoading(true);
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      );
       setError(null);
 
       if (!response.ok) {
@@ -31,8 +37,8 @@ function Input() {
         throw new Error(errorData.error);
       }
 
+      setLoading(false);
       const dataUser = await response.json();
-
       localStorage.setItem("data", JSON.stringify(dataUser));
       navigate("/details");
 
@@ -57,6 +63,7 @@ function Input() {
         placeholder="كلمة السر"
       />
       <p className={styles.error}>{`${error ? error : ""}`}</p>
+      {loading && <p className='loading'>تــحمــيل ...</p>}
       <button>
         <GiExitDoor />
         <span>دخول</span>
