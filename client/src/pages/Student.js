@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./Student.module.css";
 function Student() {
-  // useEffect(() => )
   const { id } = useParams();
   const [studentData, setStudentData] = useState([]);
   const [stdName, setStdName] = useState("");
@@ -109,180 +108,183 @@ function Student() {
   };
 
   return (
-    <div className={styles.container}>
-      {data?.user.isAdmin && (
-        <button>
-          <Link to="/details">العودة للصفحة الرئيسية</Link>
-        </button>
-      )}
-      <h2>جدول متابعة الطالب</h2>
+    <>
+      <h2>جدول المتابعة </h2>
 
-      {data?.user.isAdmin && <h2>{stdName}</h2>}
-      {loadingTables ? (
-        <h4 className="loading loading-details">تحميل ...</h4>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>اليوم</th>
-              <th>كمية الحفظ</th>
-              <th>مستوى الحفظ</th>
-              <th>المهام اليومية</th>
-              <th>المهام المكتملة</th>
-              <th>الأسئلة اليومية</th>
-              <th>الإجابات على الأسئلة</th>
-              <th className={styles.notes}>ملاحظات</th>
-              <th>التقييم</th>
-            </tr>
-          </thead>
-          <tbody>
-            {studentData?.map((std) => (
-              <tr key={std._id}>
-                <td>{std.day}</td>
-                <td>{std.quantity}</td>
-                <td>{std.level}</td>
-                <td>{std.tasks}</td>
-                <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
-                <td>{std.questions}</td>
-                <td>{std.answers}</td>
-                <td>{std.notes}</td>
-                <td>{std.rate}</td>
+      <div className={styles.container}>
+        {data?.user.isAdmin && (
+          <button>
+            <Link to="/details">العودة للصفحة الرئيسية</Link>
+          </button>
+        )}
+
+        {data?.user.isAdmin && <h2>{stdName}</h2>}
+        {loadingTables ? (
+          <h4 className="loading loading-details">تحميل ...</h4>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>اليوم</th>
+                <th>كمية الحفظ</th>
+                <th>مستوى الحفظ</th>
+                <th>المهام اليومية</th>
+                <th>المهام المكتملة</th>
+                <th>الأسئلة اليومية</th>
+                <th>الإجابات على الأسئلة</th>
+                <th>ملاحظات</th>
+                <th>التقييم</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      {data?.user.isAdmin && (
-        <button onClick={() => setShowFormTable((prev) => !prev)}>
-          إضافة جدول
-        </button>
-      )}
-      <form
-        className={`${styles.addTable} ${
-          showformTable ? styles.active : undefined
-        }`}
-        onSubmit={handleSubmit}
-      >
-        <select
-          name="day"
-          id="day"
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              day: e.target.value,
-            })
-          }
+            </thead>
+            <tbody>
+              {studentData?.map((std) => (
+                <tr key={std._id}>
+                  <td>{std.day}</td>
+                  <td>{std.quantity}</td>
+                  <td>{std.level}</td>
+                  <td>{std.tasks}</td>
+                  <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
+                  <td>{std.questions}</td>
+                  <td>{std.answers}</td>
+                  <td className={styles.notes}>{std.notes}</td>
+                  <td>{std.rate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {data?.user.isAdmin && (
+          <button onClick={() => setShowFormTable((prev) => !prev)}>
+            إضافة جدول
+          </button>
+        )}
+        <form
+          className={`${styles.addTable} ${
+            showformTable ? styles.active : undefined
+          }`}
+          onSubmit={handleSubmit}
         >
-          <option>السبت</option>
-          <option>الأحد</option>
-          <option>الاثنين</option>
-          <option>الثلاثاء</option>
-          <option>الأربعاء</option>
-          <option>الخميس</option>
-          <option>الجمعة</option>
-        </select>
+          <select
+            name="day"
+            id="day"
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                day: e.target.value,
+              })
+            }
+          >
+            <option>السبت</option>
+            <option>الأحد</option>
+            <option>الاثنين</option>
+            <option>الثلاثاء</option>
+            <option>الأربعاء</option>
+            <option>الخميس</option>
+            <option>الجمعة</option>
+          </select>
 
-        <input
-          type="text"
-          placeholder="كمية الحفظ"
-          value={tableUser.quantity}
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              quantity: e.target.value,
-            })
-          }
-        />
-        <select
-          type="text"
-          placeholder="المستوى"
-          onChange={(e) => {
-            setTableUser({
-              ...tableUser,
-              level: e.target.value,
-            });
-          }}
-        >
-          <option>ضعيف</option>
-          <option>مقبول</option>
-          <option>جيد</option>
-          <option>جيد جدا</option>
-          <option>ممتاز</option>
-        </select>
-        <input
-          placeholder="المـــهام"
-          value={tableUser.tasks}
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              tasks: e.target.value,
-            })
-          }
-        />
-        <select
-          placeholder="المهام المكتملة"
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              completed: e.target.value,
-            })
-          }
-        >
-          <option value={true}>true</option>
-          <option value={false}>false</option>
-        </select>
-        <textarea
-          placeholder="الأسئلة"
-          value={tableUser.questions}
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              questions: e.target.value,
-            })
-          }
-        />
-        <select
-          placeholder="عدد الإجابات"
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              answers: e.target.value,
-            })
-          }
-        >
-          <option value={0}>0</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-        </select>
-        <textarea
-          placeholder="ملاحظات"
-          value={tableUser.notes}
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              notes: e.target.value,
-            })
-          }
-        />
-        <input
-          placeholder="التقييم العام للحصة"
-          value={tableUser.rate}
-          onChange={(e) =>
-            setTableUser({
-              ...tableUser,
-              rate: e.target.value,
-            })
-          }
-        />
-        <button className={styles.btn} type="submit">
-          حفظ
-        </button>
-      </form>
-      {/* )} */}
-    </div>
+          <input
+            type="text"
+            placeholder="كمية الحفظ"
+            value={tableUser.quantity}
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                quantity: e.target.value,
+              })
+            }
+          />
+          <select
+            type="text"
+            placeholder="المستوى"
+            onChange={(e) => {
+              setTableUser({
+                ...tableUser,
+                level: e.target.value,
+              });
+            }}
+          >
+            <option>ضعيف</option>
+            <option>مقبول</option>
+            <option>جيد</option>
+            <option>جيد جدا</option>
+            <option>ممتاز</option>
+          </select>
+          <input
+            placeholder="المـــهام"
+            value={tableUser.tasks}
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                tasks: e.target.value,
+              })
+            }
+          />
+          <select
+            placeholder="المهام المكتملة"
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                completed: e.target.value,
+              })
+            }
+          >
+            <option value={true}>true</option>
+            <option value={false}>false</option>
+          </select>
+          <textarea
+            placeholder="الأسئلة"
+            value={tableUser.questions}
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                questions: e.target.value,
+              })
+            }
+          />
+          <select
+            placeholder="عدد الإجابات"
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                answers: e.target.value,
+              })
+            }
+          >
+            <option value={0}>0</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+          </select>
+          <textarea
+            placeholder="ملاحظات"
+            value={tableUser.notes}
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                notes: e.target.value,
+              })
+            }
+          />
+          <input
+            placeholder="التقييم العام للحصة"
+            value={tableUser.rate}
+            onChange={(e) =>
+              setTableUser({
+                ...tableUser,
+                rate: e.target.value,
+              })
+            }
+          />
+          <button className={styles.btn} type="submit">
+            حفظ
+          </button>
+        </form>
+        {/* )} */}
+      </div>
+    </>
   );
 }
 

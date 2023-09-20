@@ -1,7 +1,8 @@
 .container {
   /* margin-top: 2rem; */
   /* margin-bottom: 5rem; */
-  margin: 2rem 6px 0;
+  margin: 2rem;
+  overflow: auto;
 }
 h2 {
   color: #111142;
@@ -100,6 +101,10 @@ tbody tr td {
 .container form .btn {
   background-color: #1f1fc7;
 }
+.notes {
+  white-space: pre;
+}
+
 @media (max-width: 767px) {
   .container form {
     width: 95%;
