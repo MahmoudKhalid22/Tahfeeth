@@ -131,7 +131,7 @@ function Student() {
               <th>المهام المكتملة</th>
               <th>الأسئلة اليومية</th>
               <th>الإجابات على الأسئلة</th>
-              <th>ملاحظات</th>
+              <th className={styles.notes}>ملاحظات</th>
               <th>التقييم</th>
             </tr>
           </thead>
