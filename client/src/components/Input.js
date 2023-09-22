@@ -34,6 +34,7 @@ function Input() {
 
       if (!response.ok) {
         const errorData = await response.json();
+        setLoading(false);
         throw new Error(errorData.error);
       }
 
@@ -63,7 +64,7 @@ function Input() {
         placeholder="كلمة السر"
       />
       <p className={styles.error}>{`${error ? error : ""}`}</p>
-      {loading && <p className='loading'>تــحمــيل ...</p>}
+      {loading && <p className="loading">تــحمــيل ...</p>}
       <button>
         <GiExitDoor />
         <span>دخول</span>

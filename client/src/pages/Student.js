@@ -122,36 +122,38 @@ function Student() {
         {loadingTables ? (
           <h4 className="loading loading-details">تحميل ...</h4>
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>اليوم</th>
-                <th>كمية الحفظ</th>
-                <th>مستوى الحفظ</th>
-                <th>المهام اليومية</th>
-                <th>المهام المكتملة</th>
-                <th>الأسئلة اليومية</th>
-                <th>الإجابات على الأسئلة</th>
-                <th>ملاحظات</th>
-                <th>التقييم</th>
-              </tr>
-            </thead>
-            <tbody>
-              {studentData?.map((std) => (
-                <tr key={std._id}>
-                  <td>{std.day}</td>
-                  <td>{std.quantity}</td>
-                  <td>{std.level}</td>
-                  <td>{std.tasks}</td>
-                  <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
-                  <td>{std.questions}</td>
-                  <td>{std.answers}</td>
-                  <td className={styles.notes}>{std.notes}</td>
-                  <td>{std.rate}</td>
+          <div className={styles.tableContainer}>
+            <table>
+              <thead>
+                <tr>
+                  <th>اليوم</th>
+                  <th>كمية الحفظ</th>
+                  <th>مستوى الحفظ</th>
+                  <th>المهام اليومية</th>
+                  <th>المهام المكتملة</th>
+                  <th>الأسئلة اليومية</th>
+                  <th>الإجابات على الأسئلة</th>
+                  <th>ملاحظات</th>
+                  <th>التقييم</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {studentData?.map((std) => (
+                  <tr key={std._id}>
+                    <td>{std.day}</td>
+                    <td className={styles.notes}>{std.quantity}</td>
+                    <td>{std.level}</td>
+                    <td className={styles.notes}>{std.tasks}</td>
+                    <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
+                    <td>{std.questions}</td>
+                    <td>{std.answers}</td>
+                    <td className={styles.notes}>{std.notes}</td>
+                    <td>{std.rate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
         {data?.user.isAdmin && (
           <button onClick={() => setShowFormTable((prev) => !prev)}>
