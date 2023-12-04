@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -6,8 +10,16 @@
 }
 body {
   scroll-behavior: smooth;
-  background-color: wheat;
+  background: url("https://img.freepik.com/free-vector/flat-arabic-pattern-background_79603-1826.jpg?size=626&ext=jpg&ga=GA1.1.493938250.1694873725&semt=ais");
   font-family: "Tajawal", sans-serif;
+}
+body::before {
+  content: "";
+  position: absolute;
+  background-color: #d4d9e971;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 .loading {
   font-size: 1.5rem;

@@ -50,26 +50,43 @@ function Input() {
   };
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="الاسم"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="كلمة السر"
-      />
-      <p className={styles.error}>{`${error ? error : ""}`}</p>
-      {loading && <p className="loading">تــحمــيل ...</p>}
-      <button>
-        <GiExitDoor />
-        <span>دخول</span>
-      </button>
-    </form>
+    <div className={styles.main}>
+      <div className={styles.wrapper}>
+        <img
+          src="https://img.freepik.com/free-vector/realistic-three-dimensional-arabic-ornamental-background_52683-59086.jpg?size=626&ext=jpg&ga=GA1.1.493938250.1694873725&semt=ais"
+          alt="background-form"
+        />
+      </div>
+
+      <form className={styles.container} onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="الاسم"
+            id="name"
+          />
+          <label htmlFor="name">الاسم</label>
+        </div>
+        <div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="كلمة السر"
+            id="pass"
+          />
+          <label htmlFor="pass">كلمة السر</label>
+        </div>
+        <p className={styles.error}>{`${error ? error : ""}`}</p>
+        {loading && <p className={styles.loading}>تــحمــيل ...</p>}
+        <button>
+          <GiExitDoor />
+          <span>دخول</span>
+        </button>
+      </form>
+    </div>
   );
 }
 

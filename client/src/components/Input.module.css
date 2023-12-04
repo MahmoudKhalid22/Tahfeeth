@@ -1,21 +1,60 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+  margin: 0 2rem 2rem;
+}
+.wrapper {
+  /* width: 30rem;
+  height: 35rem; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 35rem;
+}
+.wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 40px 0 0 40px;
+  object-fit: cover;
+}
+
 .container {
-  border: 1px solid #111142;
+  background: linear-gradient(to right, #007700, #009900);
+
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 1.5rem;
   padding: 1rem;
-  border-radius: 12px;
+  border-radius: 0 40px 40px 0;
+  width: 50%;
+  height: 35rem;
+}
+.container div {
+  color: #fff;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+.container label {
+  font-size: 1.5rem;
 }
 .container input {
   font-size: 1.25rem;
   border: none;
   outline: none;
-  border-radius: 5px;
+  border-radius: 40px;
   padding: 0.5rem 0.75rem;
   background-color: #111142;
   color: #fff;
+  width: 65%;
+  height: 4rem;
 }
 
 .container button {
@@ -24,14 +63,16 @@
   outline: none;
   font-size: 1.25rem;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 40px;
   background-color: #111142;
-  color: rgb(255, 251, 12);
+  color: #fff;
   transition: 0.5s;
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 4rem;
 }
 .container button:hover {
   background-color: #292955;
@@ -40,4 +81,31 @@
   font-size: 1.5rem;
   color: #ff3333;
   font-family: "Tajawal", sans-serif;
+}
+.loading {
+  color: rgb(55, 252, 55);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .wrapper {
+    display: none;
+  }
+  .container {
+    width: 100%;
+    border-radius: 40px;
+  }
+  label {
+    display: none;
+  }
+  .container input {
+    width: 100%;
+  }
+  .container {
+    justify-content: flex-start;
+    height: fit-content;
+  }
+  .main {
+    margin-bottom: 0;
+  }
 }

@@ -1,12 +1,14 @@
-import React from 'react'
-import {Outlet} from 'react-router-dom'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Root() {
   return (
- 
-        <Outlet />
-
-  )
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
 }
 
-export default Root
+export default Root;
