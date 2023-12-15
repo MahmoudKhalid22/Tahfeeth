@@ -6,13 +6,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Cairo Play", sans-serif;
+  font-family: "Tajawal", sans-serif;
 }
 body {
   scroll-behavior: smooth;
   background: url("https://img.freepik.com/free-vector/flat-arabic-pattern-background_79603-1826.jpg?size=626&ext=jpg&ga=GA1.1.493938250.1694873725&semt=ais");
   font-family: "Tajawal", sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .loading {

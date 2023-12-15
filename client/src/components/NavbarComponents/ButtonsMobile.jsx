@@ -8,7 +8,7 @@ function ButtonsMobile({ activeState, onSetActive }) {
       <div
         className={`top-0 w-screen h-[100vh] fixed transition-all bg-white ${
           activeState
-            ? "translate-x-0 opacity-80 "
+            ? "translate-x-0 opacity-95 "
             : "translate-x-full opacity-0 "
         }`}
       >

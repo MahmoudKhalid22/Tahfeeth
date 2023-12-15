@@ -2,8 +2,8 @@ import React from "react";
 
 function Proposal() {
   return (
-    <>
-      <h1 className="mr-8 mt-36 font-bold text-3xl">
+    <div className="flex items-start h-96 mt-8 text-center sm:text-right justify-center flex-col">
+      <h1 className="mr-8 font-bold text-3xl">
         منصة <span className="text-green-600 text-4xl">نحيا بالقرآن</span>{" "}
         لتحفيظ القرآن الكريم
       </h1>
@@ -15,7 +15,7 @@ function Proposal() {
         وتقديم إحصائيات مفصلة حول أدائهم. يمكن الوصول إلى المنصة على مدار الساعة
         من أي مكان، مما يسهل على الأفراد تنظيم وقتهم بشكل أفضل
       </p>
-    </>
+    </div>
   );
 }
 
