@@ -4,6 +4,7 @@ import Root from "./pages/Root";
 import Home from "./pages/Home";
 import Details from "./components/Details";
 import Student from "./pages/Student";
+import Register from "./pages/Register";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,6 +23,10 @@ function App() {
         {
           path: "/details/:id",
           element: <Student />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },

@@ -1,14 +1,11 @@
 import React from "react";
-import Input from "../components/Input";
-import styles from "./Home.module.css";
+import Proposal from "../components/Proposal";
 
 function Home() {
   return (
-    <div className="font-bold text-center">     
-      <div className={styles.container}>
-        <Input />
-      </div>
-    </div>
+    <>
+      <Proposal />
+    </>
   );
 }
 
