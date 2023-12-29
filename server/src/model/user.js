@@ -11,15 +11,21 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
-    require: true,
+    required: true,
   },
   password: {
     type: String,
     required: true,
   },
-  isAdmin: {
+  role: {
+    type: String,
+    required: true,
+  },
+  professional: {
     type: Boolean,
-    default: false,
+    required: function () {
+      return this.role === "teacher";
+    },
   },
   tokens: [
     {

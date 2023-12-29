@@ -1,5 +1,22 @@
 const User = require("../model/user");
 
+const newUser = async (req, res) => {
+  try {
+    const { name, email, password, role, professional } = req.body;
+    const user = new User({
+      name,
+      email,
+      password,
+      role,
+      professional,
+    });
+    await user.save();
+    res.send("user has been create successfully");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
 const loginUser = async (req, res) => {
   try {
     const user = await User.findByCredentials(
@@ -50,7 +67,6 @@ const getUsers = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-
   const admins = req.user.filter((user) => user.isAdmin === true);
 
   if (admins.length > 0) {
@@ -125,6 +141,7 @@ const getOneUser = async (req, res) => {
 };
 
 module.exports = {
+  newUser,
   getUsers,
   addUser,
   deleteUser,

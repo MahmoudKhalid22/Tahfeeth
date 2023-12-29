@@ -70,8 +70,13 @@ const {
   updateUser,
   getUser,
   getOneUser,
+  newUser,
 } = require("../controller/users");
+
 const auth = require("../middleware/auth");
+
+// CREATE A NEW USER
+router.post("/user", newUser);
 
 // LOGIN
 router.post("/users/login", loginUser);
