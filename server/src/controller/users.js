@@ -60,7 +60,7 @@ const getUsers = async (req, res) => {
       const students = users.filter((user) => user.isAdmin === false);
       res.send(students);
     } else {
-      res.status(400).send("you're not the admin");
+      res.status(400).send({ message: "you're not the admin" });
     }
   } catch (e) {
     res.status(500).send(e);

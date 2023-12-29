@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { GiExitDoor } from "react-icons/gi";
 import styles from "./Input.module.css";
 
@@ -9,6 +9,10 @@ function Input() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const isLogin = searchParams.get("mode") === "login";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,40 +55,81 @@ function Input() {
 
   return (
     <div className={styles.main}>
-      <div className={styles.wrapper}>
+      <div className="flex items-center justify-center w-1/2 h-[35rem]">
         <img
           src="https://img.freepik.com/free-vector/realistic-three-dimensional-arabic-ornamental-background_52683-59086.jpg?size=626&ext=jpg&ga=GA1.1.493938250.1694873725&semt=ais"
           alt="background-form"
+          className="w-full h-full rounded-tl-xl rounded-bl-xl object-cover"
         />
       </div>
 
-      <form className={styles.container} onSubmit={handleSubmit}>
-        <div>
+      <form
+        className="bg-gradient-to-r from-[#916f6e]  to-[#574342] flex items-center
+        justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-1/2 h-[35rem]"
+        onSubmit={handleSubmit}
+      >
+        {!isLogin && (
+          <div className=" flex flex-row-reverse justify-between items-start w-full">
+            <input
+              type="text"
+              placeholder="الاسم"
+              id="name"
+              className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-2/3 h-16"
+            />
+            <label className="text-white text-2xl" htmlFor="name">
+              الاسم
+            </label>
+          </div>
+        )}
+        <div className="flex flex-row-reverse justify-between items-start w-full">
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="الاسم"
-            id="name"
+            placeholder="البريد الإلكتروني"
+            id="email"
+            className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-2/3 h-16"
           />
-          <label htmlFor="name">الاسم</label>
+          <label className="text-white text-2xl" htmlFor="email">
+            البريد الإلكتروني
+          </label>
         </div>
-        <div>
+        <div className=" flex flex-row-reverse justify-between items-start w-full">
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="كلمة السر"
             id="pass"
+            className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-2/3 h-16"
           />
-          <label htmlFor="pass">كلمة السر</label>
+          <label className="text-white text-2xl" htmlFor="pass">
+            كلمة السر
+          </label>
         </div>
         <p className={styles.error}>{`${error ? error : ""}`}</p>
         {loading && <p className={styles.loading}>تــحمــيل ...</p>}
-        <button>
+        <button className="p-2 border-none outline-none text-2xl cursor-pointer rounded-xl transition-colors flex gap-2 items-center justify-center w-full h-16 bg-[#3a2c2c] hover:bg-[#1d1616] text-white">
           <GiExitDoor />
-          <span>دخول</span>
+          {isLogin ? <span>دخول</span> : <span>تسجيل</span>}
         </button>
+        <p className="flex gap-4 text-white">
+          {isLogin ? (
+            <>
+              <span>ليس لديك حساب بعد</span>
+              <Link to="/register?mode=signup" className="underline">
+                سجل حساب جديد الآن{" "}
+              </Link>
+            </>
+          ) : (
+            <>
+              <span>لديك حساب بالفعل</span>
+              <Link to="/register?mode=login" className="underline">
+                سجل دخول الآن{" "}
+              </Link>
+            </>
+          )}
+        </p>
       </form>
     </div>
   );

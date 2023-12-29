@@ -5,22 +5,22 @@
   flex-direction: row-reverse;
   margin: 0 2rem 2rem;
 }
-.wrapper {
+/* .wrapper {
   /* width: 30rem;
   height: 35rem; */
-  display: flex;
+/* display: flex;
   align-items: center;
   justify-content: center;
   width: 50%;
   height: 35rem;
-}
-.wrapper img {
+} */
+/* .wrapper img {
   width: 100%;
   height: 100%;
   border-radius: 10px 0 0 10px;
   object-fit: cover;
-}
-
+} */
+/* 
 .container {
   background: linear-gradient(to right, #007700, #009900);
 
@@ -33,19 +33,19 @@
   border-radius: 0 10px 10px 0;
   width: 50%;
   height: 35rem;
-}
-.container div {
+} */
+/* .container div {
   color: #fff;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-}
-.container label {
+} */
+/* .container label {
   font-size: 1.5rem;
-}
-.container input {
+} */
+/* .container input {
   font-size: 1.25rem;
   border: none;
   outline: none;
@@ -55,7 +55,7 @@
   color: #fff;
   width: 65%;
   height: 4rem;
-}
+} */
 
 .container button {
   padding: 0.5rem;
