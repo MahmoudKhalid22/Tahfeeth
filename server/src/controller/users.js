@@ -32,6 +32,7 @@ const loginUser = async (req, res) => {
     } else if (error.message === "كلمة السر غير صحيحة") {
       return res.status(401).json({ error: "كلمة السر غير صحيحة" });
     } else {
+      console.log(error);
       return res.status(500).send(error.message);
     }
   }

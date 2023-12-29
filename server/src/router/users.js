@@ -76,7 +76,7 @@ const {
 const auth = require("../middleware/auth");
 
 // CREATE A NEW USER
-router.post("/user", newUser);
+router.post("/users/signup", newUser);
 
 // LOGIN
 router.post("/users/login", loginUser);
