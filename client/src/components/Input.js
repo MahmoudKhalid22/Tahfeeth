@@ -55,7 +55,7 @@ function Input() {
 
   return (
     <div className={styles.main}>
-      <div className="flex items-center justify-center w-1/2 h-[35rem]">
+      <div className="hidden md:flex items-center justify-center w-1/2 h-[35rem]">
         <img
           src="https://img.freepik.com/free-vector/realistic-three-dimensional-arabic-ornamental-background_52683-59086.jpg?size=626&ext=jpg&ga=GA1.1.493938250.1694873725&semt=ais"
           alt="background-form"
@@ -64,8 +64,8 @@ function Input() {
       </div>
 
       <form
-        className="bg-gradient-to-r from-[#916f6e]  to-[#574342] flex items-center
-        justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-1/2 h-[35rem]"
+        className="bg-none md:bg-gradient-to-r from-[#916f6e]  to-[#574342] flex items-center
+        justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-full md:w-1/2 md:h-[35rem]"
         onSubmit={handleSubmit}
       >
         {!isLogin && (
@@ -74,7 +74,7 @@ function Input() {
               type="text"
               placeholder="الاسم"
               id="name"
-              className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-2/3 h-16"
+              className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
             />
             <label className="text-white text-2xl" htmlFor="name">
               الاسم
@@ -88,7 +88,7 @@ function Input() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="البريد الإلكتروني"
             id="email"
-            className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-2/3 h-16"
+            className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
           />
           <label className="text-white text-2xl" htmlFor="email">
             البريد الإلكتروني
@@ -101,19 +101,21 @@ function Input() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="كلمة السر"
             id="pass"
-            className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-2/3 h-16"
+            className="text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
           />
           <label className="text-white text-2xl" htmlFor="pass">
             كلمة السر
           </label>
         </div>
-        <p className={styles.error}>{`${error ? error : ""}`}</p>
-        {loading && <p className={styles.loading}>تــحمــيل ...</p>}
-        <button className="p-2 border-none outline-none text-2xl cursor-pointer rounded-xl transition-colors flex gap-2 items-center justify-center w-full h-16 bg-[#3a2c2c] hover:bg-[#1d1616] text-white">
+        <p className="text-2xl text-red-600">{`${error ? error : ""}`}</p>
+        {loading && (
+          <p className="text-white text-2xl font-semibold">تــحمــيل ...</p>
+        )}
+        <button className="p-2 border-none outline-none text-2xl cursor-pointer rounded-xl transition-colors flex gap-2 items-center justify-center w-full h-16 bg-[#916f6e] hover:bg-[#574342] md:bg-[#3a2c2c] md:hover:bg-[#1d1616] text-white">
           <GiExitDoor />
           {isLogin ? <span>دخول</span> : <span>تسجيل</span>}
         </button>
-        <p className="flex gap-4 text-white">
+        <p className="flex gap-4 text-[#2b2121] md:text-white">
           {isLogin ? (
             <>
               <span>ليس لديك حساب بعد</span>

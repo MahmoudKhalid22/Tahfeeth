@@ -5,7 +5,7 @@ function Buttons() {
   return (
     <div className="btnNav hidden sm:flex gap-4 justify-end ml-4 py-4  px-6">
       <Link to={`/register?mode=login`}>
-        <button className="py-2 px-4 font-bold text-xl bg-[#bda9a8] hover:bg-[#916f6e]  text-slate-100 transition-all rounded-sm">
+        <button className="py-2 px-4 font-bold text-xl bg-[#b29a9a] hover:bg-[#916f6e]  text-slate-100 transition-all rounded-sm">
           تسجيل الدخول
         </button>
       </Link>
