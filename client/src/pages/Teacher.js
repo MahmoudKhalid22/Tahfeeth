@@ -5,7 +5,7 @@ function Teacher() {
   return (
     <div className="flex flex-col border rounded overflow-hidden shadow-lg max-w-xs mx-auto bg-slate-100 py-8 px-4">
       <img
-        className="w-1/2 object-cover mx-auto"
+        className="w-1/2 object-cover mx-auto rounded-full shadow-xl"
         src="https://my-portfolio-khalid.netlify.app/asstes/images/mine-min.png"
         alt="teacher"
       />
@@ -20,9 +20,9 @@ function Teacher() {
           <li>المتابعة</li>
           <li>تحفيظ المتون</li>
         </ul>
-        <Link to="/register?mode=login">
+        <Link to="/teacher/:id">
           <button className="py-2 px-4 mx-auto block font-bold text-xl bg-[#916f6e] hover:bg-[#745958]   text-slate-100 transition-all rounded-sm">
-            الاشتراك مع المعلم
+            عرض التفاصيل{" "}
           </button>
         </Link>
       </div>

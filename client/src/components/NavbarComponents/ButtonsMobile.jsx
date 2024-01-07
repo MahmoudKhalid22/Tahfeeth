@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 function ButtonsMobile({ activeState, onSetActive }) {
+  const [loggedIn, setLoggedIn] = useState(
+    JSON.parse(localStorage.getItem("data"))
+  );
+
+  useEffect(() => {
+    setLoggedIn((pre) =>
+      pre ? JSON.parse(localStorage.getItem("data")) : null
+    );
+  }, []);
+
   return (
     <>
       <div
@@ -27,16 +37,26 @@ function ButtonsMobile({ activeState, onSetActive }) {
             >
               صفحة المعلمين
             </Link>
-            <Link to={`/register?mode=login`}>
-              <button className="py-2 px-4 font-bold text-xl bg-[#b29a9a] hover:bg-[#916f6e] text-slate-100 transition-all rounded-sm">
-                تسجيل الدخول
-              </button>
-            </Link>
-            <Link to={`/register?mode=signup`}>
-              <button className="py-2 px-4 font-bold text-xl bg-[#916f6e] hover:bg-[#745958]  text-slate-100 transition-all rounded-sm">
-                إنشاء حساب
-              </button>
-            </Link>
+            {loggedIn ? (
+              <>
+                <Link to={`/register?mode=login`}>
+                  <button className="py-2 px-4 font-bold text-xl bg-[#b29a9a] hover:bg-[#916f6e] text-slate-100 transition-all rounded-sm">
+                    تسجيل الدخول
+                  </button>
+                </Link>
+                <Link to={`/register?mode=signup`}>
+                  <button className="py-2 px-4 font-bold text-xl bg-[#916f6e] hover:bg-[#745958]  text-slate-100 transition-all rounded-sm">
+                    إنشاء حساب
+                  </button>
+                </Link>
+              </>
+            ) : (
+              <Link to={`/details`}>
+                <button className="py-2 px-4 font-bold text-xl bg-[#916f6e] hover:bg-[#745958]   text-slate-100 transition-all rounded-sm">
+                  صفحتي
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

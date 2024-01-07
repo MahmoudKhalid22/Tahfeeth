@@ -4,7 +4,8 @@ import { GiEntryDoor } from "react-icons/gi";
 import { RxUpdate } from "react-icons/rx";
 import styles from "./Details.module.css";
 import AddUserForm from "./AddUserForm";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
+
 import UpdateForm from "./UpdateForm";
 import Student from "../pages/Student";
 
@@ -13,8 +14,6 @@ function Details() {
   const [usersData, setUsersData] = useState([]);
   const [formUpdate, setFormUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   const data = localStorage.getItem("data")
     ? JSON.parse(localStorage.getItem("data"))
@@ -42,9 +41,9 @@ function Details() {
       setLoading(false);
 
       localStorage.clear();
-      navigate("/");
+      return redirect("/");
     } catch (err) {
-      throw new Error(err);
+      setLoading(err.message);
     }
   };
 

@@ -48,7 +48,6 @@ function Form() {
       const dataUser = await response.json();
       localStorage.setItem("data", JSON.stringify(dataUser));
       navigate("/details");
-
       // Reset the form data
     } catch (error) {
       setError(error.message);
