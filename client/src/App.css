@@ -13,6 +13,17 @@ body {
   background: url("https://img.freepik.com/free-vector/flat-arabic-pattern-background_79603-1826.jpg?size=626&ext=jpg&ga=GA1.1.493938250.1694873725&semt=ais");
   font-family: "Tajawal", sans-serif;
   overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #21774f11;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
 }
 
 .loading {

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Proposal() {
   return (
@@ -15,6 +16,11 @@ function Proposal() {
         وتقديم إحصائيات مفصلة حول أدائهم. يمكن الوصول إلى المنصة على مدار الساعة
         من أي مكان، مما يسهل على الأفراد تنظيم وقتهم بشكل أفضل
       </p>
+      <Link to={"/teacher"}>
+        <button className="py-2 px-4 mt-8 mr-8 font-bold text-xl bg-[#916f6e] hover:bg-[#745958]   text-slate-100 transition-all rounded-sm">
+          صــفــحــة المعلمين
+        </button>
+      </Link>
     </div>
   );
 }

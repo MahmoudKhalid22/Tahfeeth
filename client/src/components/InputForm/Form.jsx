@@ -8,11 +8,11 @@ function Form() {
   const isLogin = searchParams.get("mode") === "login";
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [professional, setProfessional] = useState(false);
+  // const [professional, setProfessional] = useState(false);
 
   const navigate = useNavigate();
 
@@ -107,6 +107,7 @@ function Form() {
             placeholder="الاسم"
             id="name"
             className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
+            onChange={(e) => setRole(e.target.value)}
           >
             <option>التسجيل ك</option>
             <option>معلم</option>
@@ -117,7 +118,7 @@ function Form() {
           </label>
         </div>
       )}
-      {!isLogin && (
+      {!isLogin && role === "معلم" && (
         <div className=" flex flex-row-reverse justify-between items-start w-full">
           <select
             type="text"
