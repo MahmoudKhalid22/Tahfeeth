@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 
 function ButtonsMobile({ activeState, onSetActive }) {
   const [loggedIn, setLoggedIn] = useState(
-    JSON.parse(localStorage.getItem("data"))
+    JSON.parse(localStorage.getItem("data")) || null
   );
 
   useEffect(() => {
-    setLoggedIn((pre) =>
-      pre ? JSON.parse(localStorage.getItem("data")) : null
+    setLoggedIn(() =>
+      JSON.parse(localStorage.getItem("data"))
+        ? JSON.parse(localStorage.getItem("data"))
+        : null
     );
   }, []);
-
+  console.log(loggedIn);
   return (
     <>
       <div
@@ -37,7 +39,7 @@ function ButtonsMobile({ activeState, onSetActive }) {
             >
               صفحة المعلمين
             </Link>
-            {loggedIn ? (
+            {!loggedIn ? (
               <>
                 <Link to={`/register?mode=login`}>
                   <button className="py-2 px-4 font-bold text-xl bg-[#b29a9a] hover:bg-[#916f6e] text-slate-100 transition-all rounded-sm">
