@@ -8,11 +8,11 @@ function Form() {
   const isLogin = searchParams.get("mode") === "login";
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [professional, setProfessional] = useState(false);
+  // const [professional, setProfessional] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,7 +48,6 @@ function Form() {
       const dataUser = await response.json();
       localStorage.setItem("data", JSON.stringify(dataUser));
       navigate("/details");
-
       // Reset the form data
     } catch (error) {
       setError(error.message);
@@ -67,7 +66,7 @@ function Form() {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
+            className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 md:h-16"
           />
           <label className="hidden md:block text-white text-2xl" htmlFor="name">
             الاسم
@@ -81,7 +80,7 @@ function Form() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="البريد الإلكتروني"
           id="email"
-          className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
+          className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 md:h-16"
         />
         <label className="hidden md:block text-white text-2xl" htmlFor="email">
           البريد الإلكتروني
@@ -94,7 +93,7 @@ function Form() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="كلمة السر"
           id="pass"
-          className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
+          className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2  w-full md:w-2/3  md:h-16"
         />
         <label className="hidden md:block text-white text-2xl" htmlFor="pass">
           كلمة السر
@@ -106,7 +105,8 @@ function Form() {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
+            className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 md:h-16"
+            onChange={(e) => setRole(e.target.value)}
           >
             <option>التسجيل ك</option>
             <option>معلم</option>
@@ -117,13 +117,13 @@ function Form() {
           </label>
         </div>
       )}
-      {!isLogin && (
+      {!isLogin && role === "معلم" && (
         <div className=" flex flex-row-reverse justify-between items-start w-full">
           <select
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 h-16"
+            className="text-base md:text-3xl rounded-xl border-none outline-none px-3 py-2 w-full md:w-2/3 md:h-16"
           >
             <option>هل أنت مجاز</option>
             <option>نعم</option>
@@ -142,7 +142,7 @@ function Form() {
           تــحمــيل ...
         </p>
       )}
-      <button className="p-2 border-none outline-none text-2xl cursor-pointer rounded-xl transition-colors flex gap-2 items-center justify-center w-full h-16 bg-[#916f6e] hover:bg-[#574342] md:bg-[#3a2c2c] md:hover:bg-[#1d1616] text-white">
+      <button className="p-2 border-none outline-none text-xl md:text-2xl cursor-pointer rounded-xl transition-colors flex gap-2 items-center justify-center w-full md:h-16 bg-[#916f6e] hover:bg-[#574342] md:bg-[#3a2c2c] md:hover:bg-[#1d1616] text-white">
         <GiExitDoor />
         {isLogin ? <span>دخول</span> : <span>تسجيل</span>}
       </button>
