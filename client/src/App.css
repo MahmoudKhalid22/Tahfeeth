@@ -10,7 +10,7 @@
 }
 body {
   scroll-behavior: smooth;
-  background: url("https://img.freepik.com/free-vector/flat-arabic-pattern-background_79603-1826.jpg?size=626&ext=jpg&ga=GA1.1.493938250.1694873725&semt=ais");
+  background-color: #ececec;
   font-family: "Tajawal", sans-serif;
   overflow-x: hidden;
 }
