@@ -7,6 +7,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Tajawal", sans-serif;
+  scroll-behavior: smooth;
 }
 body {
   scroll-behavior: smooth;
@@ -14,16 +15,6 @@ body {
   font-family: "Tajawal", sans-serif;
   overflow-x: hidden;
   position: relative;
-}
-body::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: #21774f11;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
 }
 
 .loading {

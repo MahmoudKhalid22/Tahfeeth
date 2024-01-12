@@ -3,6 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Logo from "./NavbarComponents/Logo";
 import Buttons from "./NavbarComponents/Buttons";
 import ButtonsMobile from "./NavbarComponents/ButtonsMobile";
+import Links from "./NavbarComponents/Links";
 
 function Navbar() {
   const [active, setActive] = useState(false);
@@ -13,18 +14,19 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex items-center  justify-between h-28">
+    <nav className="flex items-center  justify-between">
       <Logo />
-      <Buttons />
+      <Links />
+      {/* <Buttons /> */}
 
-      <ButtonsMobile onSetActive={onSetActive} activeState={active} />
+      {/* <ButtonsMobile onSetActive={onSetActive} activeState={active} /> */}
 
-      <div className="block sm:hidden ml-4">
+      {/* <div className="block sm:hidden ml-4">
         <AiOutlineMenu
           onClick={() => setActive(true)}
           className="fill-emerald-800 w-6 h-6 cursor-pointer"
         />
-      </div>
+      </div> */}
     </nav>
   );
 }
