@@ -1,5 +1,8 @@
 import React from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+>>>>>>> 8ff830d29d10f373db724f37cbed84ef75d33926
 import { HashLink } from "react-router-hash-link";
 
 function Links() {
@@ -17,7 +20,11 @@ function Links() {
           </HashLink>
         </li>
         <li className="text-[#fff] text-2xl font-medium">
+<<<<<<< HEAD
           <HashLink smooth to="/#teacher">
+=======
+          <HashLink smooth to="/#teachers">
+>>>>>>> 8ff830d29d10f373db724f37cbed84ef75d33926
             المعلمين
           </HashLink>
         </li>
@@ -28,16 +35,16 @@ function Links() {
         </li>
       </ul>
       <div className="flex flex-col items-center justify-center gap-8">
-        <Link to={"/register?mode=login"}>
+        <HashLink to={"/register?mode=login"}>
           <button className="bg-[#C1A98D] hover:bg-[#9F8565] transition-colors px-5 py-3 w-48 text-white text-2xl">
             تسجيل الدخول
           </button>
-        </Link>
-        <Link to={"/register?mode=signup"}>
+        </HashLink>
+        <HashLink to={"/register?mode=signup"}>
           <button className="bg-[#9F8565] hover:bg-[#8a7762] transition-colors px-5 py-3 w-48 text-white text-2xl">
             إنشاء حساب
           </button>
-        </Link>
+        </HashLink>
       </div>
     </div>
   );

@@ -14,7 +14,11 @@ function About() {
         وفعالة. يختتم الموضوع بتحفيز الطلاب على الانضمام إلى هذه المنصة
         للاستمتاع برحلة ممتعة نحو إتقان قراءة القرآن الكريم وتحقيق اللفظ الصحيح.
       </p>
+<<<<<<< HEAD
       <h2 className="font-bold text-black mb-8 text-3xl">ما يميز المنصة</h2>
+=======
+      <h2 className="font-bold text-3xl mt-8 text-black">ما يميز المنصة</h2>
+>>>>>>> 8ff830d29d10f373db724f37cbed84ef75d33926
     </div>
   );
 }
