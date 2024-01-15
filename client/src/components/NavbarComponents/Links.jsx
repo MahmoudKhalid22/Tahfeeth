@@ -1,8 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-=======
->>>>>>> 8ff830d29d10f373db724f37cbed84ef75d33926
 import { HashLink } from "react-router-hash-link";
 
 function Links() {
@@ -20,11 +16,7 @@ function Links() {
           </HashLink>
         </li>
         <li className="text-[#fff] text-2xl font-medium">
-<<<<<<< HEAD
-          <HashLink smooth to="/#teacher">
-=======
           <HashLink smooth to="/#teachers">
->>>>>>> 8ff830d29d10f373db724f37cbed84ef75d33926
             المعلمين
           </HashLink>
         </li>
