@@ -1,21 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 function Links() {
   return (
-    <div className="w-[262px] fixed top-0 right-0 h-screen pt-[114px] pb-[27px] bg-[#43766C] px-6 flex items-center justify-between flex-col">
+    <div className="w-64 fixed top-0 right-0 h-screen pt-[114px] pb-[27px] bg-[#43766C] px-6 flex items-center justify-between flex-col">
       <ul className="flex flex-col items-center justify-center gap-8">
         <li className="text-[#fff] text-2xl font-medium">
-          <Link to="/">الصفحة الرئيسية</Link>
+          <HashLink smooth to="/#home">
+            الصفحة الرئيسية
+          </HashLink>
         </li>
         <li className="text-[#fff] text-2xl font-medium">
-          <a href="#about">من نحن</a>
+          <HashLink smooth to="/#about">
+            من نحن
+          </HashLink>
         </li>
         <li className="text-[#fff] text-2xl font-medium">
-          <a href="#teachers">المعلمين</a>
+          <HashLink smooth to="/#teacher">
+            المعلمين
+          </HashLink>
         </li>
         <li className="text-[#fff] text-2xl font-medium">
-          <a href="#contact">تواصل معنا</a>
+          <HashLink smooth to="/#contact">
+            تواصل معنا
+          </HashLink>
         </li>
       </ul>
       <div className="flex flex-col items-center justify-center gap-8">
