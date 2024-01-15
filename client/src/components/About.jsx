@@ -2,7 +2,7 @@ import React from "react";
 
 function About() {
   return (
-    <div id="about" className="mr-80 flex items-start flex-col">
+    <div id="about" className="mr-[22rem] flex items-start flex-col">
       <h2 className="text-5xl font-bold text-[#000] mb-8">من نحن</h2>
 
       <p className="text-black text-xl w-[50rem]">
@@ -14,7 +14,7 @@ function About() {
         وفعالة. يختتم الموضوع بتحفيز الطلاب على الانضمام إلى هذه المنصة
         للاستمتاع برحلة ممتعة نحو إتقان قراءة القرآن الكريم وتحقيق اللفظ الصحيح.
       </p>
-      <h2>ما يميز المنصة</h2>
+      <h2 className="font-bold text-3xl mt-8 text-black">ما يميز المنصة</h2>
     </div>
   );
 }
