@@ -14,7 +14,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex items-center  justify-between">
+    <nav className="h-0">
       <Logo />
       <Links />
       {/* <Buttons /> */}
