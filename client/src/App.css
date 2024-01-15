@@ -9,6 +9,9 @@
   font-family: "Tajawal", sans-serif;
   scroll-behavior: smooth;
 }
+#root {
+  overflow-x: hidden;
+}
 body {
   scroll-behavior: smooth;
   background-color: #ececec;
