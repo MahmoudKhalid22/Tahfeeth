@@ -3,7 +3,7 @@ import Input from "../components/Input";
 
 function Register() {
   return (
-    <div>
+    <div className="mr-16 lg:mr-[17rem] mt-28">
       <Input />
     </div>
   );

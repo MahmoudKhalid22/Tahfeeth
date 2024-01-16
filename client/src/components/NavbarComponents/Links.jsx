@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { HashLink } from "react-router-hash-link";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdInformationCircle } from "react-icons/io";
@@ -9,10 +10,16 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { LiaUserPlusSolid } from "react-icons/lia";
 
 function Links() {
+  const [active, setActive] = useState(1);
+
   return (
     <div className="w-16 lg:w-64 fixed top-0 right-0 z-40 min-h-screen pt-[114px] pb-[27px] bg-[#43766C] px-6 flex items-center justify-between flex-col overflow-hidden">
       <ul className="flex flex-col items-center justify-center gap-8">
-        <li className="text-[#fff] text-2xl font-medium">
+        <li
+          className={`text-[#fff] text-2xl font-medium pb-2 ${
+            active === 1 ? "border-b-4" : "border-none"
+          } border-white`}
+        >
           <HashLink smooth to="/#home">
             <div className="block lg:hidden">
               <AiFillHome className="w-8 h-16 text-bold" />
@@ -20,7 +27,11 @@ function Links() {
             <p className="hidden lg:block">الصفحة الرئيسية</p>
           </HashLink>
         </li>
-        <li className="text-[#fff] text-2xl font-medium">
+        <li
+          className={`text-[#fff] text-2xl font-medium pb-2 ${
+            active === 2 ? "border-b-4" : "border-none"
+          } border-white`}
+        >
           <HashLink smooth to="/#about">
             <div className="block lg:hidden">
               <IoMdInformationCircle className="w-8 h-16 text-bold" />
@@ -28,7 +39,11 @@ function Links() {
             <p className="hidden lg:block">من نحن</p>
           </HashLink>
         </li>
-        <li className="text-[#fff] text-2xl font-medium">
+        <li
+          className={`text-[#fff] text-2xl font-medium pb-2 ${
+            active === 3 ? "border-b-4" : "border-none"
+          } border-white`}
+        >
           <HashLink smooth to="/#teachers">
             <div className="block lg:hidden">
               <FaChalkboardTeacher className="w-8 h-16 text-bold" />
@@ -36,7 +51,11 @@ function Links() {
             <p className="hidden lg:block">المعلمين</p>
           </HashLink>
         </li>
-        <li className="text-[#fff] text-2xl font-medium">
+        <li
+          className={`text-[#fff] text-2xl font-medium pb-2 ${
+            active === 4 ? "border-b-4" : "border-none"
+          } border-white`}
+        >
           <HashLink smooth to="/#contact">
             <div className="block lg:hidden">
               <FaRegMessage className="w-8 h-16 text-bold" />
@@ -56,7 +75,7 @@ function Links() {
         </HashLink>
         <HashLink to={"/register?mode=signup"}>
           <div className="block lg:hidden">
-            <LiaUserPlusSolid className="w-8 h-16 text-bold text-[#9F8565] hover:text-[#8a7762] transition-colors " />
+            <LiaUserPlusSolid className="w-8 h-16 text-bold pb-2 border-b-4 border-white text-[#9F8565] hover:text-[#8a7762] transition-colors " />
           </div>
           <button className="bg-[#9F8565] hover:bg-[#8a7762] transition-colors px-5 py-3 w-48 text-white text-2xl hidden lg:block">
             إنشاء حساب
