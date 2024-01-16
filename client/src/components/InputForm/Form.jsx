@@ -66,7 +66,7 @@ function Form() {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-base py-4 md:text-3xl rounded-md border-none outline-none px-3  w-full md:w-2/3 md:h-16"
+            className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
           />
           <label className="hidden md:block text-white text-2xl" htmlFor="name">
             الاسم
@@ -80,7 +80,7 @@ function Form() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="البريد الإلكتروني"
           id="email"
-          className="text-base py-4 md:text-3xl rounded-md border-none outline-none px-3  w-full md:w-2/3 md:h-16"
+          className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
         />
         <label className="hidden md:block text-white text-2xl" htmlFor="email">
           البريد الإلكتروني
@@ -93,7 +93,7 @@ function Form() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="كلمة السر"
           id="pass"
-          className="text-base py-4 md:text-3xl rounded-md border-none outline-none px-3   w-full md:w-2/3  md:h-16"
+          className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3   w[120%]l md:w-2/3  md:h-16"
         />
         <label className="hidden md:block text-white text-2xl" htmlFor="pass">
           كلمة السر
@@ -105,7 +105,7 @@ function Form() {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-base py-4 md:text-3xl rounded-md border-none outline-none px-3  w-full md:w-2/3 md:h-16"
+            className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
             onChange={(e) => setRole(e.target.value)}
           >
             <option>التسجيل ك</option>
@@ -123,7 +123,7 @@ function Form() {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-base py-4 md:text-3xl rounded-md border-none outline-none px-3  w-full md:w-2/3 md:h-16"
+            className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
           >
             <option>هل أنت مجاز</option>
             <option>نعم</option>

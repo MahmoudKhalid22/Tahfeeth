@@ -20,14 +20,14 @@ function Proposal() {
         نحو إتقان فنون التلاوة واللفظ الصحيح. تتميز منصتنا بمجموعة من المميزات
         التي تجمع بين التكنولوجيا المبتكرة وجودة التعليم التقليدي.
       </p>
-      <div className="flex sm:flex-row flex-col justify-start items-start">
+      <div className="flex sm:flex-row flex-col justify-start items-start mt-8 gap-8 sm:gap-0">
         <HashLink smooth to={"/#about"}>
-          <button className="py-1 sm:py-2 px-2 sm:px-4 mt-8  font-bold text-sm sm:text-xl bg-[#9F8565] hover:bg-[#886d4d]   text-slate-100 transition-all rounded-sm ">
+          <button className="py-1 sm:py-2 px-2 sm:px-4  font-bold text-sm sm:text-xl bg-[#9F8565] hover:bg-[#886d4d]   text-slate-100 transition-all rounded-sm ">
             نبذة عنا
           </button>
         </HashLink>
         <HashLink smooth to={"/#teachers"}>
-          <button className="py-1 sm:py-2 sm:px-4 mt-4 sm:mt-8 sm:mr-8 font-bold text-sm sm:text-xl  hover:text-[#644746]   text-[#5E4E3B] transition-all rounded-sm">
+          <button className="py-1 sm:py-2 sm:px-4  sm:mr-8 font-bold text-sm sm:text-xl  hover:text-[#644746]   text-[#5E4E3B] transition-all rounded-sm">
             الذهاب إلى المعلمين
           </button>
         </HashLink>

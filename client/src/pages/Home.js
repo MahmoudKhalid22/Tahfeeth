@@ -32,10 +32,6 @@ function Home() {
 
   return (
     <>
-      sectionNumber={1}
-      isActive={activeSection === 1}
-      onScroll={() => handleScroll(1)}
-      ref={refSection1}
       <Proposal
         sectionNumber={1}
         isActive={activeSection === 1}
