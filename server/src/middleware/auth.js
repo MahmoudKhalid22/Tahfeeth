@@ -1,21 +1,23 @@
+const { findUserById } = require("../dbQuieries/user");
 const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.header("Authorization").replace("Bearer ", "");
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // console.log(decoded);
+    const accessToken = req.header("Authorization").replace("Bearer ", "");
 
-    const user = await User.find({ _id: decoded._id, "tokens.token": token });
+    const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+
+    const user = await findUserById(decoded?._id, accessToken);
     // const admin = user.isAdmin ? user.isAdmin : null
     if (!user) throw new Error();
 
     req.user = user;
-    req.token = token;
+    req.accessToken = accessToken;
 
     next();
   } catch (e) {
+    // console.log(e);
     res.status(500).json({ err: "Please authenticate" });
   }
 };

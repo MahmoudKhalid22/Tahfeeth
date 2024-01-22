@@ -1,3 +1,4 @@
+const { createInDB, updateInDB } = require("../dbQuieries/user");
 const User = require("../model/user");
 
 const newUser = async (req, res) => {
@@ -11,7 +12,9 @@ const newUser = async (req, res) => {
       professional,
     });
     await user.save();
-    res.send("user has been create successfully");
+
+    createInDB(user);
+    res.send("user has been create successfully, check your email to verify");
   } catch (err) {
     res.status(500).send(err);
   }
@@ -24,8 +27,8 @@ const loginUser = async (req, res) => {
       req.body.password
     );
 
-    const token = await user.createAuthToken();
-    res.send({ user, token });
+    const { accessToken, refreshToken } = await user.createAuthToken();
+    res.send({ user, accessToken, refreshToken });
   } catch (error) {
     if (error.message === "الاسم غير موجود") {
       return res.status(404).json({ error: "الاسم غير موجود" });
@@ -37,7 +40,7 @@ const loginUser = async (req, res) => {
     }
   }
 };
-
+const newAccessToken = async () => {};
 const logoutUser = async (req, res) => {
   if (req.user.tokens) {
     req.user[0].tokens = req.user[0]?.tokens.filter(
@@ -114,12 +117,13 @@ const updateUser = async (req, res) => {
   }
 
   try {
-    updates.forEach((update) => (req.user[0][update] = req.body[update]));
-
-    await req.user[0].save();
+    updates.forEach((update) => (req.user[update] = req.body[update]));
+    console.log(req.user);
+    req.user = await req.user.save();
     res.send(req.user);
   } catch (err) {
-    res.status(500).send(err);
+    console.log(err);
+    res.status(500).send({ err: "internal server error" });
   }
 };
 
@@ -151,4 +155,5 @@ module.exports = {
   updateUser,
   getUser,
   getOneUser,
+  newAccessToken,
 };

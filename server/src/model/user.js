@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Table = require("./table");
+const { createInDB } = require("../dbQuieries/user");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -30,7 +31,7 @@ const userSchema = new mongoose.Schema({
     {
       token: {
         type: String,
-        required: true,
+        // required: true,
       },
     },
   ],
@@ -49,17 +50,28 @@ userSchema.methods.toJSON = function () {
   const userObj = user.toObject();
   delete userObj.password;
   delete userObj.tokens;
-
+  delete userObj.__v;
   return userObj;
 };
 
 // CREATE TOKEN
 userSchema.methods.createAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
-  user.tokens = user.tokens.concat({ token });
+  const accessToken = jwt.sign(
+    { _id: user._id.toString() },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+  const refreshToken = jwt.sign(
+    { _id: user._id.toString() },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "30d" }
+  );
+  user.tokens = user.tokens.concat({ accessToken, refreshToken });
+  // const u = await createInDB(user);
   await user.save();
-  return token;
+  // console.log(u);
+  return { accessToken, refreshToken };
 };
 
 // LOGIN
