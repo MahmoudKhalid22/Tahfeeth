@@ -1,7 +1,7 @@
 import React from "react";
 import { HashLink } from "react-router-hash-link";
 
-function Proposal() {
+function Proposal({ onSetActiveLink, observer }) {
   return (
     <div
       id="home"
