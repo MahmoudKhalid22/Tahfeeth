@@ -8,37 +8,25 @@ const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 
 const newUser = async (req, res) => {
+  const { name, email, password, role, professional } = req.body;
+  if (!name || !email || !password || !role) {
+    return res.status(400).send("يجب إدخال البيانات أولا");
+  }
+  const user = new User(req.body);
   try {
-    const { name, email, password, role, professional } = req.body;
-
-    // // Check if required fields are present in the request body
-    if (!name || !email || !password || !role) {
-      return res
-        .status(400)
-        .send("Missing required fields in the request body");
-    }
-    const user = new User(req.body);
-
-    saveUserInDB(user);
+    await saveUserInDB(user);
 
     const token = jwt.sign(
       { _id: user._id.toString() },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    sendVerificationEmail(req.body.email, token);
-    res.send("تم إنشاء الحساب بنجاح ، من فضلك تحقق من الايميل لتفعيل الحساب");
+    // sendVerificationEmail(req.body.email, token);
+    res.send({
+      msg: "تم إنشاء الحساب بنجاح ، من قضلك راجع بريدك الإلكتروني لتفعيل الحساب",
+    });
   } catch (err) {
-    // Check if the error is a Mongoose validation error
-    if (err.name === "ValidationError") {
-      const errorMessage = Object.values(err.errors)
-        .map((error) => error.message)
-        .join(", ");
-      return res.status(400).send(errorMessage);
-    }
-
-    console.log(err);
-    res.status(500).send(err);
+    res.status(500).send({ err });
   }
 };
 
@@ -65,14 +53,7 @@ const loginUser = async (req, res) => {
     const token = await user.createAuthToken();
     res.send({ user, token });
   } catch (error) {
-    if (error.message === "الاسم غير موجود") {
-      return res.status(404).json({ error: "الاسم غير موجود" });
-    } else if (error.message === "كلمة السر غير صحيحة") {
-      return res.status(401).json({ error: "كلمة السر غير صحيحة" });
-    } else {
-      console.log(error);
-      return res.status(500).send(error.message);
-    }
+    res.status(401).send({ message: error.message });
   }
 };
 
@@ -84,7 +65,7 @@ const logoutUser = async (req, res) => {
       );
 
       await req.user[0].save();
-      res.send({ message: "You logged out" });
+      return res.send({ message: "You logged out" });
     }
 
     res.send("the user is not found");

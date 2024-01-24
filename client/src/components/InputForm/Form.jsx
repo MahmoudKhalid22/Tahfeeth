@@ -4,53 +4,93 @@ import { GiExitDoor } from "react-icons/gi";
 
 function Form() {
   const [searchParams] = useSearchParams();
-
   const isLogin = searchParams.get("mode") === "login";
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  // const [name, setName] = useState("");
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  // const [professional, setProfessional] = useState(false);
+  const [professional, setProfessional] = useState(false);
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
+  const newUser = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(false);
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:5000/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+          role: role,
+          professional: professional,
+        }),
+      });
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setRole("");
+      setLoading(false);
+      if (!response.ok) {
+        setLoading(false);
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error(errorData.error);
+      }
+      const dataUser = await response.json();
+      console.log(dataUser);
+      navigate("/verify");
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
+    }
+  };
+
+  // console.log(isLogin);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Clear any previous errors
+    setError(null);
     setLoading(false);
 
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/users/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
       setError(null);
-
+      setLoading(false);
       if (!response.ok) {
         const errorData = await response.json();
-        setLoading(false);
-        throw new Error(errorData.error);
+        setError(errorData.message);
+        throw new Error(errorData);
       }
 
-      setLoading(false);
+      // setLoading(false);
       const dataUser = await response.json();
       localStorage.setItem("data", JSON.stringify(dataUser));
       navigate("/details");
       // Reset the form data
     } catch (error) {
-      setError(error.message);
+      console.error(error);
     }
   };
 
@@ -58,7 +98,7 @@ function Form() {
     <form
       className="bg-none md:bg-gradient-to-r from-[#916f6e]  to-[#574342] flex items-center
     justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-full md:w-1/2 md:h-[40rem] "
-      onSubmit={handleSubmit}
+      onSubmit={isLogin ? handleSubmit : newUser}
     >
       {!isLogin && (
         <div className=" flex flex-row-reverse justify-between items-start w-full">
@@ -66,7 +106,9 @@ function Form() {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[100%]  md:h-16"
           />
           <label className="hidden md:block text-white text-2xl" htmlFor="name">
             الاسم
@@ -80,7 +122,7 @@ function Form() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="البريد الإلكتروني"
           id="email"
-          className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
+          className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
         />
         <label className="hidden md:block text-white text-2xl" htmlFor="email">
           البريد الإلكتروني
@@ -93,7 +135,7 @@ function Form() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="كلمة السر"
           id="pass"
-          className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3   w[120%]l md:w-2/3  md:h-16"
+          className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
         />
         <label className="hidden md:block text-white text-2xl" htmlFor="pass">
           كلمة السر
@@ -105,29 +147,30 @@ function Form() {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
+            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
             onChange={(e) => setRole(e.target.value)}
           >
             <option>التسجيل ك</option>
-            <option>معلم</option>
-            <option>طالب</option>
+            <option value={"teacher"}>معلم</option>
+            <option value={"student"}>طالب</option>
           </select>
           <label className="hidden md:block text-white text-2xl" htmlFor="name">
             التسجيل كدورك
           </label>
         </div>
       )}
-      {!isLogin && role === "معلم" && (
+      {!isLogin && role === "teacher" && (
         <div className=" flex flex-row-reverse justify-between items-start w-full">
           <select
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-md py-4 md:text-3xl rounded-md border-none outline-none px-3  w-[120%] md:w-2/3 md:h-16"
+            onChange={(e) => setProfessional(e.target.value)}
+            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
           >
             <option>هل أنت مجاز</option>
-            <option>نعم</option>
-            <option>لا</option>
+            <option value={true}>نعم</option>
+            <option value={false}>لا</option>
           </select>
           <label className="hidden md:block text-white text-2xl" htmlFor="name">
             هل أنت مجاز

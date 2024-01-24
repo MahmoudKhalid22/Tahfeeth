@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GiEntryDoor } from "react-icons/gi";
 import { RxUpdate } from "react-icons/rx";
 import styles from "./Details.module.css";
 import AddUserForm from "./AddUserForm";
-import { redirect } from "react-router-dom";
 
 import UpdateForm from "./UpdateForm";
 import Student from "../pages/Student";
 
 function Details() {
+  const navigate = useNavigate();
+
   const [userShow, setUserShow] = useState(false);
   const [usersData, setUsersData] = useState([]);
   const [formUpdate, setFormUpdate] = useState(false);
@@ -20,88 +21,89 @@ function Details() {
     : undefined;
   // console.log(data);
 
-  const adminToken = data?.user.isAdmin ? data.token : undefined;
+  // const adminToken = data?.user.isAdmin ? data.token : undefined;
   // console.log(data.token);
   const logout = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/users/logout",
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + data.token,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:5000/user/logout", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + data.token,
+        },
+      });
+      setLoading(false);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error);
       }
-      setLoading(false);
-
       localStorage.clear();
-      return redirect("/");
+      return navigate("/");
     } catch (err) {
       setLoading(err.message);
     }
   };
 
-  const getUsers = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/users",
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + adminToken,
-          },
-        }
-      );
-      const d = await response.json();
-      setUsersData(d);
-      setLoading(false);
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
+  // const getUsers = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await fetch(
+  //       "https://tahfeeth-system.onrender.com/users",
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: "Bearer " + adminToken,
+  //         },
+  //       }
+  //     );
+  //     const d = await response.json();
+  //     setUsersData(d);
+  //     setLoading(false);
+  //   } catch (err) {
+  //     throw new Error(err);
+  //   }
+  // };
 
-  const deleteUser = async (id) => {
-    try {
-      setLoading(true);
+  // const deleteUser = async (id) => {
+  //   try {
+  //     setLoading(true);
 
-      await fetch("https://tahfeeth-system.onrender.com/users/" + id, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + adminToken,
-        },
-      });
-      setLoading(false);
+  //     await fetch("https://tahfeeth-system.onrender.com/users/" + id, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Authorization: "Bearer " + adminToken,
+  //       },
+  //     });
+  //     setLoading(false);
 
-      window.location.reload();
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
+  //     window.location.reload();
+  //   } catch (e) {
+  //     throw new Error(e);
+  //   }
+  // };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.name}>
+    <div className={`${styles.container} mt-6  mr-16 lg:mr-[16rem]`}>
+      <div className="flex items-center justify-center gap-8 mb-12 text-[#43766C] text-lg md:text-4xl font-semibold">
         <h3>الاسم</h3>
 
-        <h4>
+        <h4 className="flex items-center justify-center gap-2">
           {data ? data.user.name : ""}
           {data?.user.isAdmin ? <div>(admin)</div> : undefined}
         </h4>
       </div>
       <div className={styles.settings}>
-        <button className={styles.logout} onClick={logout}>
+        <button
+          className="text-center text-5xl p-2 border-none outline-none cursor-pointer rounded-lg bg-[#959689] text-white transition-colors flex items-center justify-center hover:bg-[#959689]"
+          onClick={logout}
+          title="تسجيل الخروج"
+        >
           <GiEntryDoor />
         </button>
         <button
-          className={styles.logout}
+          className="text-center text-5xl p-2 border-none outline-none cursor-pointer rounded-lg bg-[#959689] text-white transition-colors flex items-center justify-center hover:bg-[#959689]"
           onClick={() => setFormUpdate((prev) => !prev)}
+          title="تحديث المعلومات الشخصية"
         >
           <RxUpdate />
         </button>
@@ -115,7 +117,7 @@ function Details() {
       {!data?.user.isAdmin && <Student />}
       <div>
         {data?.user.isAdmin ? (
-          <div className={styles.btns}>
+          <div className="flex items-center flex-wrap justify-center gap-4">
             <button
               onClick={() => {
                 setUserShow(true);
@@ -124,22 +126,22 @@ function Details() {
               إضافة طالب
             </button>
             <button
-              onClick={() => {
-                getUsers();
+            // onClick={() => {
+            //   getUsers();
 
-                setUserShow(false);
-              }}
+            //   setUserShow(false);
+            // }}
             >
               قراءة بيانات الطلاب
             </button>
           </div>
         ) : undefined}
 
-        <div
+        {/* <div
           className={`${styles.updateForm} ${userShow ? styles.addForm : ""}`}
         >
-          <AddUserForm />
-        </div>
+          {/* <AddUserForm /> */}
+        {/* </div> */}
         {loading && <h4 className="loading loading-details">تحميل ...</h4>}
         {!userShow &&
           !loading &&
@@ -157,7 +159,7 @@ function Details() {
               <div className={styles["action-buttons"]}>
                 <button
                   className={styles["action-button-delete"]}
-                  onClick={() => deleteUser(user._id)}
+                  // onClick={() => deleteUser(user._id)}
                 >
                   حذف الطالب
                 </button>

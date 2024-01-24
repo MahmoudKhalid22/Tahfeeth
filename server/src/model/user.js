@@ -24,7 +24,9 @@ const userSchema = new mongoose.Schema(
     },
     professional: {
       type: Boolean,
-      required: true,
+      required: function () {
+        return this.role === "teacher";
+      },
     },
     verified: {
       type: Boolean,
