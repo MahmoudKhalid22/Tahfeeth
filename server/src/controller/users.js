@@ -1,19 +1,57 @@
+const {
+  verificationToken,
+  saveUserInDB,
+  findStudents,
+} = require("../dbQueries/user");
+const { sendVerificationEmail } = require("../middleware/email");
 const User = require("../model/user");
+const jwt = require("jsonwebtoken");
 
 const newUser = async (req, res) => {
   try {
     const { name, email, password, role, professional } = req.body;
-    const user = new User({
-      name,
-      email,
-      password,
-      role,
-      professional,
-    });
-    await user.save();
-    res.send("user has been create successfully");
+
+    // // Check if required fields are present in the request body
+    if (!name || !email || !password || !role) {
+      return res
+        .status(400)
+        .send("Missing required fields in the request body");
+    }
+    const user = new User(req.body);
+
+    saveUserInDB(user);
+
+    const token = jwt.sign(
+      { _id: user._id.toString() },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    sendVerificationEmail(req.body.email, token);
+    res.send("تم إنشاء الحساب بنجاح ، من فضلك تحقق من الايميل لتفعيل الحساب");
   } catch (err) {
+    // Check if the error is a Mongoose validation error
+    if (err.name === "ValidationError") {
+      const errorMessage = Object.values(err.errors)
+        .map((error) => error.message)
+        .join(", ");
+      return res.status(400).send(errorMessage);
+    }
+
+    console.log(err);
     res.status(500).send(err);
+  }
+};
+
+const verificationEmail = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const tokenVerified = verificationToken(token);
+
+    if (tokenVerified) {
+      return res.send("your email has been verified successfully, login now");
+    }
+  } catch (e) {
+    res.status(500).send(e);
   }
 };
 
@@ -39,30 +77,35 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  if (req.user.tokens) {
-    req.user[0].tokens = req.user[0]?.tokens.filter(
-      (token) => token.token !== req.token
-    );
+  try {
+    if (req.user.length > 0) {
+      req.user[0].tokens = req.user[0]?.tokens.filter(
+        (token) => token.token !== req.token
+      );
 
-    await req.user[0].save();
-    res.send("You logged out");
+      await req.user[0].save();
+      res.send({ message: "You logged out" });
+    }
+
+    res.send("the user is not found");
+  } catch (err) {
+    res.status(500).json({ err });
   }
-
-  res.send("the user is not found");
 };
 // JUST FOR ADMIN
 const getUsers = async (req, res) => {
   try {
-    const admins = req.user.filter((user) => user.isAdmin === true);
+    // const teacher = ;
 
-    if (admins.length > 0) {
-      const users = await User.find({});
-      const students = users.filter((user) => user.isAdmin === false);
+    if (req.user[0].role === "teacher") {
+      const users = await findStudents();
+      const students = users.filter((user) => user.role === "student");
       res.send(students);
     } else {
       res.status(400).send({ message: "you're not the admin" });
     }
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 };
@@ -143,6 +186,7 @@ const getOneUser = async (req, res) => {
 
 module.exports = {
   newUser,
+  verificationEmail,
   getUsers,
   addUser,
   deleteUser,

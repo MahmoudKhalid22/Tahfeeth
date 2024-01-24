@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const {
+  newUser,
+  verificationEmail,
   getUsers,
   addUser,
   deleteUser,
@@ -8,34 +10,36 @@ const {
   updateUser,
   getUser,
   getOneUser,
-  newUser,
 } = require("../controller/users");
 
 const auth = require("../middleware/auth");
 
 // CREATE A NEW USER
-router.post("/users/signup", newUser);
+router.post("/signup", newUser);
+
+// VERIFICATION EMAIL
+router.get("/verify/:token", verificationEmail);
 
 // LOGIN
-router.post("/users/login", loginUser);
+router.post("/login", loginUser);
 
 // LOGOUT
-router.post("/users/logout", auth, logoutUser);
+router.post("/logout", auth, logoutUser);
 
-router.get("/users", auth, getUsers);
+router.get("", auth, getUsers);
 
 // GET ONE USER
 
 // FOR ADMIN
-router.get("/users/:id", getOneUser);
+router.get("/:id", getOneUser);
 
-router.post("/users", auth, addUser);
-router.delete("/users/:id", auth, deleteUser);
+router.post("", auth, addUser);
+router.delete("/:id", auth, deleteUser);
 
 // FOR ADMIN AND USERS
-router.patch("/users/:id", auth, updateUser);
+router.patch("/:id", auth, updateUser);
 
 // READ SPECIFIC USER
-router.get("/users/me", auth, getUser);
+router.get("/me", auth, getUser);
 
 module.exports = router;
