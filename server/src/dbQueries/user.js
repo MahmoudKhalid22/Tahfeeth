@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
+const bcrypt = require("bcrypt");
 
 const saveUserInDB = async (body) => {
   await body.save();
@@ -40,10 +41,18 @@ const findStudents = async () => {
 
 const updatePassword = async (id, password) => {
   const hashedPassword = await bcrypt.hash(password, 8);
-  await User.updateOne({ id }, { password: hashedPassword });
+  await User.updateOne(
+    { _id: id },
+    { password: hashedPassword },
+    { new: true }
+  );
 };
 const updateUserByName = async (id, name) => {
-  const user = await User.updateOne({ id }, { name }, { new: true });
+  const user = await User.findOneAndUpdate(
+    { _id: id },
+    { $set: { name: name } },
+    { new: true }
+  );
   return user;
 };
 module.exports = {

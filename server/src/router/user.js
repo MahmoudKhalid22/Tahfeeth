@@ -6,7 +6,7 @@ const {
   logoutUser,
   forgetPassword,
   resetPassword,
-  refreshToken,
+  newToken,
   getUsers,
   addUser,
   deleteUser,
@@ -17,6 +17,7 @@ const {
 } = require("../controller/users");
 
 const auth = require("../middleware/auth");
+const authByRefreshToken = require("../middleware/authRefreshToken");
 
 // CREATE A NEW USER
 router.post("/signup", newUser);
@@ -37,7 +38,7 @@ router.post("/forget-password", forgetPassword);
 router.post("/reset-password/:token", resetPassword);
 
 // refresh tooken
-router.get("/refresh-token", auth, refreshToken);
+router.get("/refresh-token", authByRefreshToken, newToken);
 
 // update username
 router.put("/update-username", auth, updateUsername);

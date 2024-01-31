@@ -1,21 +1,21 @@
 const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 
-const auth = async (req, res, next) => {
+const authByRefreshToken = async (req, res, next) => {
   try {
-    const accessToken = req.header("Authorization").replace("Bearer ", "");
-    const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+    const refreshToken = req.header("Authorization").replace("Bearer ", "");
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     // console.log(decoded);
 
     const user = await User.find({
       _id: decoded._id,
-      "tokens.token": accessToken,
+      "tokens.token": refreshToken,
     });
     // const admin = user.isAdmin ? user.isAdmin : null
     if (!user) throw new Error();
 
     req.user = user;
-    req.token = accessToken;
+    req.token = refreshToken;
 
     next();
   } catch (e) {
@@ -23,4 +23,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+module.exports = authByRefreshToken;

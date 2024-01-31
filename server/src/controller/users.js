@@ -4,6 +4,7 @@ const {
   saveUserInDB,
   findStudents,
   updateUserByName,
+  updatePassword,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -83,6 +84,10 @@ const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await findUserByEmail(email);
+    if (!user)
+      return res
+        .status(400)
+        .send({ message: "هذا البريد الإلكتروني غير مسجل" });
     const token = jwt.sign(
       { id: user._id.toString() },
       process.env.RESET_PASSWORD_SECRET,
@@ -102,17 +107,16 @@ const resetPassword = async (req, res) => {
     const token = req.params.token;
     const user = await verifyToken(token, process.env.RESET_PASSWORD_SECRET);
     if (!user) return res.status(400).send({ message: "token expired" });
-    await updatePassword(user._id, user.password);
-    res.send("password has been updated");
+    await updatePassword(user._id, req.body.password);
+    res.send({ message: "password has been updated" });
   } catch (error) {
     res.status(500).send({ error });
   }
 };
 
-const refreshToken = async (req, res) => {
+const newToken = async (req, res) => {
   try {
-    const refresh = req.user[0].token;
-    const user = await verifyToken(refresh, process.env.REFRESH_TOKEN_SECRET);
+    const user = req.user[0];
     const accessToken = await user.createAuthToken();
     res.send({ accessToken });
   } catch (e) {
@@ -123,9 +127,7 @@ const refreshToken = async (req, res) => {
 const updateUsername = async (req, res) => {
   const { name } = req.body;
   try {
-    const accessToken = req.user[0].token;
-    const user = await verifyToken(accessToken, process.env.JWT_SECRET);
-    const updatedUser = await updateUserByName(user._id, name);
+    const updatedUser = await updateUserByName(req.user[0]._id, name);
     res.send(updatedUser);
   } catch (err) {
     res.status(500).send({ err });
@@ -231,7 +233,7 @@ module.exports = {
   logoutUser,
   forgetPassword,
   resetPassword,
-  refreshToken,
+  newToken,
   updateUsername,
   getUsers,
   addUser,
