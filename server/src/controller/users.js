@@ -1,19 +1,48 @@
+const {
+  verificationToken,
+  findUserByEmail,
+  saveUserInDB,
+  findStudents,
+} = require("../dbQueries/user");
+const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
+const { sendVerificationEmail } = require("../middleware/verificationEmail");
+const { verifyToken } = require("../middleware/verifyToken");
 const User = require("../model/user");
+const jwt = require("jsonwebtoken");
 
 const newUser = async (req, res) => {
+  const { name, email, password, role, professional } = req.body;
+  if (!name || !email || !password || !role) {
+    return res.status(400).send("يجب إدخال البيانات أولا");
+  }
+  const user = new User(req.body);
   try {
-    const { name, email, password, role, professional } = req.body;
-    const user = new User({
-      name,
-      email,
-      password,
-      role,
-      professional,
+    await saveUserInDB(user);
+
+    const token = jwt.sign(
+      { _id: user._id.toString() },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    sendVerificationEmail(req.body.email, token);
+    res.send({
+      msg: "تم إنشاء الحساب بنجاح ، من قضلك راجع بريدك الإلكتروني لتفعيل الحساب",
     });
-    await user.save();
-    res.send("user has been create successfully");
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ err });
+  }
+};
+
+const verificationEmail = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const tokenVerified = verificationToken(token);
+
+    if (tokenVerified) {
+      return res.send("your email has been verified successfully, login now");
+    }
+  } catch (e) {
+    res.status(500).send(e);
   }
 };
 
@@ -27,42 +56,71 @@ const loginUser = async (req, res) => {
     const token = await user.createAuthToken();
     res.send({ user, token });
   } catch (error) {
-    if (error.message === "الاسم غير موجود") {
-      return res.status(404).json({ error: "الاسم غير موجود" });
-    } else if (error.message === "كلمة السر غير صحيحة") {
-      return res.status(401).json({ error: "كلمة السر غير صحيحة" });
-    } else {
-      console.log(error);
-      return res.status(500).send(error.message);
-    }
+    res.status(401).send({ message: error.message });
   }
 };
 
 const logoutUser = async (req, res) => {
-  if (req.user.tokens) {
-    req.user[0].tokens = req.user[0]?.tokens.filter(
-      (token) => token.token !== req.token
-    );
+  try {
+    if (req.user.length > 0) {
+      req.user[0].tokens = req.user[0]?.tokens.filter(
+        (token) => token.token !== req.token
+      );
 
-    await req.user[0].save();
-    res.send("You logged out");
+      await req.user[0].save();
+      return res.send({ message: "You logged out" });
+    }
+
+    res.send("the user is not found");
+  } catch (err) {
+    res.status(500).json({ err });
   }
-
-  res.send("the user is not found");
 };
+
+const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await findUserByEmail(email);
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.RESET_PASSWORD_SECRET,
+      { expiresIn: "1h" }
+    );
+    resetPasswordEmail(email, token);
+    res.send({
+      message:
+        "تم إرسال ايميل إلى عنوان بريدك الإلكتروني من فضلك اذهب إلى بريدك الإلكتروني لإعادة تعيين كلمة السر",
+    });
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+};
+const resetPassword = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const user = await verifyToken(token, process.env.RESET_PASSWORD_SECRET);
+    if (!user) return res.status(400).send({ message: "token expired" });
+    await updatePassword(user._id, user.password);
+    res.send("password has been updated");
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+};
+
 // JUST FOR ADMIN
 const getUsers = async (req, res) => {
   try {
-    const admins = req.user.filter((user) => user.isAdmin === true);
+    // const teacher = ;
 
-    if (admins.length > 0) {
-      const users = await User.find({});
-      const students = users.filter((user) => user.isAdmin === false);
+    if (req.user[0].role === "teacher") {
+      const users = await findStudents();
+      const students = users.filter((user) => user.role === "student");
       res.send(students);
     } else {
       res.status(400).send({ message: "you're not the admin" });
     }
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 };
@@ -143,11 +201,14 @@ const getOneUser = async (req, res) => {
 
 module.exports = {
   newUser,
+  verificationEmail,
+  loginUser,
+  logoutUser,
+  forgetPassword,
+  resetPassword,
   getUsers,
   addUser,
   deleteUser,
-  loginUser,
-  logoutUser,
   updateUser,
   getUser,
   getOneUser,

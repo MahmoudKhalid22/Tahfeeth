@@ -7,6 +7,7 @@ import Student from "./pages/Student";
 import Register from "./pages/Register";
 import Teacher from "./pages/Teacher";
 import TeacherPage from "./pages/TeacherPage";
+import Verification from "./pages/Verification";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Root />}>
           <Route index element={<Home />} />
+          <Route path="/verify" element={<Verification />} />
           <Route path="/details" element={<Details />} />
           <Route path="/register" element={<Register />} />
           <Route path="/details/:id" element={<Student />} />

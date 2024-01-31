@@ -3,38 +3,51 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Table = require("./table");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-  },
-  professional: {
-    type: Boolean,
-    required: function () {
-      return this.role === "teacher";
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+    professional: {
+      type: Boolean,
+      required: function () {
+        return this.role === "teacher";
       },
     },
-  ],
-});
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    // teacherOwnerId: {
+
+    // },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // RELATION BETWEEN USERS AND TASKS
 userSchema.virtual("tables", {
@@ -67,6 +80,8 @@ userSchema.statics.findByCredentials = async function (email, password) {
   const user = await User.findOne({ email });
 
   if (!user) throw new Error("الاسم غير موجود");
+
+  if (!user.verified) throw new Error("يجب تفعيل الحساب أولا");
 
   const isMatch = await bcrypt.compare(password, user.password);
 
