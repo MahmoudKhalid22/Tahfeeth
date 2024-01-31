@@ -3,6 +3,7 @@ const {
   findUserByEmail,
   saveUserInDB,
   findStudents,
+  updateUserByName,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -53,8 +54,9 @@ const loginUser = async (req, res) => {
       req.body.password
     );
 
-    const token = await user.createAuthToken();
-    res.send({ user, token });
+    const accessToken = await user.createAuthToken();
+    const refreshToken = await user.createRefreshToken();
+    res.send({ user, accessToken, refreshToken });
   } catch (error) {
     res.status(401).send({ message: error.message });
   }
@@ -82,7 +84,7 @@ const forgetPassword = async (req, res) => {
     const { email } = req.body;
     const user = await findUserByEmail(email);
     const token = jwt.sign(
-      { id: user._id },
+      { id: user._id.toString() },
       process.env.RESET_PASSWORD_SECRET,
       { expiresIn: "1h" }
     );
@@ -104,6 +106,29 @@ const resetPassword = async (req, res) => {
     res.send("password has been updated");
   } catch (error) {
     res.status(500).send({ error });
+  }
+};
+
+const refreshToken = async (req, res) => {
+  try {
+    const refresh = req.user[0].token;
+    const user = await verifyToken(refresh, process.env.REFRESH_TOKEN_SECRET);
+    const accessToken = await user.createAuthToken();
+    res.send({ accessToken });
+  } catch (e) {
+    res.status.send({ error: e });
+  }
+};
+
+const updateUsername = async (req, res) => {
+  const { name } = req.body;
+  try {
+    const accessToken = req.user[0].token;
+    const user = await verifyToken(accessToken, process.env.JWT_SECRET);
+    const updatedUser = await updateUserByName(user._id, name);
+    res.send(updatedUser);
+  } catch (err) {
+    res.status(500).send({ err });
   }
 };
 
@@ -206,6 +231,8 @@ module.exports = {
   logoutUser,
   forgetPassword,
   resetPassword,
+  refreshToken,
+  updateUsername,
   getUsers,
   addUser,
   deleteUser,

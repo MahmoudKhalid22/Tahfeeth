@@ -41,9 +41,11 @@ const findStudents = async () => {
 const updatePassword = async (id, password) => {
   const hashedPassword = await bcrypt.hash(password, 8);
   await User.updateOne({ id }, { password: hashedPassword });
-  
 };
-
+const updateUserByName = async (id, name) => {
+  const user = await User.updateOne({ id }, { name }, { new: true });
+  return user;
+};
 module.exports = {
   getUserById,
   verificationToken,
@@ -51,4 +53,5 @@ module.exports = {
   findStudents,
   findUserByEmail,
   updatePassword,
+  updateUserByName,
 };

@@ -69,7 +69,23 @@ userSchema.methods.toJSON = function () {
 // CREATE TOKEN
 userSchema.methods.createAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
+  return token;
+};
+// CREATE REFRESH TOKEN
+userSchema.methods.createRefreshToken = async function () {
+  const user = this;
+  const token = jwt.sign(
+    { _id: user._id.toString() },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: "30d",
+    }
+  );
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
