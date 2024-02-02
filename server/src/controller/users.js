@@ -12,6 +12,7 @@ const { sendVerificationEmail } = require("../middleware/verificationEmail");
 const { verifyToken } = require("../middleware/verifyToken");
 const User = require("../model/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const newUser = async (req, res) => {
   const { name, email, password, role, professional } = req.body;
@@ -157,14 +158,14 @@ const updateEmail = async (req, res) => {
 };
 
 const updateUserPassword = async (req, res) => {
-  const { password } = req.body;
+  const { oldPassword, newPassword } = req.body;
   const user = req.user[0];
   try {
-    const isMatch = await bcrypt.compare(user.password, password);
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch)
       return res.status(400).send({ error: "password is not correct" });
 
-    await updatePassword(user._id, password);
+    await updatePassword(user._id, newPassword);
     res.send({ message: "password has been updated" });
   } catch (err) {
     res.status(500).send({ err });
