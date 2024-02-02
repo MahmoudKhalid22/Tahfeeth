@@ -55,6 +55,11 @@ const updateUserByName = async (id, name) => {
   );
   return user;
 };
+const updateUserEmail = async (id, email) => {
+  const user = await User.updateOne({ _id: id }, { email }, { new: true });
+  if (!user) return false;
+  return user;
+};
 module.exports = {
   getUserById,
   verificationToken,
@@ -63,4 +68,5 @@ module.exports = {
   findUserByEmail,
   updatePassword,
   updateUserByName,
+  updateUserEmail,
 };

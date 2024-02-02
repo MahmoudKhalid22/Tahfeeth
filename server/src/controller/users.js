@@ -5,6 +5,7 @@ const {
   findStudents,
   updateUserByName,
   updatePassword,
+  updateUserEmail,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -26,7 +27,7 @@ const newUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    sendVerificationEmail(req.body.email, token);
+    await sendVerificationEmail(req.body.email, token);
     res.send({
       msg: "تم إنشاء الحساب بنجاح ، من قضلك راجع بريدك الإلكتروني لتفعيل الحساب",
     });
@@ -134,6 +135,42 @@ const updateUsername = async (req, res) => {
   }
 };
 
+const updateEmail = async (req, res) => {
+  const { email } = req.body;
+  const user = req.user[0];
+  try {
+    if (!user) return res.send({ message: "Email is not found" });
+    if (email === user.email) {
+      const updatedEmail = await updateUserEmail(user._id, email);
+      const token = await user.createAuthToken();
+      sendVerificationEmail(user.email, token);
+      res.send({
+        message:
+          "email has been sent to your new email, please go to your mail and verify your account",
+      });
+    } else {
+      return res.status(404).send({ error: "email is not found" });
+    }
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+};
+
+const updateUserPassword = async (req, res) => {
+  const { password } = req.body;
+  const user = req.user[0];
+  try {
+    const isMatch = await bcrypt.compare(user.password, password);
+    if (!isMatch)
+      return res.status(400).send({ error: "password is not correct" });
+
+    await updatePassword(user._id, password);
+    res.send({ message: "password has been updated" });
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+};
+
 // JUST FOR ADMIN
 const getUsers = async (req, res) => {
   try {
@@ -235,6 +272,8 @@ module.exports = {
   resetPassword,
   newToken,
   updateUsername,
+  updateEmail,
+  updateUserPassword,
   getUsers,
   addUser,
   deleteUser,

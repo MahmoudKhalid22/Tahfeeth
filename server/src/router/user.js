@@ -7,13 +7,15 @@ const {
   forgetPassword,
   resetPassword,
   newToken,
+  updateUsername,
+  updateEmail,
+  updateUserPassword,
   getUsers,
   addUser,
   deleteUser,
   updateUser,
   getUser,
   getOneUser,
-  updateUsername,
 } = require("../controller/users");
 
 const auth = require("../middleware/auth");
@@ -42,6 +44,12 @@ router.get("/refresh-token", authByRefreshToken, newToken);
 
 // update username
 router.put("/update-username", auth, updateUsername);
+
+// update email
+router.put("/update-email", auth, updateEmail);
+
+//update password
+router.put("/update-password", auth, updateUserPassword);
 
 router.get("", auth, getUsers);
 
