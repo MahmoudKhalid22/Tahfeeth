@@ -16,7 +16,9 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: function () {
+        return !this.googleId;
+      },
     },
     role: {
       type: String,
@@ -32,9 +34,9 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    // teacherOwnerId: {
-
-    // },
+    googleId: {
+      type: String,
+    },
     tokens: [
       {
         token: {

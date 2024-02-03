@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const passport = require("passport");
 const {
   newUser,
   verificationEmail,
@@ -53,6 +54,26 @@ router.put("/update-password", auth, updateUserPassword);
 
 // READ SPECIFIC USER
 router.get("/me", auth, getUser);
+
+// GOOGLE OAUTH
+// redirect to register page
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+// redirect to failure page
+router.get("/failure", (req, res) => {
+  res.send("failure");
+});
+
+// callback redirect
+router.get(
+  "/details",
+  passport.authenticate("google", {
+    successRedirect: "https://tahfeeth.vercel.app/details",
+    failureRedirect: "/user/failure",
+  })
+);
 
 // router.get("/me", auth, getUser);
 
