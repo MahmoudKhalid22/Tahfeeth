@@ -1,6 +1,8 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
+const passport = require("passport");
+const session = require("express-session");
 const mongoose = require("./config/dbConnection");
 const userRouter = require("./router/user");
 const tableRouter = require("./router/tables");
