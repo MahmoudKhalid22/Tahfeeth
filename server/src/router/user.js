@@ -51,7 +51,10 @@ router.put("/update-email", auth, updateEmail);
 //update password
 router.put("/update-password", auth, updateUserPassword);
 
-router.get("", auth, getUsers);
+// READ SPECIFIC USER
+router.get("/me", auth, getUser);
+
+// router.get("/me", auth, getUser);
 
 // GET ONE USER
 
@@ -63,8 +66,5 @@ router.delete("/:id", auth, deleteUser);
 
 // FOR ADMIN AND USERS
 router.patch("/:id", auth, updateUser);
-
-// READ SPECIFIC USER
-router.get("/me", auth, getUser);
 
 module.exports = router;
