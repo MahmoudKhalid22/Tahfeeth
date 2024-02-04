@@ -12,12 +12,14 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      required: true,
+      required: function () {
+        return !this.facebookId;
+      },
     },
     password: {
       type: String,
       required: function () {
-        return !this.googleId;
+        return !this.googleId && !this.facebookId;
       },
     },
     role: {
@@ -35,6 +37,9 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     googleId: {
+      type: String,
+    },
+    facebookId: {
       type: String,
     },
     tokens: [

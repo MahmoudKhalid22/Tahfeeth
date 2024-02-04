@@ -33,9 +33,9 @@ app.use(tableRouter);
 
 docs(app);
 
-app.get("*", (req, res) => {
-  res.render("404");
-});
+// app.get("*", (req, res) => {
+//   res.render("404");
+// });
 const port = process.env.PORT;
 
 app.listen(port, () => console.log("Server is running on port " + port));

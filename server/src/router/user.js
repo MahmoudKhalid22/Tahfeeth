@@ -75,10 +75,23 @@ router.get(
   })
 );
 
-// router.get("/me", auth, getUser);
+// oauth with facebook
+router.get("/auth/facebook", passport.authenticate("facebook"));
 
-// GET ONE USER
+router.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook", { failureRedirect: "/user/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("https://tahfeeth.vercel.app");
+  }
+);
 
+router.get("/login", (req, res) => {
+  res.send("some test");
+});
+
+// --------------------------------------------------
 // FOR ADMIN
 router.get("/:id", getOneUser);
 
