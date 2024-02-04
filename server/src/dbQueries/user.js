@@ -34,10 +34,10 @@ const findUserByEmail = async (email) => {
   return user;
 };
 
-const findStudents = async () => {
-  const allUsers = await User.find({});
-  return allUsers;
-};
+// const findStudents = async () => {
+//   const allUsers = await User.find({});
+//   return allUsers;
+// };
 
 const updatePassword = async (id, password) => {
   const hashedPassword = await bcrypt.hash(password, 8);
@@ -60,13 +60,20 @@ const updateUserEmail = async (id, email) => {
   if (!user) return false;
   return user;
 };
+
+const findStudents = async (id) => {
+  const students = await User.findById({ _id: id });
+  if (!students) return false;
+  return students;
+};
+
 module.exports = {
   getUserById,
   verificationToken,
   saveUserInDB,
-  findStudents,
   findUserByEmail,
   updatePassword,
   updateUserByName,
   updateUserEmail,
+  findStudents,
 };

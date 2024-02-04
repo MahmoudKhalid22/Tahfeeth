@@ -2,10 +2,11 @@ const {
   verificationToken,
   findUserByEmail,
   saveUserInDB,
-  findStudents,
+  // findStudents,
   updateUserByName,
   updatePassword,
   updateUserEmail,
+  findStudents,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -172,6 +173,21 @@ const updateUserPassword = async (req, res) => {
   }
 };
 
+// for teachers
+const getStudents = async (req, res) => {
+  try {
+    const isTeacher = req.user[0].role === "teacher";
+    if (!isTeacher) {
+      res.status(400).send({ error: "You are not a teacher" });
+    }
+    const teacher = req.user[0];
+    const students = await findStudents(teacher._id);
+    res.send({ students });
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+};
+
 // JUST FOR ADMIN
 const getUsers = async (req, res) => {
   try {
@@ -281,4 +297,5 @@ module.exports = {
   updateUser,
   getUser,
   getOneUser,
+  getStudents,
 };

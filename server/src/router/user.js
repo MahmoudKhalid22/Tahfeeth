@@ -17,6 +17,7 @@ const {
   updateUser,
   getUser,
   getOneUser,
+  getStudents,
 } = require("../controller/users");
 
 const auth = require("../middleware/auth");
@@ -87,18 +88,18 @@ router.get(
   }
 );
 
-router.get("/login", (req, res) => {
-  res.send("some test");
-});
-
 // --------------------------------------------------
 // FOR ADMIN
-router.get("/:id", getOneUser);
-
+router.get("/admin/:id", getOneUser);
+//
 router.post("", auth, addUser);
 router.delete("/:id", auth, deleteUser);
 
 // FOR ADMIN AND USERS
 router.patch("/:id", auth, updateUser);
+
+// for teachers
+
+router.get("/teacher", auth, getStudents);
 
 module.exports = router;
