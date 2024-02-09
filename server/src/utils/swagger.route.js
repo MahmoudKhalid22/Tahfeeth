@@ -5,7 +5,7 @@
  *     summary: Create a new user
  *     description: new user registretion for this site
  *     tags:
- *       - Authentication
+ *       - User
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -32,7 +32,7 @@
  *     summary: Verification token for verify account
  *     description: Verification token
  *     tags:
- *       - Authentication
+ *       - User
  *   parameters:
  *       - in: query
  *         name: verify email
@@ -54,7 +54,7 @@
  *     summary: login user to his page
  *     description: login user
  *     tags:
- *       - Authentication
+ *       - User
  *     requestBody:
  *       required: true
  *       content:
@@ -81,7 +81,7 @@
  *     summary: logout the user from the account
  *     description: logout the user
  *     tags:
- *       - Authentication
+ *       - User
  *     parameters:
  *      - in: header
  *        name: Authorization
@@ -95,6 +95,66 @@
  *         description: user logged out successfully
  *       '401':
  *         description: Unauthorized - Token is missing or invalid
+ *       '500':
+ *         description: Internal Server Error
+ */
+/**
+ * @swagger
+ * /user/forget-password:
+ *   post:
+ *     summary: verify email to reset password
+ *     description: verify email to get the link of reset password on this email
+ *     tags:
+ *       - User
+ *     requestBody:
+ *          required: true
+ *          content:
+ *           application/json:
+ *               schema:
+ *                  type: object
+ *                  example:
+ *                      email: user@example.com
+ *     responses:
+ *       '200':
+ *         description: check email to reset password
+ *         content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  example:
+ *                      {message: check your email to reset your password}
+ *       '401':
+ *         description: your email is not correct
+ *       '500':
+ *         description: Internal Server Error
+ */
+
+/**
+ * @swagger
+ * /user/reset-password/{token}:
+ *   post:
+ *     summary: reset the paswword
+ *     description: reset the password of the user account.
+ *     tags:
+ *       - User
+ *     security:
+ *       - accessToken: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *             example:
+ *                 {password: mmm123!}
+ *     responses:
+ *       '200':
+ *         description: password has been updated
+ *       '401':
+ *         description: token has been expired
  *       '500':
  *         description: Internal Server Error
  */

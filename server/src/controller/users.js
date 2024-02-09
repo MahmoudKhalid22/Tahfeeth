@@ -43,9 +43,10 @@ const verificationEmail = async (req, res) => {
     const token = req.params.token;
     const tokenVerified = verificationToken(token);
 
-    if (tokenVerified) {
-      return res.send("your email has been verified successfully, login now");
+    if (!tokenVerified) {
+      return res.send({ error: "Your token has been expired" });
     }
+    res.send({ messaga: "your account has been verified" });
   } catch (e) {
     res.status(500).send(e);
   }

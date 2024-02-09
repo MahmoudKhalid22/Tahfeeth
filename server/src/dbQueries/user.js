@@ -22,7 +22,6 @@ const verificationToken = async (token) => {
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);
   const user = await getUserById(decoded._id);
   if (user) {
-    console.log(user);
     return true;
   }
   return false;
