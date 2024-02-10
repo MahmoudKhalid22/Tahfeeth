@@ -1,8 +1,14 @@
+const { getUserById } = require("../dbQueries/user");
 const Table = require("../model/table");
 
 const getTables = async (req, res) => {
   const match = {};
+  const { id } = req.params;
   try {
+    const user = await getUserById(id);
+    if (user.role.toString() !== "student") {
+      return res.send({ error: "you're not a student" });
+    }
     const tables = await Table.find({ ownerId: req.params.id });
     res.send(tables);
   } catch (err) {

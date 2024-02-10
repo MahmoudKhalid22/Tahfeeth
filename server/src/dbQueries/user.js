@@ -33,11 +33,6 @@ const findUserByEmail = async (email) => {
   return user;
 };
 
-// const findStudents = async () => {
-//   const allUsers = await User.find({});
-//   return allUsers;
-// };
-
 const updatePassword = async (id, password) => {
   const hashedPassword = await bcrypt.hash(password, 8);
   await User.updateOne(

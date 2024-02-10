@@ -22,6 +22,7 @@ const {
   joinTeacher,
   getTeachers,
 } = require("../controller/users");
+const { getTables } = require("../controller/tables");
 
 const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
@@ -107,6 +108,9 @@ router.post("/join/teacher", auth, joinTeacher);
 router.post("/join/student", auth, joinStudent);
 
 router.get("/students", auth, getStudents);
+
+// FOR STUDENT
+router.get("/tables", auth, getTables);
 
 // --------------------------------------------------
 // FOR ADMIN

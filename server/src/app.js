@@ -29,13 +29,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/user", userRouter);
-app.use(tableRouter);
+app.use("/table", tableRouter);
 
 docs(app);
 
-// app.get("*", (req, res) => {
-//   res.render("404");
-// });
+app.get("*", (req, res) => {
+  res.render("404");
+});
 const port = process.env.PORT;
 
 app.listen(port, () => console.log("Server is running on port " + port));
