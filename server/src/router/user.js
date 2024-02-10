@@ -18,10 +18,15 @@ const {
   getUser,
   getOneUser,
   getStudents,
+  joinStudent,
+  joinTeacher,
+  getTeachers,
 } = require("../controller/users");
 
 const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
+
+// START AUTHENTICATION //
 
 // CREATE A NEW USER
 router.post("/signup", newUser);
@@ -87,6 +92,21 @@ router.get(
     res.redirect("https://tahfeeth.vercel.app");
   }
 );
+
+// END OF AUTHENTICATION //
+// FOR ALL
+router.get("/teachers", getTeachers);
+
+// FOR ADMIN //
+
+router.get("/admin", auth, getUsers);
+
+router.post("/join/teacher", auth, joinTeacher);
+
+// FOR TEACHER
+router.post("/join/student", auth, joinStudent);
+
+router.get("/students", auth, getStudents);
 
 // --------------------------------------------------
 // FOR ADMIN

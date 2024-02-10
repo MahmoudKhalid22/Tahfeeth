@@ -2,10 +2,13 @@ const {
   verificationToken,
   findUserByEmail,
   saveUserInDB,
-  // findStudents,
   updateUserByName,
   updatePassword,
   updateUserEmail,
+  findUsers,
+  getUserById,
+  getAllTeachers,
+  addStudentToTeacher,
   findStudents,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
@@ -174,6 +177,41 @@ const updateUserPassword = async (req, res) => {
   }
 };
 
+// END OF AUTHENTICATION
+
+// FOR ADMIN
+
+const getUsers = async (req, res) => {
+  try {
+    if (req.user[0].role === "admin") {
+      const users = await findUsers();
+      res.send(users);
+    } else {
+      res.status(400).send({ message: "you're not the admin" });
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+};
+
+const joinTeacher = async (req, res) => {
+  try {
+    const { _id } = req.user[0];
+    const teacher = await getUserById(_id);
+    if (!teacher.role === "teacher") {
+      return res.status(400).send({ err: "you are not a teacher" });
+    }
+    // sendNotification(teacherId);
+    res.send({ message: "notification has been sent to the admin" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ err: err.message });
+  }
+};
+
+// FOR TEACHER
+
 // for teachers
 const getStudents = async (req, res) => {
   try {
@@ -186,24 +224,6 @@ const getStudents = async (req, res) => {
     res.send({ students });
   } catch (err) {
     res.status(500).send({ err });
-  }
-};
-
-// JUST FOR ADMIN
-const getUsers = async (req, res) => {
-  try {
-    // const teacher = ;
-
-    if (req.user[0].role === "teacher") {
-      const users = await findStudents();
-      const students = users.filter((user) => user.role === "student");
-      res.send(students);
-    } else {
-      res.status(400).send({ message: "you're not the admin" });
-    }
-  } catch (e) {
-    console.log(e);
-    res.status(500).send(e);
   }
 };
 
@@ -271,6 +291,17 @@ const getUser = async (req, res) => {
   }
 };
 
+const joinStudent = async (req, res) => {
+  try {
+    const { studentId, teacherId } = req.body;
+    await addStudentToTeacher(studentId, teacherId);
+    res.send({ message: "you have been added to this teacher" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ err: err.messaga });
+  }
+};
+
 const getOneUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -278,6 +309,15 @@ const getOneUser = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
+  }
+};
+
+const getTeachers = async (req, res) => {
+  try {
+    const teachers = await getAllTeachers();
+    res.send(teachers);
+  } catch (err) {
+    res.status(500).send({ err });
   }
 };
 
@@ -299,4 +339,7 @@ module.exports = {
   getUser,
   getOneUser,
   getStudents,
+  joinStudent,
+  joinTeacher,
+  getTeachers,
 };

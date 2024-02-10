@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
+      enum: ["admin", "teacher", "student"],
     },
     professional: {
       type: Boolean,
@@ -42,6 +43,11 @@ const userSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["pending", "blocked", "verified"],
+      default: "pending",
+    },
     tokens: [
       {
         token: {
@@ -50,6 +56,9 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // For teachers to reference their students
+    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // For students to reference their teachers
+    admins: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // For teachers to reference their admins
   },
   {
     timestamps: true,
@@ -71,6 +80,10 @@ userSchema.methods.toJSON = function () {
   delete userObj.tokens;
   delete userObj.verified;
   delete userObj.__v;
+  delete userObj.students;
+  delete userObj.teachers;
+  delete userObj.admins;
+
   return userObj;
 };
 

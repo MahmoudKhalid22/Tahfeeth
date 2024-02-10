@@ -60,9 +60,29 @@ const updateUserEmail = async (id, email) => {
   return user;
 };
 
-const findStudents = async (id) => {
-  const students = await User.findById({ _id: id });
-  if (!students) return false;
+const findUsers = async (id) => {
+  const users = await User.find({});
+  if (!users) return false;
+  return users;
+};
+
+const getAllTeachers = async () => {
+  const teachers = await User.find({ role: "teacher" });
+  return teachers;
+};
+
+const addStudentToTeacher = async (studentId, teacherId) => {
+  const updatedTeacher = await User.findByIdAndUpdate(
+    teacherId,
+    { $push: { students: studentId } },
+    { new: true }
+  );
+  return updatedTeacher;
+};
+
+const findStudents = async (teacherId) => {
+  const teacher = await getUserById(teacherId);
+  const students = await User.find({ _id: { $in: teacher.students } });
   return students;
 };
 
@@ -74,5 +94,8 @@ module.exports = {
   updatePassword,
   updateUserByName,
   updateUserEmail,
+  findUsers,
+  getAllTeachers,
+  addStudentToTeacher,
   findStudents,
 };
