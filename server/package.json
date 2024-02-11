@@ -20,6 +20,7 @@
     "express-session": "^1.18.0",
     "express-swagger-generator": "^1.1.17",
     "google-auth-library": "^9.6.1",
+    "joi": "^17.12.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.0.0",
     "mongoose": "^7.5.0",

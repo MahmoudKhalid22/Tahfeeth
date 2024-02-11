@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      min: 3,
+      max: 30,
       required: true,
     },
     email: {
@@ -56,9 +58,9 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // For teachers to reference their students
-    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // For students to reference their teachers
-    admins: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // For teachers to reference their admins
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    admins: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,
