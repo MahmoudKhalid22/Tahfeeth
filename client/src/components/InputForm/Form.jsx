@@ -33,27 +33,33 @@ function Form() {
           email: email,
           password: password,
           role: role,
-          professional: professional,
+          professional: professional ? professional : null,
         }),
       });
 
+      if (!response.ok) {
+        setLoading(false);
+        const errorData = await response.json();
+        // console.log(errorData);
+        throw new Error(errorData.err);
+      }
       setName("");
       setEmail("");
       setPassword("");
       setRole("");
       setLoading(false);
-      if (!response.ok) {
-        setLoading(false);
-        const errorData = await response.json();
-        console.log(errorData);
-        throw new Error(errorData.error);
-      }
+
       const dataUser = await response.json();
-      console.log(dataUser);
+      // console.log(dataUser);
       navigate("/verify");
     } catch (err) {
-      console.log(err);
-      setError(err.message);
+      // console.log(err.message);
+
+      setError(
+        err.message[0] === "E"
+          ? "هذا البريد الإلكتروني موجود مسبقا ، حاول ببريد إلكتروني آخر"
+          : err.message
+      );
     }
   };
 
@@ -86,6 +92,7 @@ function Form() {
 
       // setLoading(false);
       const dataUser = await response.json();
+      console.log(dataUser);
       localStorage.setItem("data", JSON.stringify(dataUser));
       navigate("/details");
       // Reset the form data
@@ -97,8 +104,9 @@ function Form() {
   return (
     <form
       className="bg-none md:bg-gradient-to-r from-[#916f6e]  to-[#574342] flex items-center
-    justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-full md:w-1/2 md:h-[40rem] "
+    justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-full md:w-full md:h-[40rem] "
       onSubmit={isLogin ? handleSubmit : newUser}
+      style={{ width: "80%" }}
     >
       {!isLogin && (
         <div className=" flex flex-row-reverse justify-between items-start w-full">
@@ -177,7 +185,7 @@ function Form() {
           </label>
         </div>
       )}
-      <p className="text-2xl text-red-800 md:text-red-500">{`${
+      <p className="text-2xl text-red-800 text-center md:text-red-500">{`${
         error ? error : ""
       }`}</p>
       {loading && (

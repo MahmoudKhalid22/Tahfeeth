@@ -1,7 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-import { HashLink } from "react-router-hash-link";
-=======
 // import { useInView } from "react-intersection-observer";
 import { HashLink } from "react-router-hash-link";
 import { AiFillHome } from "react-icons/ai";
@@ -13,47 +10,15 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { LiaUserPlusSolid } from "react-icons/lia";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
->>>>>>> bb7e4c6d2275dda7a1a7a02d7be352e55df82bf1
 
 function Links() {
   // const [active, setActive] = useState(1);
 
   return (
-<<<<<<< HEAD
-    <div className="w-[262px] fixed top-0 right-0 h-screen pt-[114px] pb-[27px] bg-[#43766C] px-6 flex items-center justify-between flex-col">
-      <ul className="flex flex-col items-center justify-center gap-8">
-        <li className="text-[#fff] text-2xl font-medium">
-          <HashLink smooth to="/#home">
-            الصفحة الرئيسية
-          </HashLink>
-        </li>
-        <li className="text-[#fff] text-2xl font-medium">
-          <HashLink smooth to="/#about">
-            من نحن
-          </HashLink>
-        </li>
-        <li className="text-[#fff] text-2xl font-medium">
-          <HashLink smooth to="/#teachers">
-            المعلمين
-          </HashLink>
-        </li>
-        <li className="text-[#fff] text-2xl font-medium">
-          <a href="#contact">تواصل معنا</a>
-        </li>
-      </ul>
-      <div className="flex flex-col items-center justify-center gap-8">
-        <HashLink to={"/register?mode=login"}>
-          <button className="bg-[#C1A98D] hover:bg-[#9F8565] transition-colors px-5 py-3 w-48 text-white text-2xl">
-            تسجيل الدخول
-          </button>
-        </HashLink>
-        <HashLink to={"/register?mode=signup"}>
-          <button className="bg-[#9F8565] hover:bg-[#8a7762] transition-colors px-5 py-3 w-48 text-white text-2xl">
-            إنشاء حساب
-          </button>
-        </HashLink>
-=======
-    <div className="w-16 lg:w-64 fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden">
+    <div
+      className="flex-1 w-16 lg:w-64 fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden"
+      style={{ width: "20%" }}
+    >
       <Logo />
       <div className="flex items-center justify-between flex-col h-full  overflow-hidden">
         <ul className="flex flex-col items-center justify-center gap-8">
@@ -108,7 +73,6 @@ function Links() {
             </button>
           </HashLink>
         </div>
->>>>>>> bb7e4c6d2275dda7a1a7a02d7be352e55df82bf1
       </div>
     </div>
   );

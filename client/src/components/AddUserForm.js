@@ -16,22 +16,19 @@ function AddUserForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/users/",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            name: name,
-            password: password,
-            email: email,
-          }),
-          headers: {
-            "Content-Type": "application/json",
+      const response = await fetch("http://localhost:3000/users/", {
+        method: "POST",
+        body: JSON.stringify({
+          name: name,
+          password: password,
+          email: email,
+        }),
+        headers: {
+          "Content-Type": "application/json",
 
-            Authorization: "Bearer " + adminToken,
-          },
-        }
-      );
+          Authorization: "Bearer " + adminToken,
+        },
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

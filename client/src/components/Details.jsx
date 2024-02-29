@@ -87,10 +87,16 @@ function Details() {
       <div className="flex items-center justify-center gap-8 mb-12 text-[#43766C] text-lg md:text-4xl font-semibold">
         <h3>الاسم</h3>
 
-        <h4 className="flex items-center justify-center gap-2">
-          {data ? data.user.name : ""}
-          {data?.user.isAdmin ? <div>(admin)</div> : undefined}
-        </h4>
+        {data && (
+          <h4 className="flex items-center justify-center gap-2">
+            {data.user.name}
+            {data.user.role === "student"
+              ? "(طالب) "
+              : data.user.role === "teacher"
+              ? "(معلم) "
+              : "(مدير) "}
+          </h4>
+        )}
       </div>
       <div className={styles.settings}>
         <button

@@ -33,6 +33,8 @@ app.use("/table", tableRouter);
 
 docs(app);
 
+app.get("/test", (req, res) => res.json({ msg: "test" }));
+
 app.get("*", (req, res) => {
   res.render("404");
 });

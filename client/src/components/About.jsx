@@ -2,16 +2,11 @@ import React from "react";
 
 function About() {
   return (
-<<<<<<< HEAD
-    <div id="about" className="mr-[22rem] flex items-start flex-col">
-      <h2 className="text-5xl font-bold text-[#000] mb-8">من نحن</h2>
-=======
     <div
       id="about"
       className=" mr-20 sm:mr-28 lg:mr-[20rem] py-8 flex items-start flex-col overflow-x-hidden"
     >
       <h2 className="text-xl sm:text-3xl font-bold text-[#000] mb-8">من نحن</h2>
->>>>>>> bb7e4c6d2275dda7a1a7a02d7be352e55df82bf1
 
       <p className="text-black text-sm sm:text-xl ml-4 sm:w-[30rem] lg:w-[45rem] mb-12 leading-[1.5rem]">
         تتناول هذه المنصة تعليم قراءة القرآن الكريم على يد أمهر القراء
@@ -22,9 +17,6 @@ function About() {
         وفعالة. يختتم الموضوع بتحفيز الطلاب على الانضمام إلى هذه المنصة
         للاستمتاع برحلة ممتعة نحو إتقان قراءة القرآن الكريم وتحقيق اللفظ الصحيح.
       </p>
-<<<<<<< HEAD
-      <h2 className="font-bold text-3xl mt-8 text-black">ما يميز المنصة</h2>
-=======
       <h2 className="font-bold text-black mb-8 text-lg sm:text-2xl md:text-2xl">
         ما يميز المنصة
       </h2>
@@ -55,7 +47,6 @@ function About() {
         والعمق في فنون قراءة القرآن مع منصتنا. انضم إلينا اليوم وابدأ رحلتك نحو
         إتقان التلاوة واللفظ الصحيح.
       </p>
->>>>>>> bb7e4c6d2275dda7a1a7a02d7be352e55df82bf1
     </div>
   );
 }

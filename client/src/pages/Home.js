@@ -6,7 +6,7 @@ import Teachers from "../components/Teachers";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 
-function Home({ onSetActiveLink }) {
+function Home() {
   return (
     <>
       <Proposal />

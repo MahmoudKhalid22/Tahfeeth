@@ -26,11 +26,9 @@ function Footer() {
           </HashLink>
         </li>
       </ul>
-      <div className="bg-[#8A7A5F] shadow-[0_-2px_5.6px_1px_rgba(0,0,0,0.25)] text-white sm:text-lg md:text-3xl flex sm:flex-row-reverse flex-col items-center justify-center  h-14 mr-16">
-        <p className="sm:ml-auto">copyright @2024; designed by</p>
-        <span className="text-left font-bold  sm:mr-auto sm:ml-2">
-          Mahmoud Khalid
-        </span>
+      <div className="bg-[#8A7A5F] shadow-[0_-2px_5.6px_1px_rgba(0,0,0,0.25)] text-white sm:text-lg md:text-3xl flex sm:flex-row flex-col items-center justify-center  h-14">
+        <p className="">جميع الحقوق محفوطة. تم تصميمه بواسطة</p>
+        <span className="text-left font-bold text-[#554a38]">محمود خالد </span>
       </div>
     </footer>
   );

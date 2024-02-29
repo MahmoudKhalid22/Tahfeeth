@@ -8,6 +8,7 @@ function Student() {
   const [stdName, setStdName] = useState("");
   const [showformTable, setShowFormTable] = useState(false);
   const [loadingTables, setLoadingTables] = useState(true);
+  const [error, setError] = useState("");
   const [tableUser, setTableUser] = useState({
     day: "السبت",
     quantity: "",
@@ -25,55 +26,72 @@ function Student() {
     ? JSON.parse(localStorage.getItem("data"))
     : undefined;
 
-  const token = data?.token;
-  const adminToken = data?.user.isAdmin ? data.token : undefined;
+  const stdToken = data?.accessToken;
+  const teacherToken = data?.user.role === "teacher" ? data.accessToken : null;
+  const adminToken = data?.user.role === "admin" ? data.accessToken : null;
 
   const stdId = id ? id : data?.user._id;
 
   useEffect(() => {
-    try {
-      const getName = async () => {
-        const response = await fetch(
-          "https://tahfeeth-system.onrender.com/users/" + id
-        );
+    const getName = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/users/" + id);
 
         const student = await response.json();
         setStdName(student.name);
-      };
+      } catch (err) {
+        setError(err);
+      }
+    };
 
-      const getTables = async () => {
-        const response = await fetch(
-          "https://tahfeeth-system.onrender.com/tables/" + stdId,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+    getName();
+  }, [id]);
+
+  useEffect(() => {
+    const getTables = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/tables/" + stdId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + stdToken,
+          },
+        });
+
+        setLoadingTables(false);
+        if (!response.ok) {
+          const errorData = await response.json();
+          // console.log(errorData);
+          throw new Error(errorData.err);
+        }
 
         const tables = await response.json();
 
         setStudentData(tables);
         setLoadingTables(false);
-      };
-      if (data?.user.isAdmin) {
-        getName();
+      } catch (err) {
+        setError(err);
       }
-      getTables();
-    } catch (err) {
-      throw new Error(err);
-    }
-  }, [token, data, id, stdId]);
+    };
+    getTables();
+  }, [stdId, stdToken]);
+
+  //     if (data?.user.isAdmin) {
+  //       getName();
+  //     }
+  //     getTables();
+  //   } catch (err) {
+  //     throw new Error(err);
+  //   }
+  // }, [token, data, id, stdId]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("https://tahfeeth-system.onrender.com/tables", {
+      await fetch("http://localhost:5000/tables", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + adminToken,
+          Authorization: "Bearer " + teacherToken,
         },
         body: JSON.stringify({
           day: tableUser.day,
@@ -109,16 +127,22 @@ function Student() {
 
   return (
     <>
-      <h2>جدول المتابعة </h2>
+      <h2 className="text-xl font-semibold text-[#43766C] text-center">
+        جدول المتابعة
+      </h2>
 
       <div className={styles.container}>
-        {data?.user.isAdmin && (
+        {data?.user.role === "teacher" && (
           <button>
             <Link to="/details">العودة للصفحة الرئيسية</Link>
           </button>
         )}
 
-        {data?.user.isAdmin && <h2>{stdName}</h2>}
+        {/* {data?.user.role === "teacher" && (
+          <h2>
+            {stdName} {data.user.role}{" "}
+          </h2>
+        )} */}
         {loadingTables ? (
           <h4 className="loading loading-details">تحميل ...</h4>
         ) : (
@@ -155,7 +179,7 @@ function Student() {
             </table>
           </div>
         )}
-        {data?.user.isAdmin && (
+        {data?.user.role === "teacher" && (
           <button onClick={() => setShowFormTable((prev) => !prev)}>
             إضافة جدول
           </button>

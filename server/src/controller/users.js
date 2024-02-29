@@ -37,7 +37,7 @@ const newUser = async (req, res) => {
       msg: "تم إنشاء الحساب بنجاح ، من قضلك راجع بريدك الإلكتروني لتفعيل الحساب",
     });
   } catch (err) {
-    res.status(500).send({ err });
+    res.status(500).send({ err: err.message });
   }
 };
 

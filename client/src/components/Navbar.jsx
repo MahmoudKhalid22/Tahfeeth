@@ -14,10 +14,6 @@ function Navbar() {
   };
 
   return (
-<<<<<<< HEAD
-    <nav className="h-0">
-      <Logo />
-=======
     // {/* <Logo /> */}
     // {/* <Buttons /> */}
 
@@ -30,7 +26,6 @@ function Navbar() {
     //   />
     // </div> */}
     <>
->>>>>>> bb7e4c6d2275dda7a1a7a02d7be352e55df82bf1
       <Links />
     </>
   );
