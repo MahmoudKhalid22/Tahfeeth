@@ -85,7 +85,7 @@
  *     parameters:
  *      - in: header
  *        name: Authorization
- *        description: Bearer token token for update the username
+ *        description: Bearer access token for logout
  *        example: "Bearer abcxyz123456"
  *        required: true
  *        schema:
@@ -93,6 +93,11 @@
  *     responses:
  *       '200':
  *         description: user logged out successfully
+ *         content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      example: {message: you logged out}
  *       '401':
  *         description: Unauthorized - Token is missing or invalid
  *       '500':
@@ -139,6 +144,16 @@
  *       - User
  *     security:
  *       - accessToken: []
+ *
+ *     parameters:
+ *      - in: header
+ *        name: token
+ *        description: token had been sent in email
+ *        example: "abc123!"
+ *        required: true
+ *        schema:
+ *           type: string
+ *
  *     requestBody:
  *       required: true
  *       content:
@@ -158,9 +173,34 @@
  *       '500':
  *         description: Internal Server Error
  */
+
 /**
  * @swagger
- * /update-addresses:
+ * /user/refresh-token:
+ *  get:
+ *      summary: refresh token after the access token expires
+ *      description: this endpoint to get new access token if refresh token has been expired
+ *      tags:
+ *          - User
+ *      parameters:
+ *      - in: header
+ *        name: Authorization
+ *        description: Bearer refresh token for get new access token
+ *        example: "Bearer abcxyz123456"
+ *        required: true
+ *        schema:
+ *           type: string
+ *      responses:
+ *          '200':
+ *              desctiption: new access token
+ *              content:
+ *                  application/json:
+ *                      type: object
+ *                      example: {accessToken: string}
+ */
+/**
+ * @swagger
+ * /update-username:
  *   put:
  *     summary: Update user addresses
  *     description: Update the addresses of the authenticated user.
@@ -168,6 +208,14 @@
  *       - User
  *     security:
  *       - accessToken: []
+ *     parameters:
+ *      - in: header
+ *        name: Authorization
+ *        description: Bearer access token for update the username
+ *        example: "Bearer abcxyz123456"
+ *        required: true
+ *        schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -175,23 +223,23 @@
  *           schema:
  *             type: object
  *             properties:
- *               addresses:
- *                 type: object
- *                 properties:
- *                   street:
- *                     type: string
- *                   city:
- *                     type: string
- *                   zipCode:
- *                     type: number
+ *               name:
+ *                 type: string
+ *
  *             example:
- *               addresses:
- *                 street: "123 Main St"
- *                 city: "Cityville"
- *                 zipCode: 12345
+ *               name:
+ *                  "mahmoud khalid"
+ *
  *     responses:
  *       '200':
- *         description: Addresses updated successfully
+ *         description: username has been updated successfully
+ *         content:
+ *           application/json:
+ *              type: object
+ *
+ *              schema:
+ *                  $ref: '#/components/schemas/Login'
+ *
  *       '401':
  *         description: Unauthorized - Token is missing or invalid
  *       '500':
@@ -199,9 +247,9 @@
  */
 /**
  * @swagger
- * /update-username:
- *   patch:
- *    summary: update user name.
+ * /update-email:
+ *   put:
+ *    summary: update email.
  *    tags:
  *        - User
  *    description: if the user wants to update his name from this end point he can do that.

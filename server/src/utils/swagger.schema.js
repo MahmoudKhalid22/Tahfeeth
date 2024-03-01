@@ -38,7 +38,10 @@
  *          role:
  *             type: string
  *             description: the role either teacher or student
- *          token:
+ *          accessToken:
  *              type: string
  *              description: the token the user can do anything he allowed to do
+ *          refreshToken:
+ *              type: string
+ *              description: the token to refresh access token if it has been expired
  */
