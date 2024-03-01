@@ -85,6 +85,7 @@ function Form() {
       setError(null);
       setLoading(false);
       if (!response.ok) {
+        setLoading(false);
         const errorData = await response.json();
         setError(errorData.message);
         throw new Error(errorData);
@@ -92,12 +93,13 @@ function Form() {
 
       // setLoading(false);
       const dataUser = await response.json();
-      console.log(dataUser);
       localStorage.setItem("data", JSON.stringify(dataUser));
       navigate("/details");
       // Reset the form data
     } catch (error) {
-      console.error(error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 

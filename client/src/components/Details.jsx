@@ -15,10 +15,22 @@ function Details() {
   const [usersData, setUsersData] = useState([]);
   const [formUpdate, setFormUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const data = localStorage.getItem("data")
     ? JSON.parse(localStorage.getItem("data"))
-    : undefined;
+    : null;
+
+  if (!data) {
+    return (
+      <div className="overflow-hidden h-[25rem] w-[80%]">
+        <h2 className="text-red text-3xl font-semibold text-center w-[100%] mx-auto translate-y-1/2 h-full overflow-y-hidden -left-[12%] absolute">
+          يجب تسجيل الدخول
+        </h2>
+      </div>
+    );
+  }
+
   // console.log(data);
 
   // const adminToken = data?.user.isAdmin ? data.token : undefined;
@@ -29,7 +41,7 @@ function Details() {
       const response = await fetch("http://localhost:5000/user/logout", {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + data.token,
+          Authorization: "Bearer " + data.accessToken,
         },
       });
       setLoading(false);
@@ -40,7 +52,7 @@ function Details() {
       localStorage.clear();
       return navigate("/");
     } catch (err) {
-      setLoading(err.message);
+      setError(err.message);
     }
   };
 
