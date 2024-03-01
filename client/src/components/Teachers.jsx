@@ -14,7 +14,6 @@ function Teachers() {
         setLoading(true);
         setError(false);
         const teachers = await response.json();
-        console.log(teachers);
         if (!response.ok) {
           throw new Error(teachers);
         }

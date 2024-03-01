@@ -62,7 +62,7 @@ const findUsers = async (id) => {
 };
 
 const getAllTeachers = async () => {
-  const teachers = await User.find({ role: "teacher" });
+  const teachers = await User.find({ role: "teacher", verified: true });
   return teachers;
 };
 

@@ -12,14 +12,17 @@ import { useState } from "react";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  console.log(isLogin);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Root isLogin={isLogin} />}>
           <Route index element={<Home />} />
           <Route path="/verify" element={<Verification />} />
-          <Route path="/details" element={<Details />} />
+          <Route
+            path="/details"
+            element={<Details onSetIsLogin={setIsLogin} />}
+          />
           <Route
             path="/register"
             element={<Register onSetIsLogin={setIsLogin} />}

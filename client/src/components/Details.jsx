@@ -15,7 +15,7 @@ function Details({ onSetIsLogin }) {
   const [usersData, setUsersData] = useState([]);
   const [formUpdate, setFormUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
   const data = localStorage.getItem("data")
     ? JSON.parse(localStorage.getItem("data"))
@@ -23,13 +23,23 @@ function Details({ onSetIsLogin }) {
 
   if (!data) {
     return (
-      <div className="overflow-hidden h-[25rem] w-[80%]">
-        <h2 className="text-red text-3xl font-semibold text-center w-[100%] mx-auto translate-y-1/2 h-full overflow-y-hidden -left-[12%] absolute">
+      <div className="overflow-hidden h-[35rem] w-[80%] flex flex-col">
+        <h2 className="text-red-700 text-3xl font-semibold text-center w-[100%] mx-auto translate-y-1/2 h-full overflow-y-hidden -left-[12%] absolute">
           يجب تسجيل الدخول
         </h2>
+        <Link
+          to="/register?mode=login"
+          className="text-white bg-[#959689] text-3xl font-semibold text-center mx-auto translate-y-1/2 block mt-12 w-fit p-4 rounded-lg hover:bg-[#67685e] transition-colors -left-[12%] absolute"
+        >
+          تسجيل الدخول
+        </Link>
       </div>
     );
   }
+
+  const stdToken = data?.accessToken;
+  const teacherToken = data?.user.role === "teacher" ? data.accessToken : null;
+  const adminToken = data?.user.role === "admin" ? data.accessToken : null;
 
   // console.log(data);
 
@@ -47,12 +57,16 @@ function Details({ onSetIsLogin }) {
       setLoading(false);
       if (!response.ok) {
         const errorData = await response.json();
+        console.log(errorData);
         throw new Error(errorData.error);
       }
       localStorage.clear();
+      onSetIsLogin(false);
       return navigate("/");
     } catch (err) {
-      setError(err.message);
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -126,15 +140,23 @@ function Details({ onSetIsLogin }) {
           <RxUpdate />
         </button>
       </div>
+      {error && !loading && (
+        <p className="text-center my-12 text-red-600 font-semibold text-2xl">
+          لا يمكن تسجيل الخروج يوجد خطأ داخلي في السيرفر
+        </p>
+      )}
+      {loading && <h4 className="loading loading-details">تحميل ...</h4>}
 
       <div
         className={`${styles.updateForm} ${formUpdate ? styles.active : ""}`}
       >
-        <UpdateForm userId={data?.user._id} userToken={data?.token} />
+        {formUpdate && (
+          <UpdateForm userId={data?.user._id} userToken={data?.accessToken} />
+        )}
       </div>
-      {!data?.user.isAdmin && <Student />}
+      {data?.user.role !== "teacher" && <Student />}
       <div>
-        {data?.user.isAdmin ? (
+        {data?.user.role === "teacher" ? (
           <div className="flex items-center flex-wrap justify-center gap-4">
             <button
               onClick={() => {
@@ -143,15 +165,7 @@ function Details({ onSetIsLogin }) {
             >
               إضافة طالب
             </button>
-            <button
-            // onClick={() => {
-            //   getUsers();
-
-            //   setUserShow(false);
-            // }}
-            >
-              قراءة بيانات الطلاب
-            </button>
+            <button>قراءة بيانات الطلاب</button>
           </div>
         ) : undefined}
 
@@ -160,7 +174,6 @@ function Details({ onSetIsLogin }) {
         >
           {/* <AddUserForm /> */}
         {/* </div> */}
-        {loading && <h4 className="loading loading-details">تحميل ...</h4>}
         {!userShow &&
           !loading &&
           usersData?.map((user) => (

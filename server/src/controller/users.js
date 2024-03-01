@@ -71,7 +71,7 @@ const loginUser = async (req, res) => {
     const refreshToken = await user.createRefreshToken();
     res.send({ user, accessToken, refreshToken });
   } catch (error) {
-    res.status(401).send({ message: "internal server error" });
+    res.status(401).send({ message: error.message });
   }
 };
 
@@ -310,6 +310,7 @@ const joinStudent = async (req, res) => {
 const getOneUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+    console.log(user);
     res.send(user);
   } catch (err) {
     console.log(err);

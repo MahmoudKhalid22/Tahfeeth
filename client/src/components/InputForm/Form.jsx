@@ -89,7 +89,6 @@ function Form({ onSetIsLogin }) {
       if (!response.ok) {
         setLoading(false);
         const errorData = await response.json();
-        console.log(errorData);
         throw new Error(errorData.message);
       }
 
@@ -97,7 +96,6 @@ function Form({ onSetIsLogin }) {
       const dataUser = await response.json();
       localStorage.setItem("data", JSON.stringify(dataUser));
       onSetIsLogin(true);
-      console.log(onSetIsLogin);
       navigate("/details");
       // Reset the form data
     } catch (error) {
