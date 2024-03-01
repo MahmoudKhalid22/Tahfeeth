@@ -15,10 +15,7 @@ function Links() {
   // const [active, setActive] = useState(1);
 
   return (
-    <div
-      className="flex-1 w-16 lg:w-64 fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden"
-      style={{ width: "20%" }}
-    >
+    <div className="flex-1 w-16 lg:w-64 fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden">
       <Logo />
       <div className="flex items-center justify-between flex-col h-full  overflow-hidden">
         <ul className="flex flex-col items-center justify-center gap-8">

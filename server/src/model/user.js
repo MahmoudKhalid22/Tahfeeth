@@ -35,6 +35,12 @@ const userSchema = new mongoose.Schema(
         return this.role === "teacher";
       },
     },
+    price: {
+      type: Number,
+      required: function () {
+        return this.role === "teacher";
+      },
+    },
     verified: {
       type: Boolean,
       default: false,

@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 function Root() {
   return (
-    <div className="w-full flex">
+    <div className="w-full">
       <Navbar />
       <Outlet />
     </div>

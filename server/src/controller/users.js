@@ -17,6 +17,7 @@ const { verifyToken } = require("../middleware/verifyToken");
 const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Message = require("../model/Message");
 
 const newUser = async (req, res) => {
   const { name, email, password, role, professional } = req.body;
@@ -62,11 +63,15 @@ const loginUser = async (req, res) => {
       req.body.password
     );
 
+    if (!user) {
+      return res.status(404).send({ message: "invalid credentials" });
+    }
+
     const accessToken = await user.createAuthToken();
     const refreshToken = await user.createRefreshToken();
     res.send({ user, accessToken, refreshToken });
   } catch (error) {
-    res.status(401).send({ message: error.message });
+    res.status(401).send({ message: "internal server error" });
   }
 };
 
@@ -321,6 +326,18 @@ const getTeachers = async (req, res) => {
   }
 };
 
+const messageForm = async (req, res) => {
+  try {
+    const { name, email, msg } = req.body;
+    const message = new Message({ name, email, msg });
+    await saveUserInDB(message);
+
+    res.send({ msg: "your message has been sent" });
+  } catch (err) {
+    res.status(500).send({ error: "internal server error" });
+  }
+};
+
 module.exports = {
   newUser,
   verificationEmail,
@@ -342,4 +359,5 @@ module.exports = {
   joinStudent,
   joinTeacher,
   getTeachers,
+  messageForm,
 };

@@ -21,6 +21,7 @@ const {
   joinStudent,
   joinTeacher,
   getTeachers,
+  messageForm,
 } = require("../controller/users");
 const { getTables } = require("../controller/tables");
 
@@ -97,6 +98,7 @@ router.get(
 // END OF AUTHENTICATION //
 // FOR ALL
 router.get("/teachers", getTeachers);
+router.post("/message", messageForm);
 
 // FOR ADMIN //
 

@@ -87,8 +87,8 @@ function Form() {
       if (!response.ok) {
         setLoading(false);
         const errorData = await response.json();
-        setError(errorData.message);
-        throw new Error(errorData);
+        console.log(errorData);
+        throw new Error(errorData.message);
       }
 
       // setLoading(false);
