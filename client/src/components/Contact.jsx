@@ -37,21 +37,19 @@ function Contact() {
       }
       setError(false);
       setRes({ ...res, msg: result.msg });
-
-      setTimeout(() => {
-        setTime(false);
-      }, 1500);
-
+    } catch (err) {
+      // console.log(err.message);
+      setError(true);
+    } finally {
+      setLoading(false);
       setMessage({
         msg: "",
         name: "",
         email: "",
       });
-    } catch (err) {
-      // console.log(err.message);
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setTime(false);
+      }, 1500);
     }
   };
 
@@ -102,13 +100,13 @@ function Contact() {
         </form>
       </div>
 
-      {time && (
+      {!time && (
         <p
-          className={`flex items-center justify-center flex-row-reverse mt-4 gap-12 mr-16 lg:mr-[16rem] overflow-x-hidden text-3xl font-semibold ${
+          className={`flex items-center justify-center flex-row-reverse mt-4 gap-12 mr-16 lg:mr-[16rem] overflow-hidden text-3xl font-semibold  ${
             error ? "text-red-600" : "text-[#948366]"
           } `}
         >
-          {error ? error : res.msg}
+          {error ? "خطأ داخلي في السيرفر، من فضلك حاول في وقت لاحق" : res.msg}
         </p>
       )}
     </>
