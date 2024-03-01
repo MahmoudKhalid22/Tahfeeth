@@ -8,16 +8,22 @@ import Register from "./pages/Register";
 import Teacher from "./pages/Teacher";
 import TeacherPage from "./pages/TeacherPage";
 import Verification from "./pages/Verification";
+import { useState } from "react";
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  console.log(isLogin);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Root />}>
+        <Route path="/" element={<Root isLogin={isLogin} />}>
           <Route index element={<Home />} />
           <Route path="/verify" element={<Verification />} />
           <Route path="/details" element={<Details />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/register"
+            element={<Register onSetIsLogin={setIsLogin} />}
+          />
           <Route path="/details/:id" element={<Student />} />
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/teacher/:id" element={<TeacherPage />} />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { GiExitDoor } from "react-icons/gi";
 
-function Form() {
+function Form({ onSetIsLogin }) {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
 
@@ -51,7 +51,7 @@ function Form() {
       setRole("");
       setLoading(false);
 
-      const dataUser = await response.json();
+      // const dataUser = await response.json();
       // console.log(dataUser);
       navigate("/verify");
     } catch (err) {
@@ -96,6 +96,8 @@ function Form() {
       // setLoading(false);
       const dataUser = await response.json();
       localStorage.setItem("data", JSON.stringify(dataUser));
+      onSetIsLogin(true);
+      console.log(onSetIsLogin);
       navigate("/details");
       // Reset the form data
     } catch (error) {

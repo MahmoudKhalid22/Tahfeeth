@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-function Root() {
+function Root({ isLogin }) {
   return (
     <div className="w-full">
-      <Navbar />
+      <Navbar isLogin={isLogin} />
       <Outlet />
     </div>
   );

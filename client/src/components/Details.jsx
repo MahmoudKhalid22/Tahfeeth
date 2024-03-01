@@ -8,7 +8,7 @@ import AddUserForm from "./AddUserForm";
 import UpdateForm from "./UpdateForm";
 import Student from "../pages/Student";
 
-function Details() {
+function Details({ onSetIsLogin }) {
   const navigate = useNavigate();
 
   const [userShow, setUserShow] = useState(false);
