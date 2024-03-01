@@ -11,7 +11,7 @@ function Contact() {
   const [res, setRes] = useState({
     msg: "",
   });
-  const [time, setTime] = useState(true);
+  const [time, setTime] = useState(false);
   // console.log(message);
   const handleSendMsg = async (e) => {
     e.preventDefault();
@@ -47,9 +47,10 @@ function Contact() {
         name: "",
         email: "",
       });
+      setTime(true);
       setTimeout(() => {
         setTime(false);
-      }, 1500);
+      }, 2500);
     }
   };
 
@@ -100,7 +101,7 @@ function Contact() {
         </form>
       </div>
 
-      {!time && (
+      {time && (
         <p
           className={`flex items-center justify-center flex-row-reverse mt-4 gap-12 mr-16 lg:mr-[16rem] overflow-hidden text-3xl font-semibold  ${
             error ? "text-red-600" : "text-[#948366]"

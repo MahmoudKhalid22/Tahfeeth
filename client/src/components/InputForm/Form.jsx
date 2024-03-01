@@ -11,6 +11,7 @@ function Form() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [professional, setProfessional] = useState(false);
+  const [price, setPrice] = useState(0);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ function Form() {
           password: password,
           role: role,
           professional: professional ? professional : null,
+          price: price ? price : 0,
         }),
       });
 
@@ -184,6 +186,21 @@ function Form() {
           </select>
           <label className="hidden md:block text-white text-2xl" htmlFor="name">
             هل أنت مجاز
+          </label>
+        </div>
+      )}
+      {!isLogin && role === "teacher" && (
+        <div className=" flex flex-row-reverse justify-between items-start w-full">
+          <input
+            type="number"
+            placeholder="السعر"
+            step={10}
+            id="name"
+            onChange={(e) => setPrice(e.target.value)}
+            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+          />
+          <label className="hidden md:block text-white text-2xl" htmlFor="name">
+            مقدار الأجر الذي تتقاضاه{" "}
           </label>
         </div>
       )}
