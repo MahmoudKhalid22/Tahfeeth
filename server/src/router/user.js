@@ -71,7 +71,7 @@ router.get(
 );
 // redirect to failure page
 router.get("/failure", (req, res) => {
-  res.send("failure");
+  res.send({ message: "failure" });
 });
 
 // callback redirect

@@ -5,7 +5,7 @@
  *     summary: Create a new user
  *     description: new user registretion for this site
  *     tags:
- *       - User
+ *       - Authentication
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -32,7 +32,7 @@
  *     summary: Verification token for verify account
  *     description: Verification token
  *     tags:
- *       - User
+ *       - Authentication
  *   parameters:
  *       - in: query
  *         name: verify email
@@ -54,7 +54,7 @@
  *     summary: login user to his page
  *     description: login user
  *     tags:
- *       - User
+ *       - Authentication
  *     requestBody:
  *       required: true
  *       content:
@@ -81,7 +81,7 @@
  *     summary: logout the user from the account
  *     description: logout the user
  *     tags:
- *       - User
+ *       - Authentication
  *     parameters:
  *      - in: header
  *        name: Authorization
@@ -110,7 +110,7 @@
  *     summary: verify email to reset password
  *     description: verify email to get the link of reset password on this email
  *     tags:
- *       - User
+ *       - Authentication
  *     requestBody:
  *          required: true
  *          content:
@@ -141,7 +141,7 @@
  *     summary: reset the paswword
  *     description: reset the password of the user account.
  *     tags:
- *       - User
+ *       - Authentication
  *     security:
  *       - accessToken: []
  *
@@ -181,7 +181,7 @@
  *      summary: refresh token after the access token expires
  *      description: this endpoint to get new access token if refresh token has been expired
  *      tags:
- *          - User
+ *          - Authentication
  *      parameters:
  *      - in: header
  *        name: Authorization
@@ -205,7 +205,7 @@
  *     summary: Update user addresses
  *     description: Update the addresses of the authenticated user.
  *     tags:
- *       - User
+ *       - Authentication
  *     security:
  *       - accessToken: []
  *     parameters:
@@ -251,12 +251,13 @@
  *   put:
  *    summary: update email.
  *    tags:
- *        - User
+ *        - Authentication
  *    description: if the user wants to update his name from this end point he can do that.
  *    parameters:
  *       - in: header
- *         name: accessToken
- *         description: access token token for update the username
+ *         name: Authorization
+ *         description: Bearer access token for update the username
+ *         example: "Bearer abcxyz123456"
  *         required: true
  *         schema:
  *           type: string
@@ -266,11 +267,16 @@
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               email:
  *                 type: string
  *    responses:
  *       '200':
- *         description: User has been updated successfully
+ *         description: email has been sent to you, please check your email to verify your new one.
+ *         content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  example: {message: email has been sent to you. please check your email to verify your new one}
  *       '500':
  *         description: Internal server error
  */
@@ -281,13 +287,14 @@
  *     summary: Update user password
  *     description: Update user password after authentication using a Bearer token stored in a cookie.
  *     tags:
- *       - User
+ *       - Authentication
  *     security:
  *       - accessToken: []
  *     parameters:
- *       - in: cookie
- *         name: accessToken
+ *       - in: header
+ *         name: Authorization
  *         description: Bearer token for authentication
+ *         example: "Bearer abcxyz123456"
  *         required: true
  *         schema:
  *           type: string
@@ -306,6 +313,125 @@
  *     responses:
  *       '200':
  *         description: User updated successfully
+ *         content:
+ *          application/json:
+ *              type: object
+ *              example: {message: password has been updated}
  *       '400':
  *         description: Bad request
+ */
+/**
+ * @swagger
+ * /user/me:
+ *  get:
+ *      summary: get the information of the user
+ *      description: To get the information of user
+ *      tags:
+ *          - Authentication
+ *      parameters:
+ *          - in: header
+ *            name: Authorization
+ *            description: give me access token with Bearer key word in header
+ *            example: Bearer abcdefxyz123
+ *      responses:
+ *          '200':
+ *              content:
+ *                  application/json:
+ *                      type: object
+ *                      schema:
+ *                            $ref: '#/components/schemas/Login'
+ *          '500':
+ *              description: internal server error
+ *
+ */
+
+/**
+ * @swagger
+ * /user/auth/google:
+ *  get:
+ *      description: oauth with google
+ *      summary: this endpoint to enter oauth interface with google
+ *      tags:
+ *          - Authentication
+ */
+/**
+ * @swagger
+ * /user/failure:
+ *  get:
+ *      description: if the user signed in with google and there is some error so this one for send failure message
+ *      tags:
+ *          - Authentication
+ *      responses:
+ *          '200':
+ *              content:
+ *                  application/json:
+ *                      type: object
+ *                      example: {message: failure}
+ */
+/**
+ * @swagger
+ *  /user/auth/facebook:
+ *      get:
+ *          description: user login with facebook account
+ *          tags:
+ *              - Authentication
+ */
+/**
+ * @swagger
+ *   /user/teachers:
+ *       get:
+ *          description: get all verified teachers
+ *          tags:
+ *              - For all Users
+ *
+ *
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          type: object
+ *                          schema:
+ *                              $ref: '#/components/schemas/Teachers'
+ *
+ *              '500':
+ *                  description: internal server error
+ */
+/**
+ * @swagger
+ *  /user/message:
+ *      post:
+ *          description: the user send messages for give a feedback or aquirement
+ *          tags:
+ *              - For all Users
+ *          requestBody:
+ *            required: true
+ *            content:
+ *             application/json:
+ *              schema:
+ *               $ref: '#/components/schemas/Message'
+ *          responses:
+ *              '200':
+ *                 description: the response message
+ *                 content:
+ *                  application/json:
+ *                      type: object
+ *                      example: {message: your message has been sent successfully}
+ *              '400':
+ *                  description: bad request
+ */
+/**
+ * @swagger
+ *  /user/admin:
+ *   get:
+ *      description: this is just for admin
+ *      tags:
+ *          - Admin
+ *      parameters:
+ *          - in: header
+ *            name: Authorization
+ *            description: the access token with Bearer keyword
+ *            example: Bearer abcxyz123
+ *      responses:
+ *          '200':
+ *              description: an array that contains all users and teachers
  */
