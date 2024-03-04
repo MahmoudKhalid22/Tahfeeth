@@ -105,5 +105,37 @@
  *                  type: boolean
  *              id:
  *                  type: string
+ * 
+ *      Table:
+ *          type: object
+ *          properties:
+ *              day: 
+ *                  type: string
+ *                  description: the day of the session
+ *              quantity:
+ *                  type: string
+ *                  description: the quantity of the memorization
+ *              level:
+ *                  type: string
+ *                  description: the level of the memorization
+ *              tasks:
+ *                  type: string
+ *                  description: the tasks that the student should do next time
+ *              completed:
+ *                  type: boolean
+ *                  description: the completed status of the previous task
+ *              questions:
+ *                  type: string
+ *                  description: if there any important question
+ *              answers:
+ *                  type: string
+ *                  description: the answer of the question
+ *              notes:
+ *                  type: string
+ *                  description: check if there any notes about this student
+ *              rate: 
+ *                  type: string
+ *                  description: the rate of the student at this session   
+ *                  
  *
  */
