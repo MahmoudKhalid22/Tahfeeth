@@ -23,6 +23,7 @@ function Links({ isLogin, onSetIsLogin }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [status, setStatus] = useState(isLogin);
+  // console.log(status);
 
   useEffect(() => {
     const isLoggedInStatus = JSON.parse(localStorage.getItem("status"));
@@ -44,7 +45,7 @@ function Links({ isLogin, onSetIsLogin }) {
         console.log(errorData);
         throw new Error(errorData.error);
       }
-      localStorage.clear();
+      localStorage.setItem("data", JSON.stringify([]));
       onSetIsLogin(false);
       return navigate("/");
     } catch (err) {
@@ -92,7 +93,7 @@ function Links({ isLogin, onSetIsLogin }) {
             </HashLink>
           </li>
         </ul>
-        {!status ? (
+        {!status.status ? (
           <div className="flex flex-col items-center justify-center gap-8">
             <Link to={"/register?mode=login"}>
               <div className="block lg:hidden">

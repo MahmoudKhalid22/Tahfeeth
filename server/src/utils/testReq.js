@@ -1,7 +1,8 @@
 const testReq = async () => {
   try {
     const response = await fetch("https://tahfeeth-system.onrender.com/test");
-    await response.json();
+    const result = await response.json();
+    // console.log(result);
   } catch (err) {
     console.log("Error fetching data:", err);
   } finally {

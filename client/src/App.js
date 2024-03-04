@@ -13,6 +13,7 @@ import Settings from "./pages/Settings";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  // console.log(isLogin);
 
   useEffect(() => {
     localStorage.setItem("status", JSON.stringify({ status: isLogin }));
