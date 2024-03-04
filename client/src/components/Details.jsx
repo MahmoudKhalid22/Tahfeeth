@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GiEntryDoor } from "react-icons/gi";
-import { RxUpdate } from "react-icons/rx";
 import styles from "./Details.module.css";
 import AddUserForm from "./AddUserForm";
 
@@ -9,13 +7,8 @@ import UpdateForm from "./UpdateForm";
 import Student from "../pages/Student";
 
 function Details({ onSetIsLogin }) {
-  const navigate = useNavigate();
-
-  const [userShow, setUserShow] = useState(false);
   const [usersData, setUsersData] = useState([]);
-  const [formUpdate, setFormUpdate] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [userShow, setUserShow] = useState(false);
 
   const data = localStorage.getItem("data")
     ? JSON.parse(localStorage.getItem("data"))
@@ -45,30 +38,6 @@ function Details({ onSetIsLogin }) {
 
   // const adminToken = data?.user.isAdmin ? data.token : undefined;
   // console.log(data.token);
-  const logout = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:5000/user/logout", {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + data.accessToken,
-        },
-      });
-      setLoading(false);
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log(errorData);
-        throw new Error(errorData.error);
-      }
-      localStorage.clear();
-      onSetIsLogin(false);
-      return navigate("/");
-    } catch (err) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // const getUsers = async () => {
   //   try {
@@ -124,57 +93,19 @@ function Details({ onSetIsLogin }) {
           </h4>
         )}
       </div>
-      <div className={styles.settings}>
-        <button
-          className="text-center text-5xl p-2 border-none outline-none cursor-pointer rounded-lg bg-[#959689] text-white transition-colors flex items-center justify-center hover:bg-[#959689]"
-          onClick={logout}
-          title="تسجيل الخروج"
-        >
-          <GiEntryDoor />
-        </button>
-        <button
-          className="text-center text-5xl p-2 border-none outline-none cursor-pointer rounded-lg bg-[#959689] text-white transition-colors flex items-center justify-center hover:bg-[#959689]"
-          onClick={() => setFormUpdate((prev) => !prev)}
-          title="تحديث المعلومات الشخصية"
-        >
-          <RxUpdate />
-        </button>
-      </div>
-      {error && !loading && (
+      <div className={styles.settings}></div>
+      {/* {error && !loading && (
         <p className="text-center my-12 text-red-600 font-semibold text-2xl">
           لا يمكن تسجيل الخروج يوجد خطأ داخلي في السيرفر
         </p>
       )}
-      {loading && <h4 className="loading loading-details">تحميل ...</h4>}
-
-      <div
-        className={`${styles.updateForm} ${formUpdate ? styles.active : ""}`}
-      >
-        {formUpdate && (
-          <UpdateForm userId={data?.user._id} userToken={data?.accessToken} />
-        )}
-      </div>
-      {data?.user.role !== "teacher" && <Student />}
-      <div>
-        {data?.user.role === "teacher" ? (
-          <div className="flex items-center flex-wrap justify-center gap-4">
-            <button
-              onClick={() => {
-                setUserShow(true);
-              }}
-            >
-              إضافة طالب
-            </button>
-            <button>قراءة بيانات الطلاب</button>
-          </div>
-        ) : undefined}
-
-        {/* <div
+      {loading && <h4 className="loading loading-details">تحميل ...</h4>} */}
+      {/* <div
           className={`${styles.updateForm} ${userShow ? styles.addForm : ""}`}
         >
           {/* <AddUserForm /> */}
-        {/* </div> */}
-        {!userShow &&
+      {/* </div> */}
+      {/* {!userShow &&
           !loading &&
           usersData?.map((user) => (
             <div className={styles.cart} key={user._id}>
@@ -199,9 +130,24 @@ function Details({ onSetIsLogin }) {
                 </button>
               </div>
             </div>
-          ))}
+          ))} */}
+      {data?.role !== "teacher" && <Student />}
+      <div>
+        {data?.user.role === "teacher" ? (
+          <div className="flex items-center flex-wrap justify-center gap-4">
+            <button
+              onClick={() => {
+                setUserShow(true);
+              }}
+            >
+              إضافة طالب
+            </button>
+            <button>قراءة بيانات الطلاب</button>
+          </div>
+        ) : undefined}
       </div>
     </div>
+    // </div>
   );
 }
 

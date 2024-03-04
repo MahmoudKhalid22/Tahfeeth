@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdInformationCircle } from "react-icons/io";
@@ -8,14 +8,57 @@ import { FaRegMessage } from "react-icons/fa6";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { LiaUserPlusSolid } from "react-icons/lia";
 import Logo from "./Logo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { GiEntryDoor } from "react-icons/gi";
+import { RxGear } from "react-icons/rx";
+import { CgProfile } from "react-icons/cg";
 
-function Links({ isLogin }) {
+const data = localStorage.getItem("data")
+  ? JSON.parse(localStorage.getItem("data"))
+  : null;
+
+function Links({ isLogin, onSetIsLogin }) {
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [status, setStatus] = useState(isLogin);
+
+  useEffect(() => {
+    const isLoggedInStatus = JSON.parse(localStorage.getItem("status"));
+    setStatus(isLoggedInStatus);
+  }, [isLogin]);
+
+  const logout = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:5000/user/logout", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + data.accessToken,
+        },
+      });
+      setLoading(false);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error(errorData.error);
+      }
+      localStorage.clear();
+      onSetIsLogin(false);
+      return navigate("/");
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex-1 w-16 lg:w-64 fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden">
       <Logo />
       <div className="flex items-center justify-between flex-col h-full  overflow-hidden">
-        <ul className="flex flex-col items-center justify-center gap-8">
+        <ul className="flex flex-col items-center justify-center gap-4">
           <li className={`text-[#fff] text-2xl font-medium pb-2`}>
             <HashLink smooth to="/#home">
               <div className="block lg:hidden">
@@ -49,7 +92,7 @@ function Links({ isLogin }) {
             </HashLink>
           </li>
         </ul>
-        {!isLogin ? (
+        {!status ? (
           <div className="flex flex-col items-center justify-center gap-8">
             <Link to={"/register?mode=login"}>
               <div className="block lg:hidden">
@@ -69,7 +112,36 @@ function Links({ isLogin }) {
             </HashLink>
           </div>
         ) : (
-          <Link to="/details">حسابي</Link>
+          <div className="flex flex-col gap-4">
+            <Link
+              to="/details"
+              className=" text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
+            >
+              <span className="hidden lg:block">حسابي</span>
+              <div className="block lg:hidden">
+                <CgProfile />
+              </div>
+            </Link>
+            <Link
+              to="/settings"
+              className="text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
+            >
+              <span className="hidden lg:block">إعدادات الحساب</span>
+              <div className="block lg:hidden">
+                <RxGear />
+              </div>
+            </Link>
+            <button
+              className="text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
+              onClick={logout}
+              title="تسجيل الخروج"
+            >
+              <span className="hidden lg:block">تسجيل الخروج</span>
+              <div className="block lg:hidden">
+                <GiEntryDoor />
+              </div>
+            </button>
+          </div>
         )}
       </div>
     </div>

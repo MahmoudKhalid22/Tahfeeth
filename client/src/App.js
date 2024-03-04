@@ -8,15 +8,23 @@ import Register from "./pages/Register";
 import Teacher from "./pages/Teacher";
 import TeacherPage from "./pages/TeacherPage";
 import Verification from "./pages/Verification";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Settings from "./pages/Settings";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
 
+  useEffect(() => {
+    localStorage.setItem("status", JSON.stringify({ status: isLogin }));
+  }, [isLogin]);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Root isLogin={isLogin} />}>
+        <Route
+          path="/"
+          element={<Root isLogin={isLogin} onSetIsLogin={setIsLogin} />}
+        >
           <Route index element={<Home />} />
           <Route path="/verify" element={<Verification />} />
           <Route
@@ -30,6 +38,7 @@ function App() {
           <Route path="/details/:id" element={<Student />} />
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/teacher/:id" element={<TeacherPage />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>
