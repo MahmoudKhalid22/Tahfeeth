@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
+const Message = require("../model/Message");
 
 const saveUserInDB = async (body) => {
   await body.save();
@@ -62,7 +63,11 @@ const findUsers = async (id) => {
 };
 
 const getAllTeachers = async () => {
-  const teachers = await User.find({ role: "teacher", verified: true });
+  const teachers = await User.find({
+    role: "teacher",
+    verified: true,
+    pending: "verified",
+  });
   return teachers;
 };
 
@@ -81,6 +86,11 @@ const findStudents = async (teacherId) => {
   return students;
 };
 
+const findAllMessages = async () => {
+  const messages = Message.find({});
+  return messages;
+};
+
 module.exports = {
   getUserById,
   verificationToken,
@@ -93,4 +103,5 @@ module.exports = {
   getAllTeachers,
   addStudentToTeacher,
   findStudents,
+  findAllMessages,
 };

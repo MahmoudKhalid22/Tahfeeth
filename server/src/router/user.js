@@ -14,7 +14,7 @@ const {
   getUsers,
   addUser,
   deleteUser,
-  updateUser,
+  // updateUser,
   getUser,
   getOneUser,
   getStudents,
@@ -22,6 +22,7 @@ const {
   joinTeacher,
   getTeachers,
   messageForm,
+  getMessages,
 } = require("../controller/users");
 const { getTables } = require("../controller/tables");
 
@@ -101,31 +102,20 @@ router.get("/teachers", getTeachers);
 router.post("/message", messageForm);
 
 // FOR ADMIN //
-
 router.get("/admin", auth, getUsers);
+router.get("/join/teacher", auth, joinTeacher);
+router.delete("/:id", auth, deleteUser);
 
-router.post("/join/teacher", auth, joinTeacher);
+router.get("/admin/:id", getOneUser);
+router.get("/admin/message", auth, getMessages);
+router.post("", auth, addUser);
 
 // FOR TEACHER
-router.post("/join/student", auth, joinStudent);
+router.get("/join/student", auth, joinStudent);
 
 router.get("/students", auth, getStudents);
 
 // FOR STUDENT
 router.get("/tables", auth, getTables);
-
-// --------------------------------------------------
-// FOR ADMIN
-router.get("/admin/:id", getOneUser);
-//
-router.post("", auth, addUser);
-router.delete("/:id", auth, deleteUser);
-
-// FOR ADMIN AND USERS
-router.patch("/:id", auth, updateUser);
-
-// for teachers
-
-router.get("/teacher", auth, getStudents);
 
 module.exports = router;

@@ -423,7 +423,7 @@
  * @swagger
  *  /user/admin:
  *   get:
- *      description: this is just for admin
+ *      description: to get all users of the platform
  *      tags:
  *          - Admin
  *      parameters:
@@ -434,4 +434,199 @@
  *      responses:
  *          '200':
  *              description: an array that contains all users and teachers
+ */
+
+/**
+ * @swagger
+ *  /user/admin/message:
+ *      get:
+ *          description: to get all the messages from users and clients
+ *          tags:
+ *              - Admin
+ *          parameters:
+ *              - in: header
+ *                name: Authorization
+ *                description: access token to check if he is the admin
+ *                example: Bearer abcxyz123
+ *
+ *          responses:
+ *           '200':
+ *             content:
+ *               application/json:
+ *                 schema:
+ *                  type: object
+ *                  $ref: '#/components/schemas/Message'
+ */
+
+/**
+ * @swagger
+ *  /user/join/teacher:
+ *      get:
+ *          description: if teacher want to join to platform
+ *          tags:
+ *              - Admin
+ *          parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: send access token in header to check the admin status with keyword Bearer
+ *                example: Bearer abcxyz123
+ *
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          example: {message: notification has been sent to admin. wait for acception}
+ *
+ *              '500':
+ *                 description: internal server error
+ *
+ */
+/**
+ * @swagger
+ *  /user:
+ *      post:
+ *          description: add user or accept invitation for the users
+ *          tags:
+ *              - Admin
+ *          parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: send access token in header to check the admin status with keyword Bearer
+ *                example: Bearer abcxyz123
+ *
+ *          requestBody:
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/User'
+ *
+ *          responses:
+ *              '200':
+ *                 content:
+ *                  application/json:
+ *                      example:
+ *                          {message: user has been added successfully}
+ *              '500':
+ *                  description: internal server error
+ *
+ *
+ *
+ */
+/**
+ * @swagger
+ *  /user/{id}:
+ *      delete:
+ *          description: the admin wants to delete some users
+ *          tags:
+ *              - Admin
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                type: string
+ *                required: true
+ *              - in: headers
+ *                name: Authorization
+ *                description: send access token in header to check the admin status with keyword Bearer
+ *                example: Bearer abcxyz123
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example:
+ *                                       {message: user has been deleted}
+ *
+ *              '400':
+ *                  description: internal server error
+ *
+ */
+/**
+ * @swagger
+ *  /user/admin/{id}:
+ *      get:
+ *          description: the admin wants to get one user
+ *          tags:
+ *              - Admin
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                type: string
+ *                required: true
+ *              - in: headers
+ *                name: Authorization
+ *                description: send access token in header to check the admin status with keyword Bearer
+ *                example: Bearer abcxyz123
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/components/schemas/Teachers'
+ *              '500':
+ *                  description: internal server error
+ *
+ *
+ *
+ */
+/**
+ * @swagger
+ *  /user/join/student:
+ *      get:
+ *          description: if student want to join to the teacher
+ *          tags:
+ *              - Teacher
+ *          parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: send access token in header to check the admin status with keyword Bearer
+ *                example: Bearer abcxyz123
+ *
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          example: {message: notification has been sent to admin. wait for acception}
+ *
+ *              '500':
+ *                 description: internal server error
+ *
+ */
+/**
+ * @swagger
+ *  /user/students:
+ *      get:
+ *          description: the teacher get all students who joined to him
+ *          tags:
+ *              - Teacher
+ *          parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: send access token in header to check the admin status with keyword Bearer
+ *                example: Bearer abcxyz123
+ *
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/components/schemas/Student'
+ *
+ *              '500':
+ *                 description: internal server error
+ *
+ */
+/**
+ * @swagger
+ *  /user/tables:
+ *      get:
+ *           description: get the data of the student activity
+ *           tags:
+ *              - Students
+ *           parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: send access token in header to check the admin status with keyword Bearer
+ *                example: Bearer abcxyz123
+ *
  */

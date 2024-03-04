@@ -8,9 +8,7 @@
  *          - email
  *          - password
  *        properties:
- *          id:
- *            type: string
- *            description: The auto-generated id of the user
+
  *          name:
  *            type: string
  *            description: the name of the user
@@ -20,6 +18,17 @@
  *          password:
  *             type: string
  *             description: the password of the user
+ *          role:
+ *              type: string
+ *              description: the role of the user
+ *          professional: 
+ *              type: boolean
+ *              description: if the user is a teacher, is he professional or not
+ *          price: 
+ *              type: number
+ *              default: 50
+ *              description: if the user is a teacher, how much does he want for a student
+ * 
  *      Login:
  *        type: object
  *        required:
@@ -83,4 +92,18 @@
  *              msg:
  *                  type: string
  *                  description: the message of the user
+ *      Student:
+ *          type: object
+ *          properties:
+ *              name:
+ *                  type: string
+ *              email:
+ *                  type: string
+ *              role:
+ *                  type: string
+ *              professional:
+ *                  type: boolean
+ *              id:
+ *                  type: string
+ *
  */
