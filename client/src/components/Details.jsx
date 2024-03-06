@@ -1,81 +1,31 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Details.module.css";
-import AddUserForm from "./AddUserForm";
-
-import UpdateForm from "./UpdateForm";
+// import AddUserForm from "./AddUserForm";
 import Student from "../pages/Student";
 
 function Details({ onSetIsLogin }) {
-  const [usersData, setUsersData] = useState([]);
   const [userShow, setUserShow] = useState(false);
 
-  const data = localStorage.getItem("data")
+  const data = JSON.parse(localStorage.getItem("data"))
     ? JSON.parse(localStorage.getItem("data"))
     : null;
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return (
-      <div className="overflow-hidden h-[35rem] w-[80%] flex flex-col">
-        <h2 className="text-red-700 text-3xl font-semibold text-center w-[100%] mx-auto translate-y-1/2 h-full overflow-y-hidden -left-[12%] absolute">
+      <div className="overflow-hidden h-screen w-[80%] absolute left-0 flex flex-col items-center justify-center">
+        <h2 className="text-red-700 text-3xl font-semibold text-center overflow-y-hidden">
           يجب تسجيل الدخول
         </h2>
         <Link
           to="/register?mode=login"
-          className="text-white bg-[#959689] text-3xl font-semibold text-center mx-auto translate-y-1/2 block mt-12 w-fit p-4 rounded-lg hover:bg-[#67685e] transition-colors -left-[12%] absolute"
+          className="text-white bg-[#959689] text-3xl font-semibold text-center mx-auto block mt-12 w-fit p-4 rounded-lg hover:bg-[#67685e] transition-colors"
         >
           تسجيل الدخول
         </Link>
       </div>
     );
   }
-
-  const stdToken = data?.accessToken;
-  const teacherToken = data?.user.role === "teacher" ? data.accessToken : null;
-  const adminToken = data?.user.role === "admin" ? data.accessToken : null;
-
-  // console.log(data);
-
-  // const adminToken = data?.user.isAdmin ? data.token : undefined;
-  // console.log(data.token);
-
-  // const getUsers = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const response = await fetch(
-  //       "https://tahfeeth-system.onrender.com/users",
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           Authorization: "Bearer " + adminToken,
-  //         },
-  //       }
-  //     );
-  //     const d = await response.json();
-  //     setUsersData(d);
-  //     setLoading(false);
-  //   } catch (err) {
-  //     throw new Error(err);
-  //   }
-  // };
-
-  // const deleteUser = async (id) => {
-  //   try {
-  //     setLoading(true);
-
-  //     await fetch("https://tahfeeth-system.onrender.com/users/" + id, {
-  //       method: "DELETE",
-  //       headers: {
-  //         Authorization: "Bearer " + adminToken,
-  //       },
-  //     });
-  //     setLoading(false);
-
-  //     window.location.reload();
-  //   } catch (e) {
-  //     throw new Error(e);
-  //   }
-  // };
 
   return (
     <div className={`${styles.container} mt-6  mr-16 lg:mr-[16rem]`}>
@@ -84,10 +34,10 @@ function Details({ onSetIsLogin }) {
 
         {data && (
           <h4 className="flex items-center justify-center gap-2">
-            {data.user.name}
-            {data.user.role === "student"
+            {data?.user?.name}
+            {data?.user?.role === "student"
               ? "(طالب) "
-              : data.user.role === "teacher"
+              : data?.user?.role === "teacher"
               ? "(معلم) "
               : "(مدير) "}
           </h4>
@@ -131,9 +81,9 @@ function Details({ onSetIsLogin }) {
               </div>
             </div>
           ))} */}
-      {data?.role !== "teacher" && <Student />}
+      {data?.user.role !== "teacher" && <Student />}
       <div>
-        {data?.user.role === "teacher" ? (
+        {data?.user?.role === "teacher" ? (
           <div className="flex items-center flex-wrap justify-center gap-4">
             <button
               onClick={() => {

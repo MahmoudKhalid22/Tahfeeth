@@ -32,9 +32,11 @@ function Student() {
     ? JSON.parse(localStorage.getItem("data"))
     : undefined;
 
+    
+
   const stdToken = data?.accessToken;
-  const teacherToken = data?.user.role === "teacher" ? data.accessToken : null;
-  const adminToken = data?.user.role === "admin" ? data.accessToken : null;
+  const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
+  // const adminToken = data?.user.role === "admin" ? data.accessToken : null;
 
   const stdId = id ? id : data?.user._id;
 
