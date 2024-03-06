@@ -96,7 +96,7 @@ function Links({ isLogin, onSetIsLogin }) {
             </HashLink>
           </li>
         </ul>
-        {!status.status ? (
+        {!isLogin ? (
           <div className="flex flex-col items-center justify-center gap-8">
             <Link to={"/register?mode=login"}>
               <div className="block lg:hidden">
