@@ -115,7 +115,7 @@ function Form({ onSetIsLogin }) {
 
   return (
     <form
-      className="bg-none md:bg-gradient-to-r from-[#916f6e]  to-[#574342] flex items-center
+      className="bg-none flex items-center
     justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-full md:w-full md:h-[40rem] "
       onSubmit={isLogin ? handleSubmit : newUser}
       style={{ width: "80%" }}
@@ -128,9 +128,12 @@ function Form({ onSetIsLogin }) {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[100%]  md:h-16"
+            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[100%]  md:h-16"
           />
-          <label className="hidden md:block text-white text-2xl" htmlFor="name">
+          <label
+            className="hidden md:block text-[#43766C] text-2xl"
+            htmlFor="name"
+          >
             الاسم
           </label>
         </div>
@@ -142,9 +145,12 @@ function Form({ onSetIsLogin }) {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="البريد الإلكتروني"
           id="email"
-          className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+          className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
         />
-        <label className="hidden md:block text-white text-2xl" htmlFor="email">
+        <label
+          className="hidden md:block text-[#43766C] text-2xl"
+          htmlFor="email"
+        >
           البريد الإلكتروني
         </label>
       </div>
@@ -155,9 +161,12 @@ function Form({ onSetIsLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="كلمة السر"
           id="pass"
-          className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+          className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
         />
-        <label className="hidden md:block text-white text-2xl" htmlFor="pass">
+        <label
+          className="hidden md:block text-[#43766C] text-2xl"
+          htmlFor="pass"
+        >
           كلمة السر
         </label>
       </div>
@@ -167,14 +176,17 @@ function Form({ onSetIsLogin }) {
             type="text"
             placeholder="الاسم"
             id="name"
-            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
             onChange={(e) => setRole(e.target.value)}
           >
             <option>التسجيل ك</option>
             <option value={"teacher"}>معلم</option>
             <option value={"student"}>طالب</option>
           </select>
-          <label className="hidden md:block text-white text-2xl" htmlFor="name">
+          <label
+            className="hidden md:block text-[#43766C] text-2xl"
+            htmlFor="name"
+          >
             التسجيل كدورك
           </label>
         </div>
@@ -186,13 +198,16 @@ function Form({ onSetIsLogin }) {
             placeholder="الاسم"
             id="name"
             onChange={(e) => setProfessional(e.target.value)}
-            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
           >
             <option>هل أنت مجاز</option>
             <option value={true}>نعم</option>
             <option value={false}>لا</option>
           </select>
-          <label className="hidden md:block text-white text-2xl" htmlFor="name">
+          <label
+            className="hidden md:block text-[#43766C] text-2xl"
+            htmlFor="name"
+          >
             هل أنت مجاز
           </label>
         </div>
@@ -205,9 +220,12 @@ function Form({ onSetIsLogin }) {
             step={10}
             id="name"
             onChange={(e) => setPrice(e.target.value)}
-            className="text-md py-4 md:text-xl rounded-md border-none outline-none px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
           />
-          <label className="hidden md:block text-white text-2xl" htmlFor="name">
+          <label
+            className="hidden md:block text-[#43766C] text-2xl"
+            htmlFor="name"
+          >
             مقدار الأجر الذي تتقاضاه{" "}
           </label>
         </div>
@@ -216,15 +234,15 @@ function Form({ onSetIsLogin }) {
         error ? error : ""
       }`}</p>
       {loading && (
-        <p className="text-[#2b2121] md:text-white text-2xl font-semibold">
+        <p className="text-[#2b2121] md:text-[#43766C] text-2xl font-semibold">
           تــحمــيل ...
         </p>
       )}
-      <button className="p-2 border-none outline-none text-xl md:text-2xl cursor-pointer rounded-md transition-colors flex gap-2 items-center justify-center w-full md:h-16 bg-[#9F8565] hover:bg-[#8a7762] text-white">
+      <button className="p-2 border-slate-700  text-xl md:text-2xl cursor-pointer rounded-md transition-colors flex gap-2 items-center justify-center w-full md:h-16 bg-[#9F8565] hover:bg-[#8a7762] text-[#ececec] duration-300">
         <GiExitDoor />
         {isLogin ? <span>دخول</span> : <span>تسجيل</span>}
       </button>
-      <p className="flex flex-col items-center md:flex-row gap-4 text-[#2b2121] md:text-white">
+      <p className="flex flex-col items-center md:flex-row gap-4 text-[#2b2121] md:text-[#43766C]">
         {isLogin ? (
           <>
             <span>ليس لديك حساب بعد</span>
