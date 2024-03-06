@@ -16,6 +16,16 @@ const getTables = async (req, res) => {
   }
 };
 
+const getTablesStd = async (req, res) => {
+  try {
+    const userId = req.user;
+    const tables = await Table.find({ ownerId: userId });
+    res.send(tables);
+  } catch (err) {
+    res.status(500).send({ err: err.message });
+  }
+};
+
 const createItem = async (req, res) => {
   const admins = req.user.filter((admin) => admin.isAdmin === true);
 
@@ -88,4 +98,10 @@ const deleteItem = async (req, res) => {
   }
 };
 
-module.exports = { getTables, createItem, updateItem, deleteItem };
+module.exports = {
+  getTables,
+  getTablesStd,
+  createItem,
+  updateItem,
+  deleteItem,
+};

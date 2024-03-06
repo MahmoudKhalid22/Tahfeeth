@@ -16,33 +16,6 @@ function Details({ onSetIsLogin }) {
 
   const stdToken = data.accessToken;
 
-  useEffect(() => {
-    const getTables = async () => {
-      try {
-        const response = await fetch(
-          "https://tahfeeth-system.onrender.com/user/tables",
-          {
-            method: "GET",
-            headers: {
-              "content-type": "application/json",
-              Authorization: "Bearer " + stdToken,
-            },
-          }
-        );
-        const result = await response.json();
-        setTable(result);
-      } catch (err) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (data || data.length > 0) {
-      getTables();
-    }
-  }, []);
-
   if (!data || data.length === 0) {
     return (
       <div className="overflow-hidden h-screen w-[80%] absolute left-0 flex flex-col items-center justify-center">
@@ -59,7 +32,7 @@ function Details({ onSetIsLogin }) {
     );
   }
 
-  console.log(table);
+  // console.log(table);
 
   return (
     <div className={`${styles.container} mt-6  mr-16 lg:mr-[16rem]`}>
