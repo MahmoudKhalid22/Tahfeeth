@@ -10,4 +10,6 @@ const testReq = async () => {
   }
 };
 
+testReq();
+
 module.exports = { testReq };

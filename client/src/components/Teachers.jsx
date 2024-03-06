@@ -40,18 +40,24 @@ function Teachers() {
       </h3>
       {!error && !loading && (
         <div className="flex flex-wrap gap-4 lg:gap-8 justify-center">
-          {teachers?.map((teacher) => (
-            <Card
-              name={teacher.name}
-              role={teacher.role}
-              professional={teacher.professional}
-              price={teacher?.price}
-              avatar={teacher?.avatar}
-            />
-          ))}
+          {teachers.length > 0 ? (
+            teachers?.map((teacher) => (
+              <Card
+                name={teacher.name}
+                role={teacher.role}
+                professional={teacher.professional}
+                price={teacher?.price}
+                avatar={teacher?.avatar}
+              />
+            ))
+          ) : (
+            <h3 className="text-2xl font-semibold text-center text-red-600">
+              لا يوجد معلمون
+            </h3>
+          )}
         </div>
       )}
-      {!error && !loading && (
+      {!error && !loading && teachers.length > 6 && (
         <button className="bg-[#43766C] hover:bg-[#2f534c] transition-colors text-md sm:text-xl block mx-auto px-4 py-2 font-semibold text-white my-8">
           <Link to="/teacher">المزيد من المعلمين</Link>
         </button>
