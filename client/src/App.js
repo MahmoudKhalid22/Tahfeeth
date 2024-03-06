@@ -12,11 +12,9 @@ import { useEffect, useState } from "react";
 import Settings from "./pages/Settings";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
-console.log(initialStatus);
 
 function App() {
   const [isLogin, setIsLogin] = useState(initialStatus?.isLogin ? true : false);
-  console.log(isLogin);
 
   useEffect(() => {
     localStorage.setItem("status", JSON.stringify({ isLogin }));
