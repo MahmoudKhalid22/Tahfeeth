@@ -33,12 +33,15 @@ function Links({ isLogin, onSetIsLogin }) {
   const logout = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/user/logout", {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + data.accessToken,
-        },
-      });
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/logout",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + data.accessToken,
+          },
+        }
+      );
       setLoading(false);
       if (!response.ok) {
         const errorData = await response.json();

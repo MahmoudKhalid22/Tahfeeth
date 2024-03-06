@@ -11,28 +11,31 @@ function UpdateForm({ userId, userToken }) {
   const updateUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/users/${userId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          name:
-            userDataUpdate.name.trim().length > 0
-              ? userDataUpdate.name
-              : undefined,
-          email:
-            userDataUpdate.email.trim().length > 0
-              ? userDataUpdate.email
-              : undefined,
-          password:
-            userDataUpdate.password.trim().length > 0
-              ? userDataUpdate.password
-              : undefined,
-        }),
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `https://tahfeeth-system.onrender.com/users/${userId}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({
+            name:
+              userDataUpdate.name.trim().length > 0
+                ? userDataUpdate.name
+                : undefined,
+            email:
+              userDataUpdate.email.trim().length > 0
+                ? userDataUpdate.email
+                : undefined,
+            password:
+              userDataUpdate.password.trim().length > 0
+                ? userDataUpdate.password
+                : undefined,
+          }),
+          headers: {
+            "Content-Type": "application/json",
 
-          Authorization: "Bearer " + userToken,
-        },
-      });
+            Authorization: "Bearer " + userToken,
+          },
+        }
+      );
 
       if (!response.ok) {
         console.log(response.error);

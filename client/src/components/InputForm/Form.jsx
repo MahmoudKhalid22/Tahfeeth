@@ -24,20 +24,23 @@ function Form({ onSetIsLogin }) {
     setLoading(false);
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/user/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          password: password,
-          role: role,
-          professional: professional ? professional : null,
-          price: price ? price : 0,
-        }),
-      });
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+            role: role,
+            professional: professional ? professional : null,
+            price: price ? price : 0,
+          }),
+        }
+      );
 
       if (!response.ok) {
         setLoading(false);
@@ -76,16 +79,19 @@ function Form({ onSetIsLogin }) {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      );
       setError(null);
       setLoading(false);
       if (!response.ok) {
