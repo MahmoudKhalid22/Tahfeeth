@@ -52,7 +52,7 @@ const verificationEmail = async (req, res) => {
     if (!tokenVerified) {
       return res.send({ error: "Your token has been expired" });
     }
-    res.send({ messaga: "your account has been verified" });
+    res.redirect("http://localhost:3000/verified");
   } catch (e) {
     res.status(500).send(e);
   }

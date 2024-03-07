@@ -10,6 +10,8 @@ import TeacherPage from "./pages/TeacherPage";
 import Verification from "./pages/Verification";
 import { useEffect, useState } from "react";
 import Settings from "./pages/Settings";
+import NotFound from "./pages/NotFound";
+import Verified from "./pages/Verified";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
 
@@ -29,6 +31,7 @@ function App() {
         >
           <Route index element={<Home />} />
           <Route path="/verify" element={<Verification />} />
+          <Route path="/verified" element={<Verified />} />
           <Route
             path="/details"
             element={<Details onSetIsLogin={setIsLogin} />}
@@ -41,6 +44,7 @@ function App() {
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/teacher/:id" element={<TeacherPage />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

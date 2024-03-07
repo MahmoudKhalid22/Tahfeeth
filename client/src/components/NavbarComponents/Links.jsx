@@ -52,6 +52,7 @@ function Links({ isLogin, onSetIsLogin }) {
       localStorage.setItem("data", JSON.stringify([]));
       return navigate("/");
     } catch (err) {
+      console.log(err);
       setError(true);
     } finally {
       setLoading(false);
