@@ -46,7 +46,8 @@ const newUser = async (req, res) => {
 const verificationEmail = async (req, res) => {
   try {
     const token = req.params.token;
-    const tokenVerified = verificationToken(token);
+    // console.log(token);
+    const tokenVerified = await verificationToken(token);
 
     if (!tokenVerified) {
       return res.send({ error: "Your token has been expired" });

@@ -11,11 +11,13 @@ import Verification from "./pages/Verification";
 import { useEffect, useState } from "react";
 import Settings from "./pages/Settings";
 
+const initialStatus = JSON.parse(localStorage.getItem("status"));
+
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(initialStatus?.isLogin ? true : false);
 
   useEffect(() => {
-    localStorage.setItem("status", JSON.stringify({ status: isLogin }));
+    localStorage.setItem("status", JSON.stringify({ isLogin }));
   }, [isLogin]);
 
   return (

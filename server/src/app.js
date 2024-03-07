@@ -10,7 +10,6 @@ require("./controller/OAuth");
 const userRouter = require("./router/user");
 const tableRouter = require("./router/tables");
 const { docs } = require("./utils/swagger");
-const { testReq } = require("./utils/testReq");
 
 const app = express();
 
@@ -33,6 +32,18 @@ app.use("/user", userRouter);
 app.use("/table", tableRouter);
 
 docs(app);
+
+const testReq = async () => {
+  try {
+    const response = await fetch("https://tahfeeth-system.onrender.com/test");
+    const result = await response.json();
+    // console.log(result);
+  } catch (err) {
+    console.log("Error fetching data:", err);
+  } finally {
+    setTimeout(testReq, 600000);
+  }
+};
 
 testReq();
 

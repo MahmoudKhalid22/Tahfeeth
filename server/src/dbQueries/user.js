@@ -8,24 +8,30 @@ const saveUserInDB = async (body) => {
 };
 
 const updateVerifiedUser = async (id) => {
-  await User.findByIdAndUpdate(id, { verified: true });
+  const user = await User.findByIdAndUpdate(
+    id,
+    { verified: true },
+    { new: true }
+  );
+  if (user) return true;
+  return false;
 };
 
-const getUserById = async (id) => {
-  const user = await User.findById(id);
-  if (user) {
-    updateVerifiedUser(user._id);
-  }
+const getUserById = async (_id) => {
+  const user = await User.findById(_id).exec();
+  if (!user) return false;
   return user;
 };
 
 const verificationToken = async (token) => {
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-  const user = await getUserById(decoded._id);
-  if (user) {
-    return true;
+  const userId = decoded._id;
+  const user = await updateVerifiedUser(userId);
+  if (!user) {
+    return false;
   }
-  return false;
+
+  return true;
 };
 
 const findUserByEmail = async (email) => {

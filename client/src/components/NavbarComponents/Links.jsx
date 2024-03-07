@@ -23,6 +23,7 @@ function Links({ isLogin, onSetIsLogin }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [status, setStatus] = useState(isLogin);
+  // console.log(status);
 
   useEffect(() => {
     const isLoggedInStatus = JSON.parse(localStorage.getItem("status"));
@@ -32,20 +33,23 @@ function Links({ isLogin, onSetIsLogin }) {
   const logout = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/user/logout", {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + data.accessToken,
-        },
-      });
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/logout",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + data.accessToken,
+          },
+        }
+      );
       setLoading(false);
       if (!response.ok) {
         const errorData = await response.json();
         console.log(errorData);
         throw new Error(errorData.error);
       }
-      localStorage.clear();
       onSetIsLogin(false);
+      localStorage.setItem("data", JSON.stringify([]));
       return navigate("/");
     } catch (err) {
       setError(true);
@@ -92,7 +96,7 @@ function Links({ isLogin, onSetIsLogin }) {
             </HashLink>
           </li>
         </ul>
-        {!status ? (
+        {!isLogin ? (
           <div className="flex flex-col items-center justify-center gap-8">
             <Link to={"/register?mode=login"}>
               <div className="block lg:hidden">
@@ -131,16 +135,30 @@ function Links({ isLogin, onSetIsLogin }) {
                 <RxGear />
               </div>
             </Link>
-            <button
-              className="text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
-              onClick={logout}
-              title="تسجيل الخروج"
-            >
-              <span className="hidden lg:block">تسجيل الخروج</span>
-              <div className="block lg:hidden">
-                <GiEntryDoor />
+            {loading ? (
+              <p className="text-center text-[#ececec] text-2xl">تحميل ...</p>
+            ) : error ? (
+              <div className="text-center text-[#ececec] text-xl">
+                <span>خطأ داخلي</span>
+                <p
+                  className="text-[0.5rem] sm:text-[0.75rem] cursor-pointer"
+                  onClick={logout}
+                >
+                  سجل خروج مرة أخرى
+                </p>
               </div>
-            </button>
+            ) : (
+              <button
+                className="text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
+                onClick={logout}
+                title="تسجيل الخروج"
+              >
+                <span className="hidden lg:block">تسجيل الخروج</span>
+                <div className="block lg:hidden">
+                  <GiEntryDoor />
+                </div>
+              </button>
+            )}
           </div>
         )}
       </div>

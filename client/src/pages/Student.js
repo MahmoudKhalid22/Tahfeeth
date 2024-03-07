@@ -32,9 +32,11 @@ function Student() {
     ? JSON.parse(localStorage.getItem("data"))
     : undefined;
 
+    
+
   const stdToken = data?.accessToken;
-  const teacherToken = data?.user.role === "teacher" ? data.accessToken : null;
-  const adminToken = data?.user.role === "admin" ? data.accessToken : null;
+  const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
+  // const adminToken = data?.user.role === "admin" ? data.accessToken : null;
 
   const stdId = id ? id : data?.user._id;
 
@@ -55,13 +57,16 @@ function Student() {
   useEffect(() => {
     const getTables = async () => {
       try {
-        const response = await fetch("http://localhost:5000/tablesa/" + stdId, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + stdToken,
-          },
-        });
+        const response = await fetch(
+          "https://tahfeeth-system.onrender.com/tablesa/" + stdId,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + stdToken,
+            },
+          }
+        );
 
         setLoadingTables(true);
         if (!response.ok) {
@@ -94,7 +99,7 @@ function Student() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:5000/tables", {
+      await fetch("https://tahfeeth-system.onrender.com/tables", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -5,7 +5,7 @@ const sgMail = require("@sendgrid/mail");
 
 const resetPasswordEmail = async (email, token) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  const resetPasswordLink = `http://localhost:${process.env.PORT}/user/reset/${token}`;
+  const resetPasswordLink = `https://tahfeeth-system.onrender.com/user/reset/${token}`;
 
   const msg = {
     to: email, // Change to your recipient

@@ -17,17 +17,20 @@ function Contact() {
     e.preventDefault();
     try {
       setLoading(false);
-      const response = await fetch("http://localhost:5000/user/message", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: message.name.length > 1 ? message.name : null,
-          email: message.name.length > 1 ? message.email : null,
-          msg: message.name.length > 1 ? message.msg : null,
-        }),
-      });
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/message",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: message.name.length > 1 ? message.name : null,
+            email: message.name.length > 1 ? message.email : null,
+            msg: message.name.length > 1 ? message.msg : null,
+          }),
+        }
+      );
       setLoading(true);
       const result = await response.json();
 
