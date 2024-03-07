@@ -10,6 +10,7 @@ require("./controller/OAuth");
 const userRouter = require("./router/user");
 const tableRouter = require("./router/tables");
 const { docs } = require("./utils/swagger");
+const { testReq } = require("./utils/testReq");
 
 const app = express();
 
@@ -32,6 +33,8 @@ app.use("/user", userRouter);
 app.use("/table", tableRouter);
 
 docs(app);
+
+testReq();
 
 app.get("/test", (req, res) => res.json({ msg: "test" }));
 

@@ -62,6 +62,8 @@ function Form({ onSetIsLogin }) {
           ? "هذا البريد الإلكتروني موجود مسبقا ، حاول ببريد إلكتروني آخر"
           : err.message
       );
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -3,12 +3,16 @@
   "name": "متابعة الطالب في تحفيظ القرآن",
   "icons": [
     {
+<<<<<<< HEAD
       "src": "logo-copy.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
       "src": "logo-copy.png",
+=======
+      "src": "logo512.png",
+>>>>>>> c575828b8289a411def45d2336173037a7519375
       "type": "image/png",
       "sizes": "512x512"
     }
