@@ -24,7 +24,7 @@ const {
   messageForm,
   getMessages,
 } = require("../controller/users");
-const { getTables } = require("../controller/tables");
+const { getTables, getTablesStd } = require("../controller/tables");
 
 const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
@@ -116,6 +116,6 @@ router.get("/join/student", auth, joinStudent);
 router.get("/students", auth, getStudents);
 
 // FOR STUDENT
-router.get("/tables", auth, getTables);
+router.get("/tables", auth, getTablesStd);
 
 module.exports = router;

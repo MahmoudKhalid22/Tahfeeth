@@ -32,33 +32,18 @@ function Student() {
     ? JSON.parse(localStorage.getItem("data"))
     : undefined;
 
-    
-
   const stdToken = data?.accessToken;
   const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
   // const adminToken = data?.user.role === "admin" ? data.accessToken : null;
 
   const stdId = id ? id : data?.user._id;
 
-  // useEffect(() => {
-  //   const getName = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:5000/user/admin/" + id);
-  //       const student = await response.json();
-  //       setStdName(student.name);
-  //     } catch (err) {
-  //       setError(err);
-  //     }
-  //   };
-
-  //   getName();
-  // }, [id]);
-
   useEffect(() => {
     const getTables = async () => {
       try {
+        setLoadingTables(true);
         const response = await fetch(
-          "https://tahfeeth-system.onrender.com/tablesa/" + stdId,
+          "https://tahfeeth-system.onrender.com/table/" + stdId,
           {
             method: "GET",
             headers: {
@@ -68,7 +53,6 @@ function Student() {
           }
         );
 
-        setLoadingTables(true);
         if (!response.ok) {
           const errorData = await response.json();
           console.log(errorData);
@@ -76,9 +60,9 @@ function Student() {
         }
 
         const tables = await response.json();
+        console.log(tables);
 
         setStudentData(tables);
-        setLoadingTables(false);
       } catch (err) {
         setError(err);
       } finally {
@@ -87,6 +71,8 @@ function Student() {
     };
     getTables();
   }, [stdId, stdToken]);
+
+  // console.log(studentData);
 
   //     if (data?.user.isAdmin) {
   //       getName();
@@ -173,21 +159,23 @@ function Student() {
                   <th>التقييم</th>
                 </tr>
               </thead>
-              <tbody>
-                {studentData?.map((std) => (
-                  <tr key={std._id}>
-                    <td>{std.day}</td>
-                    <td className={styles.notes}>{std.quantity}</td>
-                    <td>{std.level}</td>
-                    <td className={styles.notes}>{std.tasks}</td>
-                    <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
-                    <td>{std.questions}</td>
-                    <td>{std.answers}</td>
-                    <td className={styles.notes}>{std.notes}</td>
-                    <td>{std.rate}</td>
-                  </tr>
-                ))}
-              </tbody>
+              {studentData.length > 0 && (
+                <tbody>
+                  {studentData?.map((std) => (
+                    <tr key={std._id}>
+                      <td>{std.day}</td>
+                      <td className={styles.notes}>{std.quantity}</td>
+                      <td>{std.level}</td>
+                      <td className={styles.notes}>{std.tasks}</td>
+                      <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
+                      <td>{std.questions}</td>
+                      <td>{std.answers}</td>
+                      <td className={styles.notes}>{std.notes}</td>
+                      <td>{std.rate}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
             </table>
           </div>
         )}

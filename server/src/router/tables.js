@@ -8,6 +8,7 @@ const {
 } = require("../controller/tables");
 
 router.get("/:id", auth, getTables);
+router.get("");
 router.post("/create-table", auth, createItem);
 router.patch("/:id", auth, updateItem);
 router.delete("/:id", auth, deleteItem);
