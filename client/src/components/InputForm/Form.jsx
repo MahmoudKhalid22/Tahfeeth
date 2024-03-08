@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { GiExitDoor } from "react-icons/gi";
+import { FaGooglePlus, FaFacebook } from "react-icons/fa";
 
 function Form({ onSetIsLogin }) {
   const [searchParams] = useSearchParams();
@@ -107,6 +108,19 @@ function Form({ onSetIsLogin }) {
       // Reset the form data
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleRegister = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/user/auth/google");
+      const result = await response.json();
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -258,6 +272,15 @@ function Form({ onSetIsLogin }) {
           </>
         )}
       </p>
+
+      <div className="flex gap-12">
+        <button onClick={handleGoogleRegister}>
+          <FaGooglePlus className="text-5xl fill-green-600 " />
+        </button>
+        <button>
+          <FaFacebook className="text-5xl fill-green-600 " />
+        </button>
+      </div>
     </form>
   );
 }

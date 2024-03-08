@@ -1,9 +1,8 @@
 const express = require("express");
 require("dotenv").config();
-const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
-
+const cors = require("cors");
 const path = require("path");
 require("./config/dbConnection");
 require("./controller/OAuth");
