@@ -6,7 +6,7 @@ import AddUserForm from "../components/AddUserForm";
 
 const data = JSON.parse(localStorage.getItem("data"));
 
-const adminToken = data.user.role === "admin" ? data.accessToken : null;
+const adminToken = data?.user?.role === "admin" ? data.accessToken : null;
 
 const initialState = {
   showTeacherForm: false,
@@ -150,7 +150,7 @@ const Settings = () => {
               >
                 إضافة طالب
               </button>
-              {state.showStudentForm && <AddUserForm role="student" />}{" "}
+              {state.showStudentForm && <AddUserForm role="student" />}
             </div>
           </div>
         </div>
