@@ -69,9 +69,24 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    admins: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    students: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    teachers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    admins: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   {
     timestamps: true,
@@ -104,7 +119,7 @@ userSchema.methods.toJSON = function () {
 userSchema.methods.createAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+    expiresIn: "30d",
   });
   user.tokens = user.tokens.concat({ token });
   await user.save();

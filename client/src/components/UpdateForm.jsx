@@ -2,99 +2,97 @@ import React, { useState } from "react";
 import styles from "./UpdateForm.module.css";
 
 function UpdateForm({ userId, userToken }) {
-  const [userDataUpdate, setUserDataUpdate] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const updateUser = async (e) => {
+  const updateUsername = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch(
-        `https://tahfeeth-system.onrender.com/users/${userId}`,
+        `http://localhost:5000/user/update-username`,
         {
-          method: "PATCH",
-          body: JSON.stringify({
-            name:
-              userDataUpdate.name.trim().length > 0
-                ? userDataUpdate.name
-                : undefined,
-            email:
-              userDataUpdate.email.trim().length > 0
-                ? userDataUpdate.email
-                : undefined,
-            password:
-              userDataUpdate.password.trim().length > 0
-                ? userDataUpdate.password
-                : undefined,
-          }),
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
-
             Authorization: "Bearer " + userToken,
           },
+          body: JSON.stringify({
+            name: username.trim().length > 0 ? username : null,
+          }),
         }
       );
 
       if (!response.ok) {
-        console.log(response.error);
-        throw new Error();
+        throw new Error(await response.json());
       }
 
       const updatedData = await response.json();
-      console.log(updatedData[0]);
-      setUserDataUpdate({
-        ...userDataUpdate,
-        name: "",
-        email: "",
-        password: "",
-      });
-      const existingData = localStorage.getItem("data");
-      const existingDataParsed = JSON.parse(existingData);
+      console.log(updatedData);
 
-      existingDataParsed.user.name = updatedData[0].name;
-      existingDataParsed.user.email = updatedData[0].email;
-      existingDataParsed.user.password = updatedData[0].password;
+      const existingData = JSON.parse(localStorage.getItem("data"));
+      existingData.user.name = updatedData.name;
+      // existingData.user.email = updatedData[0].email;
+      // existingData.user.password = updatedData[0].password;
 
-      const updatedDataStr = JSON.stringify(existingDataParsed);
-      console.log(updatedDataStr);
+      const updatedDataStr = JSON.stringify(existingData);
       localStorage.setItem("data", updatedDataStr);
       window.location.reload();
     } catch (e) {
-      console.log(e);
-      throw new Error(e);
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form className={styles.container} onSubmit={updateUser}>
-      <input
-        type="text"
-        placeholder="الاسم"
-        value={userDataUpdate.name}
-        onChange={(e) =>
-          setUserDataUpdate({ ...userDataUpdate, name: e.target.value })
-        }
-      />
-      <input
-        type="text"
-        placeholder="الايميل"
-        value={userDataUpdate.email}
-        onChange={(e) =>
-          setUserDataUpdate({ ...userDataUpdate, email: e.target.value })
-        }
-      />
-      <input
-        type="password"
-        placeholder="كلـــمة السر"
-        value={userDataUpdate.password}
-        onChange={(e) =>
-          setUserDataUpdate({ ...userDataUpdate, password: e.target.value })
-        }
-      />
-      <button type="submit">تعديل</button>
-    </form>
+    <div
+      className={`${styles.container} mb-6 rounded-md border-2 border-[#43766C]`}
+    >
+      <form className="" onSubmit={updateUsername}>
+        <div className="flex items-center justify-center gap-6 p-4 rounded-md">
+          <input
+            className="text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
+            type="text"
+            placeholder="الاسم"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <button type="submit">تغيير</button>
+        </div>
+        <div>
+          {loading && <p className="text-xl text-center">تحميل...</p>}
+          {error && !loading && (
+            <p className="text-xl text-center">حدث بعض الخطأ</p>
+          )}
+        </div>
+      </form>
+      <form className="flex items-center justify-center gap-6 p-4 rounded-md">
+        <input
+          className="text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
+          type="text"
+          placeholder="الايميل"
+          // value={userDataUpdate.email}
+          // onChange={(e) =>
+          //   setUserDataUpdate({ ...userDataUpdate, email: e.target.value })
+          // }
+        />
+        <button type="submit">تغيير</button>
+      </form>
+      <form className="flex items-center justify-center gap-6 p-4 rounded-md">
+        <input
+          className="text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
+          type="password"
+          placeholder="كلـــمة السر"
+          // value={userDataUpdate.password}
+          // onChange={(e) =>
+          //   setUserDataUpdate({ ...userDataUpdate, password: e.target.value })
+          // }
+        />
+        <button type="submit">تغيير</button>
+      </form>
+    </div>
   );
 }
 

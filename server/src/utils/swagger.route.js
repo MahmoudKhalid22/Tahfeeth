@@ -630,3 +630,28 @@
  *                example: Bearer abcxyz123
  *
  */
+/**
+ * @swagger
+ *  /user/join/{id}:
+ *   post:
+ *      summary: allow user to join to specific teacher
+ *      tags:
+ *          - Students
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            description: the id of the teacher who student wants to join
+ *            example: abcxyz123
+ *          - in: headers
+ *            name: Authorization
+ *            description: Bearer and access token of this student to allow him to join
+ *            example: Bearer abcxyz123
+ *      responses:
+ *          '200':
+ *              content:
+ *                  application/json:
+ *                      example: {message: you have joined ot this teacher}
+ *          '500':
+ *              description: internal server error
+ *
+ */

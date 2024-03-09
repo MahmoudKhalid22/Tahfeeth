@@ -3,6 +3,7 @@ const passport = require("passport");
 const {
   newUser,
   verificationEmail,
+  internalSignup,
   loginUser,
   logoutUser,
   forgetPassword,
@@ -19,7 +20,7 @@ const {
   getOneUser,
   getStudents,
   joinStudent,
-  joinTeacher,
+  joinToTeacher,
   getTeachers,
   messageForm,
   getMessages,
@@ -36,6 +37,9 @@ router.post("/signup", newUser);
 
 // VERIFICATION EMAIL
 router.get("/verify/:token", verificationEmail);
+
+// INTERNAL SIGNUP
+router.post("/teacher/signup", auth, internalSignup);
 
 // LOGIN
 router.post("/login", loginUser);
@@ -103,7 +107,7 @@ router.post("/message", messageForm);
 
 // FOR ADMIN //
 router.get("/admin", auth, getUsers);
-router.get("/join/teacher", auth, joinTeacher);
+// router.get("/join/teacher", auth, joinTeacher);
 router.delete("/:id", auth, deleteUser);
 
 router.get("/admin/:id", getOneUser);
@@ -117,5 +121,6 @@ router.get("/students", auth, getStudents);
 
 // FOR STUDENT
 router.get("/tables", auth, getTablesStd);
+router.post("/join/:id", auth, joinToTeacher);
 
 module.exports = router;

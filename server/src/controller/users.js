@@ -25,7 +25,7 @@ const newUser = async (req, res) => {
   if (!name || !email || !password || !role) {
     return res.status(400).send("يجب إدخال البيانات أولا");
   }
-  const user = new User(req.body);
+  const user = new User({ ...req.body });
   try {
     await saveUserInDB(user);
 
@@ -55,6 +55,22 @@ const verificationEmail = async (req, res) => {
     res.redirect("https://tahfeeth.vercel.app/verified");
   } catch (e) {
     res.status(500).send(e);
+  }
+};
+
+const internalSignup = async (req, res) => {
+  try {
+    const { name, email, password, role, verified, status } = req.body;
+    if (!name || !email || !password || !role || !verified || !status) {
+      return res.status(400).send("يجب إدخال البيانات أولا");
+    }
+    const student = new User({ ...req.body });
+    const teacherId = req.user[0]._id;
+    await student.save();
+    await addStudentToTeacher(teacherId, student._id);
+    res.status(201).send({ message: "تمت إضافة الطالب" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -144,7 +160,7 @@ const updateUsername = async (req, res) => {
     const updatedUser = await updateUserByName(req.user[0]._id, name);
     res.send(updatedUser);
   } catch (err) {
-    res.status(500).send({ err });
+    res.status(500).send({ err: err.message });
   }
 };
 
@@ -192,25 +208,26 @@ const getUsers = async (req, res) => {
   try {
     if (req.user[0].role === "admin") {
       const users = await findUsers();
+
       res.send(users);
     } else {
       res.status(400).send({ message: "you're not the admin" });
     }
   } catch (e) {
-    console.log(e);
-    res.status(500).send(e);
+    // console.log(e);
+    res.status(500).send({ e: e.message });
   }
 };
 
-const joinTeacher = async (req, res) => {
+const joinToTeacher = async (req, res) => {
   try {
-    const { _id } = req.user[0];
-    const teacher = await getUserById(_id);
-    if (!teacher.role === "teacher") {
-      return res.status(400).send({ err: "you are not a teacher" });
-    }
-    // sendNotification(teacherId);
-    res.send({ message: "notification has been sent to the admin" });
+    const teacherId = req.params.id;
+    const studentId = req.user[0]._id;
+    // console.log(teacherId, studentId);
+
+    const newStudents = await addStudentToTeacher(teacherId, studentId);
+
+    res.send({ newStudents });
   } catch (err) {
     // console.log(err);
     res.status(500).send({ err: err.message });
@@ -304,7 +321,7 @@ const joinStudent = async (req, res) => {
     await addStudentToTeacher(studentId, teacherId);
     res.send({ message: "you have been added to this teacher" });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).send({ err: err.messaga });
   }
 };
@@ -312,10 +329,10 @@ const joinStudent = async (req, res) => {
 const getOneUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    console.log(user);
+    // console.log(user);
     res.send(user);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).send(err);
   }
 };
@@ -353,6 +370,7 @@ const getMessages = async (req, res) => {
 module.exports = {
   newUser,
   verificationEmail,
+  internalSignup,
   loginUser,
   logoutUser,
   forgetPassword,
@@ -369,7 +387,7 @@ module.exports = {
   getOneUser,
   getStudents,
   joinStudent,
-  joinTeacher,
+  joinToTeacher,
   getTeachers,
   messageForm,
   getMessages,

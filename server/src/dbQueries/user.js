@@ -63,7 +63,11 @@ const updateUserEmail = async (id, email) => {
 };
 
 const findUsers = async (id) => {
-  const users = await User.find({});
+  const roleOrder = ["admin", "teacher", "student"];
+
+  const users = await User.find({}).sort({
+    role: 1,
+  });
   if (!users) return false;
   return users;
 };
@@ -77,13 +81,16 @@ const getAllTeachers = async () => {
   return teachers;
 };
 
-const addStudentToTeacher = async (studentId, teacherId) => {
+const addStudentToTeacher = async (teacherId, studentId) => {
   const updatedTeacher = await User.findByIdAndUpdate(
     teacherId,
     { $push: { students: studentId } },
     { new: true }
   );
-  return updatedTeacher;
+
+  return {
+    newStudents: updatedTeacher.students,
+  };
 };
 
 const findStudents = async (teacherId) => {

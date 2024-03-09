@@ -1,24 +1,8 @@
 .container {
-  border: 1px solid #111142;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem;
-  border-radius: 12px;
+  animation: update 0.7s;
 }
-.container input {
-  font-size: 1.25rem;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  padding: 0.5rem 0.75rem;
-  background-color: #58587b;
-  color: #fff;
-}
-.container input::placeholder{
 
+.container input::placeholder {
   color: #ffffff6e;
 }
 .container button {
@@ -35,4 +19,14 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+}
+@keyframes update {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
