@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./AddUserForm.module.css";
 
-function AddUserForm() {
+function AddUserForm({ role }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -131,7 +131,7 @@ function Links({ isLogin, onSetIsLogin }) {
               to="/settings"
               className="text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
             >
-              <span className="hidden lg:block">إعدادات الحساب</span>
+              <span className="hidden lg:block">لوحة التحكم</span>
               <div className="block lg:hidden">
                 <RxGear />
               </div>
