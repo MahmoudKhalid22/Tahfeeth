@@ -86,17 +86,13 @@ tbody tr td {
   color: #ffffff6e;
 }
 .addTable {
-  transform: translateY(10%);
-
-  transition: all 0.7s;
-  opacity: 0;
-  overflow-y: hidden;
+  animation: table 0.7s;
 }
-.addTable.active {
+/* .addTable.active {
   height: auto;
   transform: translateY(0);
   opacity: 1;
-}
+} */
 .container form .btn {
   background-color: #1f1fc7;
 }
@@ -120,5 +116,16 @@ tbody tr td {
   tbody tr td {
     padding: 6px;
     font-size: 1rem;
+  }
+}
+
+@keyframes table {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

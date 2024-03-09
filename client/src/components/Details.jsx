@@ -14,7 +14,7 @@ function Details({ onSetIsLogin }) {
     ? JSON.parse(localStorage.getItem("data"))
     : null;
 
-  const stdToken = data.accessToken;
+  const stdToken = data?.accessToken;
 
   if (!data || data.length === 0) {
     return (

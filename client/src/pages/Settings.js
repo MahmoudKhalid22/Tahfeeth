@@ -3,10 +3,13 @@ import UpdateForm from "../components/UpdateForm";
 import Student from "./Student";
 import Teacher from "./Teacher";
 import AddUserForm from "../components/AddUserForm";
+import StudentCard from "../components/StudentCard";
 
 const data = JSON.parse(localStorage.getItem("data"));
 
 const adminToken = data?.user?.role === "admin" ? data.accessToken : null;
+const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
+const studentToken = data?.user?.role === "student" ? data.accessToken : null;
 
 const initialState = {
   showTeacherForm: false,
@@ -86,6 +89,28 @@ const Settings = () => {
       setLoading(false);
     }
   };
+  const getStudents = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/students",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + teacherToken,
+          },
+        }
+      );
+      const students = await response.json();
+      dispatch({ type: "students", payload: students?.students });
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
   if (!data) return <p>يجب تسجيل الدخول</p>;
   return (
     <div className="w-[80%] mr-24 lg:mr-80 mt-16">
@@ -138,19 +163,37 @@ const Settings = () => {
         <div>
           <div>
             <div>
-              <button className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg ">
+              <button
+                className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg"
+                onClick={() => {
+                  getStudents();
+                }}
+              >
                 عرض كل الطلبة
               </button>
-              <div>data of stds</div>
+              <div className="flex gap-8">
+                {loading ? (
+                  <p className="text-xl font-semibold">تحميل...</p>
+                ) : error ? (
+                  <p className="text-red-600 text-xl font-semibold">
+                    حدث بعض الخطأ الداخلي.{" "}
+                  </p>
+                ) : (
+                  state.students.length > 0 &&
+                  state.students.map((student) => (
+                    <StudentCard key={student._id} student={student} />
+                  ))
+                )}
+              </div>
             </div>
             <div>
               <button
-                className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg "
+                className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg mt-6"
                 onClick={() => dispatch({ type: "showStudent" })}
               >
                 إضافة طالب
               </button>
-              {state.showStudentForm && <AddUserForm role="student" />}
+              {state?.showStudentForm && <AddUserForm role="student" />}
             </div>
           </div>
         </div>
