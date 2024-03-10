@@ -312,7 +312,7 @@ const getUser = async (req, res) => {
   try {
     res.send(req.user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ err: err.message });
   }
 };
 
@@ -341,6 +341,7 @@ const getOneUser = async (req, res) => {
 const getTeachers = async (req, res) => {
   try {
     const teachers = await getAllTeachers();
+
     res.send(teachers);
   } catch (err) {
     res.status(500).send({ err });
@@ -381,6 +382,23 @@ const getOneTeacher = async (req, res) => {
   }
 };
 
+const uploadAvatar = async (req, res) => {
+  try {
+    const base64Data = req.file.buffer.toString("base64");
+    imgsrc = `data:${req.file.mimetype};base64,${base64Data}`;
+
+    req.user[0].avatar = imgsrc;
+    await req.user[0].save();
+
+    res.send({
+      message: "image has been uploaded",
+      user: req.user[0],
+    });
+  } catch (err) {
+    res.status(500).send({ err: err.message });
+  }
+};
+
 module.exports = {
   newUser,
   verificationEmail,
@@ -406,4 +424,5 @@ module.exports = {
   messageForm,
   getMessages,
   getOneTeacher,
+  uploadAvatar,
 };

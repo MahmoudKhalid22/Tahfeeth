@@ -29,7 +29,6 @@ const Teacher = () => {
     };
     getOneTeacher();
   }, [id]);
-  console.log(teacherData);
   return (
     <div className="w-[60%] sm:w-[55%] md:w-[53%] lg:w-[45%] absolute left-0 h-full mt-20">
       {error ? (

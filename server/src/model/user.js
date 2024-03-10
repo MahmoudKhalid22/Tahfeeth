@@ -50,6 +50,15 @@ const userSchema = new mongoose.Schema(
       enum: ["verified, pending, blocked"],
       default: "pending",
     },
+    avatar: {
+      type: String,
+    },
+    information: {
+      type: Array,
+      required: function () {
+        return this.role === "teacher";
+      },
+    },
     googleId: {
       type: String,
     },

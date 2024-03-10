@@ -13,13 +13,17 @@ function Card({ name, role, professional, avatar, price, id, multiple }) {
           <span>{professional ? "(مجاز)" : "(غير مجاز)"}</span>
         </p>
         <p className="text-xl font-semibold">{price}</p>
-        {multiple && (
+        {multiple ? (
           <Link
             to={`/teacher/${id}`}
             className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors mt-4 text-white text-md sm:text-lg py-1 px-2"
           >
             عرض التفاصيل
           </Link>
+        ) : (
+          <button className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors mt-4 text-white text-md sm:text-lg py-1 px-2">
+            انضمام إلى المعلم
+          </button>
         )}
       </div>
     </div>

@@ -45,6 +45,7 @@ function Teachers() {
           {teachers.length > 0 ? (
             teachers?.map((teacher) => (
               <Card
+                key={teacher._id}
                 id={teacher._id}
                 name={teacher.name}
                 role={teacher.role}

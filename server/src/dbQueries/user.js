@@ -78,6 +78,8 @@ const getAllTeachers = async () => {
     verified: true,
     status: "verified",
   });
+  if (!teachers) return false;
+
   return teachers;
 };
 

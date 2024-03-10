@@ -5,6 +5,7 @@ function UpdateForm({ userId, userToken }) {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [avatar, setAvatar] = useState("");
 
   const updateUsername = async (e) => {
     e.preventDefault();
@@ -46,14 +47,36 @@ function UpdateForm({ userId, userToken }) {
     }
   };
 
+  const uploadAvatar = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData(avatar);
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/upload-avatar",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (err) {
+      setError(true);
+    }
+  };
+
   return (
     <div
       className={`${styles.container} mb-6 rounded-md border-2 border-[#43766C]`}
     >
       <form className="" onSubmit={updateUsername}>
-        <div className="flex items-center justify-center gap-6 p-4 rounded-md">
+        <div className="flex items-center sm:justify-center gap-2 sm:gap-6 p-4 rounded-md">
           <input
-            className="text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
+            className="text-md sm:w-auto w-[55%] sm:text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
             type="text"
             placeholder="الاسم"
             value={username}
@@ -62,15 +85,17 @@ function UpdateForm({ userId, userToken }) {
           <button type="submit">تغيير</button>
         </div>
         <div>
-          {loading && <p className="text-xl text-center">تحميل...</p>}
+          {loading && (
+            <p className="text-md sm:text-xl text-center">تحميل...</p>
+          )}
           {error && !loading && (
-            <p className="text-xl text-center">حدث بعض الخطأ</p>
+            <p className="text-md sm:text-xl text-center">حدث بعض الخطأ</p>
           )}
         </div>
       </form>
-      <form className="flex items-center justify-center gap-6 p-4 rounded-md">
+      <form className="flex items-center sm:justify-center gap-2 sm:gap-6 p-4 rounded-md">
         <input
-          className="text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
+          className="sm:w-auto w-[55%] text-md sm:text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
           type="text"
           placeholder="الايميل"
           // value={userDataUpdate.email}
@@ -80,9 +105,9 @@ function UpdateForm({ userId, userToken }) {
         />
         <button type="submit">تغيير</button>
       </form>
-      <form className="flex items-center justify-center gap-6 p-4 rounded-md">
+      <form className="flex items-center sm:justify-center gap-2 sm:gap-6 p-4 rounded-md">
         <input
-          className="text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
+          className="sm:w-auto w-[55%] text-md sm:text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
           type="password"
           placeholder="كلـــمة السر"
           // value={userDataUpdate.password}
@@ -90,7 +115,22 @@ function UpdateForm({ userId, userToken }) {
           //   setUserDataUpdate({ ...userDataUpdate, password: e.target.value })
           // }
         />
-        <button type="submit">تغيير</button>
+        <button type="submit" className="textmd sm:text-lg">
+          تغيير
+        </button>
+      </form>
+      <form
+        className="flex flex-col items-start justify-start gap-2 p-4 rounded-md border border-black sm:16rem"
+        onSubmit={uploadAvatar}
+      >
+        <input
+          placeholder="ارفع صورتك هنا"
+          type="file"
+          name="avatar"
+          className="sm:w-auto w-[30%] text-md sm:text-xl border-none outline-none rounded-md py-2 px-3 bg-[#58587b] text-[#ececec]"
+          onChange={(e) => setAvatar(e.target.files[0])}
+        />
+        <button type="submit">رفع</button>
       </form>
     </div>
   );

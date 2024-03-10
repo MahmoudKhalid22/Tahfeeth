@@ -25,11 +25,16 @@ const {
   messageForm,
   getMessages,
   getOneTeacher,
+  uploadAvatar,
 } = require("../controller/users");
 const { getTables, getTablesStd } = require("../controller/tables");
+const { GridFsStorage } = require("multer-gridfs-storage");
+const crypto = require("crypto");
+const path = require("path");
 
 const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
+const multer = require("multer");
 
 // START AUTHENTICATION //
 
@@ -65,6 +70,17 @@ router.put("/update-email", auth, updateEmail);
 
 //update password
 router.put("/update-password", auth, updateUserPassword);
+
+// upload avatar
+
+const upload = multer();
+router.post(
+  "/upload-avatar",
+  auth,
+  upload.single("avatar"),
+  uploadAvatar,
+  (error, req, res, next) => res.status(500).json({ error: error.message })
+);
 
 // READ SPECIFIC USER
 router.get("/me", auth, getUser);

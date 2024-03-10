@@ -56,7 +56,6 @@ function Student() {
         }
 
         const tables = await response.json();
-        console.log(tables);
 
         setStudentData(tables);
       } catch (err) {
