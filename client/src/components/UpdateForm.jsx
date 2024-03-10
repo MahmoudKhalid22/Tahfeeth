@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./UpdateForm.module.css";
 
 function UpdateForm({ userId, userToken }) {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState(null);
 
   const updateUsername = async (e) => {
     e.preventDefault();
@@ -50,21 +50,29 @@ function UpdateForm({ userId, userToken }) {
   const uploadAvatar = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData(avatar);
+      console.log(avatar);
+      const formData = new FormData();
+      formData.append("avatar", avatar);
+
       const response = await fetch(
         "https://tahfeeth-system.onrender.com/user/upload-avatar",
         {
           method: "POST",
           body: formData,
+          headers: {
+            Authorization: "Bearer " + userToken,
+          },
         }
       );
       if (!response.ok) {
+        console.log(await response.json());
         throw new Error();
       }
 
       const result = await response.json();
       console.log(result);
     } catch (err) {
+      console.log(err);
       setError(true);
     }
   };

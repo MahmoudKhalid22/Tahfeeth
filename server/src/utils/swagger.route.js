@@ -675,3 +675,15 @@
  *                          $ref: '#/components/schemas/Teachers'
  *
  */
+/**
+ * @swagger
+ *  /user/upload-avatar:
+ *      post:
+ *          tags:
+ *              - Authentication
+ *          summary: upload user avatar
+ *      parameters:
+ *          - in: headers
+ *            name: Authorization
+ *            description: the access token with Bearer keyword
+ */

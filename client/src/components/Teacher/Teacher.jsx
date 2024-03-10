@@ -43,6 +43,7 @@ const Teacher = () => {
           id={teacherData._id}
           professional={teacherData.professional}
           multiple={false}
+          avatar={teacherData.avatar}
         />
       )}
     </div>
