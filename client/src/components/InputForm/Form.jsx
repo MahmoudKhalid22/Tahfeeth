@@ -115,7 +115,9 @@ function Form({ onSetIsLogin }) {
 
   const handleGoogleRegister = async () => {
     try {
-      const response = await fetch("http://localhost:5000/user/auth/google");
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/auth/google"
+      );
       const result = await response.json();
       console.log(result);
     } catch (err) {

@@ -11,7 +11,7 @@ function UpdateForm({ userId, userToken }) {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:5000/user/update-username`,
+        `https://tahfeeth-system.onrender.com/user/update-username`,
         {
           method: "PUT",
           headers: {

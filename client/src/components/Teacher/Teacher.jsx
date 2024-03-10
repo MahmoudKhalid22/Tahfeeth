@@ -12,7 +12,7 @@ const Teacher = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "http://localhost:5000/user/teacher/" + id
+          "https://tahfeeth-system.onrender.com/user/teacher/" + id
         );
         if (!response.ok) {
           throw new Error();
