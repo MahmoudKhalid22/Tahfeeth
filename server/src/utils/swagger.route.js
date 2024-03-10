@@ -147,7 +147,7 @@
  *
  *     parameters:
  *      - in: header
- *        name: token
+ *        name: Authorization
  *        description: token had been sent in email
  *        example: "abc123!"
  *        required: true
@@ -679,11 +679,28 @@
  * @swagger
  *  /user/upload-avatar:
  *      post:
+ *          summary: upload user avatar
  *          tags:
  *              - Authentication
- *          summary: upload user avatar
- *      parameters:
- *          - in: headers
- *            name: Authorization
- *            description: the access token with Bearer keyword
+ *          parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: Bearer accessToken sent to server
+ *
+ *          requestBody:
+ *            content:
+ *               multipart/form-data:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          file:
+ *                              type: string
+ *                              format: binary
+ *          responses:
+ *              '200':
+ *                 description: Photo uploaded successfully
+ *              '400':
+ *                  description: Bad request - Missing or invalid parameters
+ *              '500':
+ *                  description: Internal server error - Failed to upload photo
  */
