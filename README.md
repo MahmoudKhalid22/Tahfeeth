@@ -36,6 +36,7 @@ and ensuring secure user authentication.
 4. run the command that run mongodb
 5. run the server by the command npm start ( you should see in the console 'Server is running' 'Connected to db' )
 6. chagne the links in react client to ('http://localhost:5000/') instead of deployed server
+7. this is swagger documentation for backend [link](https://tafeeth-system.onrender.com/docs)
 
 ## Usage:
 After setting up both the client and server, you can access the teaching system through your web browser.
@@ -45,6 +46,6 @@ Contributing:
 Contributions to this project are welcome. Please follow the guidelines in the respective README files in the client and server directories for contribution instructions.
 
 ## Live Demo
-[Live Demo](https://teachingquran.netlify.app/)
+[Live Demo](https://tahfeeth.vercel.app/)
 
  
