@@ -11,6 +11,7 @@ const {
   addStudentToTeacher,
   findStudents,
   findAllMessages,
+  getTeacher,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -367,6 +368,19 @@ const getMessages = async (req, res) => {
   }
 };
 
+const getOneTeacher = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const teacher = await getTeacher(id);
+    if (!teacher) {
+      res.status(500).send({ error: "this is not a teacher" });
+    }
+    res.send(teacher);
+  } catch (err) {
+    res.status(500).send({ err: err.message });
+  }
+};
+
 module.exports = {
   newUser,
   verificationEmail,
@@ -391,4 +405,5 @@ module.exports = {
   getTeachers,
   messageForm,
   getMessages,
+  getOneTeacher,
 };

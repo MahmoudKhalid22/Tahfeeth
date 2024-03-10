@@ -24,6 +24,7 @@ const {
   getTeachers,
   messageForm,
   getMessages,
+  getOneTeacher,
 } = require("../controller/users");
 const { getTables, getTablesStd } = require("../controller/tables");
 
@@ -104,6 +105,7 @@ router.get(
 // FOR ALL
 router.get("/teachers", getTeachers);
 router.post("/message", messageForm);
+router.get("/teacher/:id", getOneTeacher);
 
 // FOR ADMIN //
 router.get("/admin", auth, getUsers);

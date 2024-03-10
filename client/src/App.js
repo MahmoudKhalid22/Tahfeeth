@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Details from "./components/Details";
 import Student from "./pages/Student";
 import Register from "./pages/Register";
-import Teacher from "./pages/Teacher";
+import Teacher from "./components/Teacher/Teacher";
 import TeacherPage from "./pages/TeacherPage";
 import Verification from "./pages/Verification";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ function App() {
             element={<Register onSetIsLogin={setIsLogin} />}
           />
           <Route path="/details/:id" element={<Student />} />
-          <Route path="/teacher" element={<Teacher />} />
+          <Route path="/teacher/:id" element={<Teacher />} />
           <Route path="/teacher/:id" element={<TeacherPage />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />

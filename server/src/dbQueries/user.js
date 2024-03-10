@@ -76,7 +76,7 @@ const getAllTeachers = async () => {
   const teachers = await User.find({
     role: "teacher",
     verified: true,
-    pending: "verified",
+    status: "verified",
   });
   return teachers;
 };
@@ -104,6 +104,12 @@ const findAllMessages = async () => {
   return messages;
 };
 
+const getTeacher = async (id) => {
+  const teacher = await User.findById(id);
+  if (teacher.role !== "teacher") return false;
+  return teacher;
+};
+
 module.exports = {
   getUserById,
   verificationToken,
@@ -117,4 +123,5 @@ module.exports = {
   addStudentToTeacher,
   findStudents,
   findAllMessages,
+  getTeacher,
 };

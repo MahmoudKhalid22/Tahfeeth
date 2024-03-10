@@ -113,7 +113,7 @@ const Settings = () => {
   };
   if (!data) return <p>يجب تسجيل الدخول</p>;
   return (
-    <div className="w-[80%] mr-24 lg:mr-80 mt-16">
+    <div className="w-[80%] mr-20 lg:mr-80 mt-16">
       {/* ADMIN DASHBOARD */}
       {data?.user?.role === "admin" && (
         <div className="text-2xl ">
@@ -171,7 +171,7 @@ const Settings = () => {
               >
                 عرض كل الطلبة
               </button>
-              <div className="flex gap-8">
+              <div className="flex gap-2 w-full flex-wrap overflow-x-scroll">
                 {loading ? (
                   <p className="text-xl font-semibold">تحميل...</p>
                 ) : error ? (

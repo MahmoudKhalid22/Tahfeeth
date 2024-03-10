@@ -655,3 +655,23 @@
  *              description: internal server error
  *
  */
+/**
+ * @swagger
+ *  /user/teacher/{id}:
+ *      get:
+ *          summary: to get specific teacher
+ *          tags:
+ *              - For all Users
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                description: id of the teacher
+ *
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                        schema:
+ *                          $ref: '#/components/schemas/Teachers'
+ *
+ */
