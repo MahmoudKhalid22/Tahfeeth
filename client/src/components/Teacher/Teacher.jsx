@@ -44,6 +44,7 @@ const Teacher = () => {
           professional={teacherData.professional}
           multiple={false}
           avatar={teacherData.avatar}
+          information={teacherData.information}
         />
       )}
     </div>

@@ -232,41 +232,42 @@ function Form({ onSetIsLogin }) {
         </div>
       )}
       {!isLogin && role === "teacher" && (
-        <div className=" flex flex-row-reverse justify-between items-start w-full">
-          <input
-            type="number"
-            placeholder="السعر"
-            step={10}
-            id="price"
-            onChange={(e) => setPrice(e.target.value)}
-            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
-          />
-          <label
-            className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="price"
-          >
-            مقدار الأجر الذي تتقاضاه{" "}
-          </label>
-        </div>
+        <>
+          <div className=" flex flex-row-reverse justify-between items-start w-full">
+            <input
+              type="number"
+              placeholder="السعر"
+              step={10}
+              id="price"
+              onChange={(e) => setPrice(e.target.value)}
+              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+            />
+            <label
+              className="hidden md:block text-[#43766C] text-2xl"
+              htmlFor="price"
+            >
+              مقدار الأجر الذي تتقاضاه{" "}
+            </label>
+          </div>
+          <div className=" flex flex-row-reverse justify-between items-start w-full">
+            <textarea
+              type="number"
+              placeholder="معلومات عن كيفية تعليم الطلاب"
+              step={10}
+              id="price"
+              onChange={(e) => setInformation(e.target.value)}
+              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-60"
+            />
+            <label
+              className="hidden md:block text-[#43766C] text-2xl w-52"
+              htmlFor="price"
+            >
+              معلومات عن كيفية تعليم الطلاب{" "}
+            </label>
+          </div>
+        </>
       )}
-      {!isLogin && role === "teacher" && (
-        <div className=" flex flex-row-reverse justify-between items-start w-full">
-          <textarea
-            type="number"
-            placeholder="معلومات عن كيفية تعليم الطلاب"
-            step={10}
-            id="price"
-            onChange={(e) => setInformation(e.target.value)}
-            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-60"
-          />
-          <label
-            className="hidden md:block text-[#43766C] text-2xl w-52"
-            htmlFor="price"
-          >
-            معلومات عن كيفية تعليم الطلاب{" "}
-          </label>
-        </div>
-      )}
+
       <p className="text-2xl text-red-800 text-center md:text-red-500">{`${
         error ? error : ""
       }`}</p>

@@ -3,7 +3,16 @@ import { Link } from "react-router-dom";
 
 const data = JSON.parse(localStorage.getItem("data"));
 
-function Card({ name, role, professional, avatar, price, id, multiple }) {
+function Card({
+  name,
+  role,
+  professional,
+  avatar,
+  price,
+  id,
+  multiple,
+  information,
+}) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -45,6 +54,7 @@ function Card({ name, role, professional, avatar, price, id, multiple }) {
             <span>{professional ? "(مجاز)" : "(غير مجاز)"}</span>
           </p>
           <p className="text-xl font-semibold">{price} ج</p>
+          {information && <div>{information}</div>}
           {multiple ? (
             <Link
               to={`/teacher/${id}`}
