@@ -141,4 +141,9 @@ router.get("/students", auth, getStudents);
 router.get("/tables", auth, getTablesStd);
 router.post("/join/:id", auth, joinToTeacher);
 
+// TEST REQUEST
+router.get("/test", (req, res) => {
+  res.send({ msg: "test" });
+});
+
 module.exports = router;
