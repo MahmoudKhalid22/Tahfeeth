@@ -20,13 +20,16 @@ function Card({
   const joinToTeacher = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/user/join/" + id, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + data?.accessToken,
-        },
-      });
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/join/" + id,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + data?.accessToken,
+          },
+        }
+      );
       if (!response.ok) {
         const err = await response.json();
         throw new Error(err.err);
