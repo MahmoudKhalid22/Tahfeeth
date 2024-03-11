@@ -224,9 +224,10 @@ const joinToTeacher = async (req, res) => {
   try {
     const teacherId = req.params.id;
     const studentId = req.user[0]._id;
-    // console.log(teacherId, studentId);
+    console.log(teacherId, studentId);
 
     const newStudents = await addStudentToTeacher(teacherId, studentId);
+    console.log(newStudents);
 
     res.send({ newStudents });
   } catch (err) {

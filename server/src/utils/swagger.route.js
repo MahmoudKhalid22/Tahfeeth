@@ -704,3 +704,32 @@
  *              '500':
  *                  description: Internal server error - Failed to upload photo
  */
+/**
+ * @swagger
+ *  /user/teacher/signup:
+ *    post:
+ *          summary: the teacher want to add a student for his class
+ *          tags:
+ *              - Teacher
+ *          parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: the access token with keyworBearer for the token of the teacher
+ *                example: Bearer 123abc...
+ *          requestBody:
+ *            required: true
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/User'
+ *          responses:
+ *              '200':
+ *                  description: the student has been added
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/components/schemas/Login'
+ *              '500':
+ *                  description: Internal Server Error
+ *
+ */

@@ -19,7 +19,7 @@ const Teacher = () => {
         }
 
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
         setTeacherData(result);
       } catch (err) {
         setError(true);

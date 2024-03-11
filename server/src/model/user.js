@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     information: {
-      type: Array,
+      type: String,
       required: function () {
         return this.role === "teacher";
       },

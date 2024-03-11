@@ -1,4 +1,3 @@
-import Image from "./InputForm/Image";
 import Form from "./InputForm/Form";
 
 function Input({ onSetIsLogin }) {

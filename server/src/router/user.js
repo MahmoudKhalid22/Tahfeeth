@@ -134,7 +134,6 @@ router.post("", auth, addUser);
 
 // FOR TEACHER
 router.get("/join/student", auth, joinStudent);
-
 router.get("/students", auth, getStudents);
 
 // FOR STUDENT

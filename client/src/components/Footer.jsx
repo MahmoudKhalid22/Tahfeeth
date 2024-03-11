@@ -26,7 +26,7 @@ function Footer() {
           </HashLink>
         </li>
       </ul>
-      <div className="bg-[#8A7A5F] shadow-[0_-2px_5.6px_1px_rgba(0,0,0,0.25)] text-[#ececec] flex flex-wrap text-center items-center justify-center absolute bottom-0 w-[90%] sm:w-[95%] md:w-full md:mr-8 lg:w-[80%] left-0 gap-1 px-8 sm:px-1 py-2">
+      <div className="bg-[#8A7A5F] shadow-[0_-2px_5.6px_1px_rgba(0,0,0,0.25)] text-[#ececec] flex flex-wrap text-center items-center justify-center absolute bottom-0 w-[90%] sm:w-[95%] md:w-full md:mr-8 lg:w-[80%] 2xl:w-[95%] left-0 gap-1 px-8 sm:px-1 py-2">
         <p className="text-[0.5rem] sm:text-sm md:text-lg">
           جميع الحقوق محفوطة. تم تصميمه بواسطة
         </p>

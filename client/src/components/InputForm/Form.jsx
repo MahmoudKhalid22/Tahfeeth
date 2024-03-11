@@ -13,6 +13,7 @@ function Form({ onSetIsLogin }) {
   const [role, setRole] = useState("");
   const [professional, setProfessional] = useState(false);
   const [price, setPrice] = useState(0);
+  const [information, setInformation] = useState("");
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,6 +40,7 @@ function Form({ onSetIsLogin }) {
             role: role,
             professional: professional ? professional : null,
             price: price ? price : 0,
+            information: information ? information : "",
           }),
         }
       );
@@ -130,8 +132,10 @@ function Form({ onSetIsLogin }) {
 
   return (
     <form
-      className="bg-none flex items-center
-    justify-center flex-col gap-6 p-4 rounded-tr-xl rounded-br-xl w-full md:w-full md:h-[40rem] "
+      className={`bg-none flex items-center
+    justify-center flex-col gap-6 p-4 ${
+      role === "teacher" ? "mt-80" : "mt-8"
+    } rounded-tr-xl rounded-br-xl w-full md:w-full md:h-[40rem]`}
       onSubmit={isLogin ? handleSubmit : newUser}
       style={{ width: "80%" }}
     >
@@ -190,7 +194,7 @@ function Form({ onSetIsLogin }) {
           <select
             type="text"
             placeholder="الاسم"
-            id="name"
+            id="role"
             className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
             onChange={(e) => setRole(e.target.value)}
           >
@@ -200,7 +204,7 @@ function Form({ onSetIsLogin }) {
           </select>
           <label
             className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="name"
+            htmlFor="role"
           >
             التسجيل كدورك
           </label>
@@ -211,7 +215,7 @@ function Form({ onSetIsLogin }) {
           <select
             type="text"
             placeholder="الاسم"
-            id="name"
+            id="prof"
             onChange={(e) => setProfessional(e.target.value)}
             className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
           >
@@ -221,7 +225,7 @@ function Form({ onSetIsLogin }) {
           </select>
           <label
             className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="name"
+            htmlFor="prof"
           >
             هل أنت مجاز
           </label>
@@ -233,15 +237,33 @@ function Form({ onSetIsLogin }) {
             type="number"
             placeholder="السعر"
             step={10}
-            id="name"
+            id="price"
             onChange={(e) => setPrice(e.target.value)}
             className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
           />
           <label
             className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="name"
+            htmlFor="price"
           >
             مقدار الأجر الذي تتقاضاه{" "}
+          </label>
+        </div>
+      )}
+      {!isLogin && role === "teacher" && (
+        <div className=" flex flex-row-reverse justify-between items-start w-full">
+          <textarea
+            type="number"
+            placeholder="معلومات عن كيفية تعليم الطلاب"
+            step={10}
+            id="price"
+            onChange={(e) => setInformation(e.target.value)}
+            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-60"
+          />
+          <label
+            className="hidden md:block text-[#43766C] text-2xl w-52"
+            htmlFor="price"
+          >
+            معلومات عن كيفية تعليم الطلاب{" "}
           </label>
         </div>
       )}
