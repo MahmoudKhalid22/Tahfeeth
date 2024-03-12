@@ -71,7 +71,7 @@ const Teacher = () => {
       ) : loading ? (
         <p className="text-slate-600 font-semibold text-2xl">تحميل...</p>
       ) : (
-        <div className="sm:w-[80%] absolute left-0 flex flex-col items-center justify-center gap-2 sm:gap-4">
+        <div className="w-full sm:w-[80%] absolute left-0 flex flex-col items-center justify-center gap-2 sm:gap-4">
           <img
             src={
               teacherData?.avatar
