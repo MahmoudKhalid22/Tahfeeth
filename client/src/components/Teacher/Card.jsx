@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function Card({
@@ -13,7 +13,7 @@ function Card({
 }) {
   return (
     <>
-      <div className="flex flex-col bg-white shadow-lg w-40 sm:w-52 h-80 py-8 items-center justify-between">
+      <div className="flex flex-col bg-white shadow-lg w-[80%] sm:w-52 h-80 py-8 items-center justify-between">
         <div className="sm:w-32 sm:h-32 w-28 h-28 rounded-full flex items-center justify-center shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
           <img
             src={avatar ? avatar : "/assets/dummyImage.jpg"}

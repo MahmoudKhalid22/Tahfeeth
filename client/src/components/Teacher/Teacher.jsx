@@ -65,7 +65,7 @@ const Teacher = () => {
   };
 
   return (
-    <div className="w-[80%] sm:w-[55%] md:w-[53%] lg:w-[95%] absolute left-0 h-full mt-20">
+    <div className="w-[80%] sm:w-[55%] md:w-[53%] lg:w-[95%] absolute left-0 h-full mt-8">
       {error ? (
         <p className="text-red-600 font-semibold text-2xl">حدث بعض الخطأ</p>
       ) : loading ? (
@@ -79,7 +79,7 @@ const Teacher = () => {
                 : "/assets/dummyImage.jpg"
             }
             alt={teacherData?.name}
-            className="rounded-full w-40 h-40 object-cover"
+            className="rounded-full w-40 h-40 object-cover ml-3"
           />
           <p className="text-center ml-4 text-xl sm:text-3xl text-[#43766C]">
             {teacherData.name}
@@ -87,31 +87,33 @@ const Teacher = () => {
           <p className="text-center ml-4 text-xl sm:text-3xl text-[#43766C]">
             {teacherData.role === "teacher" ? "معلم" : "مدير"}
           </p>
-          <p className="text-center ml-4 text-xl sm:text-3xl font-bold text-[#43766C]">
-            {teacherData.price}
-          </p>
           <p className="text-center ml-4 text-xl sm:text-3xl font-semibold text-[#43766C]">
             {teacherData.professional ? "مجاز" : "غير مجاز"}
           </p>
-          <p className="text-center ml-4 text-md sm:text-xl   text-[#43766C] w-[70%] mt-4 sm:mt-12 leading-loose">
+          <p className="text-center ml-4 text-xl sm:text-3xl font-bold text-[#43766C]">
+            {teacherData.price} ج
+          </p>
+          <p className="text-center ml-2 text-md sm:text-xl   text-[#43766C] w-[95%] mt-4 sm:mt-12 leading-loose">
             {teacherData.information}
           </p>
           <button
-            className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors mt-4 text-white text-md sm:text-lg py-1 px-2"
+            className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors ml-6 mt-4 text-white text-md sm:text-lg py-1 px-2"
             onClick={joinToTeacher}
           >
             انضمام إلى المعلم
           </button>{" "}
           <div className="mt-2">
             {errJoin && !loadingJoin && (
-              <p className="text-red-600 md:text-2xl w-fit text-center">
+              <p className="text-red-600 md:text-2xl w-fit text-center ml-6">
                 {errJoin}
               </p>
             )}
             {loadingJoin && (
-              <p className="text-2xl font-semibold mx-auto">تحميل...</p>
+              <p className="text-2xl font-semibold ml-6">تحميل...</p>
             )}
-            {!loadingJoin && message && <p>{message}</p>}
+            {!loadingJoin && message && (
+              <p className="text-2xl font-semibold ml-6">{message}</p>
+            )}
           </div>
         </div>
       )}
