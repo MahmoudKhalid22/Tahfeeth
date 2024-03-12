@@ -134,7 +134,7 @@ function Form({ onSetIsLogin }) {
     <form
       className={`bg-none flex items-center
     justify-center flex-col gap-6 p-4 ${
-      role === "teacher" ? "mt-80" : "mt-8"
+      role === "teacher" && !isLogin ? "mt-80" : "mt-8"
     } rounded-tr-xl rounded-br-xl w-full md:w-full md:h-[40rem]`}
       onSubmit={isLogin ? handleSubmit : newUser}
       style={{ width: "80%" }}
