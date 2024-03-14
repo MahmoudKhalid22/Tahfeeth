@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import styles from "./Details.module.css";
-// import AddUserForm from "./AddUserForm";
-import Student from "../pages/Student";
+import { Link } from "react-router-dom";
+import Spinner from "./utilsComponents/Spinner";
 
 function Details({ onSetIsLogin }) {
-  const [userShow, setUserShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [table, setTable] = useState([]);
+  const [teacherData, setTeacherData] = useState({});
 
   const data = JSON.parse(localStorage.getItem("data"))
     ? JSON.parse(localStorage.getItem("data"))
     : null;
 
-  const stdToken = data?.accessToken;
+  useEffect(() => {
+    const getOneTeacher = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          "https://tahfeeth-system.onrender.com/user/teacher/" + data?.user?._id
+        );
+        if (!response.ok) {
+          throw new Error();
+        }
+
+        const result = await response.json();
+        // console.log(result);
+        setTeacherData(result);
+      } catch (err) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getOneTeacher();
+  }, [data?.user?._id]);
 
   if (!data || data.length === 0) {
     return (
@@ -32,71 +50,46 @@ function Details({ onSetIsLogin }) {
     );
   }
 
-  // console.log(table);
-
   return (
-    <div className={`${styles.container} mt-6  mr-16 lg:mr-[16rem]`}>
-      <div className="flex items-center justify-center gap-8 mb-12 text-[#43766C] text-lg md:text-4xl font-semibold">
-        <h3>الاسم</h3>
-
-        {data && (
-          <h4 className="flex items-center justify-center gap-2">
-            {data?.user?.name}
-            {data?.user?.role === "student"
-              ? "(طالب) "
-              : data?.user?.role === "teacher"
-              ? "(معلم) "
-              : "(مدير) "}
-          </h4>
-        )}
-      </div>
-      <div className={styles.settings}></div>
-
-      {/* <AddUserForm /> */}
-      {/* </div> */}
-      {/* {!userShow &&
-        !loading &&
-        table?.map((user) => (
-          <div className={styles.cart} key={user._id}>
-            <div className={styles["student-info"]}>
-              <span>الاسم / </span>
-              <span>{user.name}</span>
-            </div>
-            <div className={styles["student-info"]}>
-              <span>الايميل / </span>
-              <span>{user.email}</span>
-            </div>
-
-            <div className={styles["action-buttons"]}>
-              <button
-                className={styles["action-button-delete"]}
-                // onClick={() => deleteUser(user._id)}
-              >
-                حذف الطالب
-              </button>
-              <button className={styles["action-button-data"]}>
-                <Link to={`/details/${user._id}`}>بيانات الطالب</Link>
-              </button>
-            </div>
-          </div>
-        ))} */}
-      {data?.user?.role !== "teacher" && <Student />}
-      <div>
-        {data?.user?.role === "teacher" ? (
-          <div className="flex items-center flex-wrap justify-center gap-4">
-            <button
-              onClick={() => {
-                setUserShow(true);
-              }}
-            >
-              إضافة طالب
-            </button>
-            <button>قراءة بيانات الطلاب</button>
-          </div>
-        ) : undefined}
-      </div>
+    <div className="w-[80%]  absolute left-0  mt-8">
+      {error ? (
+        <p className="text-red-600 font-semibold text-2xl mx-auto text-center">
+          حدث بعض الخطأ
+        </p>
+      ) : loading ? (
+        <Spinner />
+      ) : (
+        <div className="w-full absolute left-0 flex flex-col items-center justify-center gap-2 sm:gap-4">
+          <img
+            src={
+              teacherData?.avatar
+                ? teacherData?.avatar
+                : "/assets/dummyImage.jpg"
+            }
+            alt={teacherData?.name}
+            className="rounded-full w-40 h-40 object-cover ml-3"
+          />
+          <p className="text-center ml-4 text-xl sm:text-3xl text-[#43766C]">
+            {teacherData.name}
+          </p>
+          <p className="text-center ml-4 text-xl sm:text-3xl text-[#43766C]">
+            {teacherData.role === "teacher" ? "معلم" : "مدير"}
+          </p>
+          <p className="text-center ml-4 text-xl sm:text-3xl font-semibold text-[#43766C]">
+            {teacherData.professional ? "مجاز" : "غير مجاز"}
+          </p>
+          <p className="text-center ml-4 text-xl sm:text-3xl font-bold text-[#43766C]">
+            {teacherData.price} ج
+          </p>
+          <p className="text-center ml-2 text-md sm:text-xl   text-[#43766C] w-[95%] mt-4 sm:mt-12 leading-loose font-semibold">
+            وصف طريقة التعليم
+          </p>
+          <p className="text-center ml-2 text-md sm:text-xl   text-[#43766C] lg:w-[50rem] w-[90%] leading-loose">
+            {teacherData.information}
+          </p>
+        </div>
+      )}
     </div>
-    // </div>
   );
 }
 

@@ -152,6 +152,11 @@ function Edit() {
             alt="user img"
             className="rounded-full w-40 h-40 object-cover"
           />
+          {error && (
+            <p className="mx-auto text-center text-red-600 text-2xl">
+              حدث بعض الخطأ
+            </p>
+          )}
           <div className="flex gap-6 text-2xl justify-center mt-6">
             <button
               className="bg-[#8A7A5F] hover:bg-[#6e624c] transition-colors duration-300 text-[#ececec] rounded-md px-4 py-2 "
@@ -189,9 +194,13 @@ function Edit() {
           {loading && <Spinner />}
         </div>
         <form onSubmit={updateUsername}>
-          <h2 className="mx-auto text-2xl text-center mt-6 mb-6">
-            {data?.user?.name}
-          </h2>
+          {loadingName ? (
+            <Spinner />
+          ) : (
+            <h2 className="mx-auto text-2xl text-center mt-6 mb-6">
+              {data?.user?.name}
+            </h2>
+          )}
 
           <div className="flex items-center justify-center gap-4">
             <input
