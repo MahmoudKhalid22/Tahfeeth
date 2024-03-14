@@ -29,7 +29,7 @@ function Student() {
 
   const data = localStorage.getItem("data")
     ? JSON.parse(localStorage.getItem("data"))
-    : undefined;
+    : null;
 
   const stdToken = data?.user?.role === "student" ? data?.accessToken : null;
   const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;

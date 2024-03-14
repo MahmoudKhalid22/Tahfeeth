@@ -4,6 +4,7 @@ import Student from "./Student";
 import Teacher from "./Teacher";
 import AddUserForm from "../components/AddUserForm";
 import StudentCard from "../components/StudentCard";
+import { Link } from "react-router-dom";
 
 const data = JSON.parse(localStorage.getItem("data"));
 
@@ -268,13 +269,14 @@ const Settings = () => {
         )}
       </div>
       <div>
-        <button
-          className="text-center text-lg p-2 border-none outline-none cursor-pointer  bg-[#43766C] hover:bg-[#365e56] text-white transition-colors mt-6 flex items-center justify-center "
+        <Link
+          to="/settings/edit"
+          className="text-center w-fit text-lg p-2 border-none outline-none cursor-pointer  bg-[#43766C] hover:bg-[#365e56] text-white transition-colors mt-6 flex items-center justify-center "
           onClick={() => setFormUpdate((prev) => !prev)}
           title="تحديث المعلومات الشخصية"
         >
           تحديث معلومات الحساب
-        </button>
+        </Link>
         <div className="mt-6 w-fit border-none">
           {formUpdate && (
             <UpdateForm userId={data?.user._id} userToken={data?.accessToken} />

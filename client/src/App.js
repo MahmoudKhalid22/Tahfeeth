@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Verified from "./pages/Verified";
+import Edit from "./pages/Edit";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
 
@@ -43,7 +44,10 @@ function App() {
           <Route path="/details/:id" element={<Student />} />
           <Route path="/teacher/:id" element={<Teacher />} />
           <Route path="/teacher/:id" element={<TeacherPage />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings">
+            <Route index element={<Settings />} />
+            <Route path="edit" element={<Edit />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

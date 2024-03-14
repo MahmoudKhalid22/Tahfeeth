@@ -192,11 +192,10 @@ const updateUserPassword = async (req, res) => {
   const user = req.user[0];
   try {
     const isMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!isMatch)
-      return res.status(400).send({ error: "password is not correct" });
+    if (!isMatch) return res.status(400).send({ error: "كلمة السر غير صحيحة" });
 
     await updatePassword(user._id, newPassword);
-    res.send({ message: "password has been updated" });
+    res.send({ message: "تم تحديث كلمة السر" });
   } catch (err) {
     res.status(500).send({ err });
   }

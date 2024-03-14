@@ -1,0 +1,24 @@
+.modal {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.521);
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  margin-top: 0;
+  z-index: 19;
+}
+.form {
+  animation: form 0.7s;
+}
+
+@keyframes form {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
