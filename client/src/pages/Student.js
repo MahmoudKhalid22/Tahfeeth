@@ -45,13 +45,16 @@ function Student() {
     const getTables = async () => {
       try {
         setLoadingTables(true);
-        const response = await fetch("http://localhost:5000/table/" + stdId, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + data?.accessToken,
-          },
-        });
+        const response = await fetch(
+          "https://tahfeeth-system.onrender.com/table/" + stdId,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + data?.accessToken,
+            },
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -81,25 +84,28 @@ function Student() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/table/create-table", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + teacherToken,
-        },
-        body: JSON.stringify({
-          day: tableUser.day,
-          quantity: tableUser.quantity,
-          level: tableUser.level,
-          tasks: tableUser.tasks,
-          completed: tableUser.completed,
-          questions: tableUser.questions,
-          answers: tableUser.answers,
-          notes: tableUser.notes,
-          rate: tableUser.rate,
-          ownerId: id,
-        }),
-      });
+      const res = await fetch(
+        "https://tahfeeth-system.onrender.com/table/create-table",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + teacherToken,
+          },
+          body: JSON.stringify({
+            day: tableUser.day,
+            quantity: tableUser.quantity,
+            level: tableUser.level,
+            tasks: tableUser.tasks,
+            completed: tableUser.completed,
+            questions: tableUser.questions,
+            answers: tableUser.answers,
+            notes: tableUser.notes,
+            rate: tableUser.rate,
+            ownerId: id,
+          }),
+        }
+      );
       if (!res.ok) {
         throw new Error(await res.json());
       }
@@ -127,7 +133,7 @@ function Student() {
     // console.log(id);
     try {
       setLoadingDelMap({ ...loadingDelMap, [id]: true });
-      await fetch("http://localhost:5000/table/" + id, {
+      await fetch("https://tahfeeth-system.onrender.com/table/" + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

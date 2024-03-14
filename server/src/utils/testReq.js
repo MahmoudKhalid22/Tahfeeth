@@ -10,7 +10,7 @@ const test = async () => {
   } catch (err) {
     console.log(err.message);
   } finally {
-    setTimeout(test, 60000);
+    setTimeout(test, 600000);
   }
 };
 
