@@ -27,9 +27,8 @@ const getTablesStd = async (req, res) => {
 };
 
 const createItem = async (req, res) => {
-  const admins = req.user.filter((admin) => admin.isAdmin === true);
-
-  if (admins.length > 0) {
+  const isTeacher = req.user[0].role === "teacher";
+  if (isTeacher) {
     const item = new Table({ ...req.body, ownerId: req.body.ownerId });
     try {
       await item.save();
@@ -84,17 +83,17 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async (req, res) => {
   try {
-    const admins = req.user.filter((admin) => admin.isAdmin === true);
+    const isTeacher = req.user[0].role === "teacher";
 
-    if (admins.length > 0) {
-      await Task.findByIdAndDelete(req.params.id);
-      if (!task) return res.status(404).send("Item is not found");
-      res.send("Item has been deleted");
+    if (isTeacher) {
+      const task = await Table.findByIdAndDelete(req.params.id);
+      if (!task) return res.status(404).send({ error: "Item is not found" });
+      res.send({ message: "Item has been deleted" });
     } else {
-      res.status(400).send("You're not the admin");
+      res.status(400).send("You're not a teacher");
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ err: err.message });
   }
 };
 

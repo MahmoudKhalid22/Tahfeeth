@@ -26,6 +26,7 @@ const {
   getMessages,
   getOneTeacher,
   uploadAvatar,
+  deleteStd,
 } = require("../controller/users");
 const { getTables, getTablesStd } = require("../controller/tables");
 const { GridFsStorage } = require("multer-gridfs-storage");
@@ -135,6 +136,7 @@ router.post("", auth, addUser);
 // FOR TEACHER
 router.get("/join/student", auth, joinStudent);
 router.get("/students", auth, getStudents);
+router.delete("/student/:id", auth, deleteStd);
 
 // FOR STUDENT
 router.get("/tables", auth, getTablesStd);

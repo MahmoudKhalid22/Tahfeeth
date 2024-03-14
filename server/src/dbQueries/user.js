@@ -63,8 +63,6 @@ const updateUserEmail = async (id, email) => {
 };
 
 const findUsers = async (id) => {
-  const roleOrder = ["admin", "teacher", "student"];
-
   const users = await User.find({}).sort({
     role: 1,
   });
@@ -112,6 +110,20 @@ const getTeacher = async (id) => {
   return teacher;
 };
 
+const deleteStudent = async (teacherId, studentId) => {
+  const students = await findStudents(teacherId);
+  students.filter((s) => s._id === studentId);
+  if (students.length === 0) return false;
+  const newStudents = await User.updateOne(
+    { _id: teacherId },
+    { $pull: { students: students[0]._id } },
+    {
+      new: true,
+    }
+  );
+  return true;
+};
+
 module.exports = {
   getUserById,
   verificationToken,
@@ -126,4 +138,5 @@ module.exports = {
   findStudents,
   findAllMessages,
   getTeacher,
+  deleteStudent,
 };

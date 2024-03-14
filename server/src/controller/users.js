@@ -12,6 +12,7 @@ const {
   findStudents,
   findAllMessages,
   getTeacher,
+  deleteStudent,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -400,6 +401,23 @@ const uploadAvatar = async (req, res) => {
   }
 };
 
+const deleteStd = async (req, res) => {
+  try {
+    const teacher = req.user[0];
+    const stdId = req.params.id;
+    const isTeacher = teacher.role === "teacher";
+    if (!isTeacher) {
+      res.status(400).send({ error: "you're not a teacher" });
+    }
+    const users = await deleteStudent(teacher._id, stdId);
+    if (!users) return res.status(400).send({ error: "Student is not found" });
+    console.log(users);
+    res.send({ message: "user has been deleted" });
+  } catch (err) {
+    res.status(500).send({ err: err.message });
+  }
+};
+
 module.exports = {
   newUser,
   verificationEmail,
@@ -426,4 +444,5 @@ module.exports = {
   getMessages,
   getOneTeacher,
   uploadAvatar,
+  deleteStd,
 };

@@ -733,3 +733,43 @@
  *                  description: Internal Server Error
  *
  */
+/**
+ * @swagger
+ *  /user/student/{id}:
+ *      delete:
+ *          tags:
+ *              - Teacher
+ *          summary:
+ *              teacher wants to delete specific student
+ *          description:
+ *              the teacher wants to fire a student from his class
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                example: abc123
+ *              - in: headers
+ *                name: Authorization
+ *                description: the teacher provide his access token so the student will be deleted
+ *                example: Bearer xyz123
+ *
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: student has been deleted}
+ *              '400':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: you are not a teacher or the student is not found}
+ *              '500':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: internal server error}
+ *
+ */

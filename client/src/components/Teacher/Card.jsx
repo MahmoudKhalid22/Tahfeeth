@@ -1,16 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Card({
-  name,
-  role,
-  professional,
-  avatar,
-  price,
-  id,
-  multiple,
-  information,
-}) {
+function Card({ name, role, professional, avatar, price, id, information }) {
   return (
     <>
       <div className="flex flex-col bg-white shadow-lg w-[80%] sm:w-52 h-80 py-8 items-center justify-between">

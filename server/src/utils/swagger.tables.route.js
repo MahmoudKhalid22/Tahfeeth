@@ -1,6 +1,6 @@
 /**
  * @swagger
- *  /tables/{id}:
+ *  /table/{id}:
  *      get:
  *          description:
  *              admin and teacher and student can get this information about the student
@@ -26,7 +26,7 @@
  */
 /**
  * @swagger
- *  /tables/create-table:
+ *  /table/create-table:
  *      post:
  *          description: teacher add table for the student
  *          tags:
@@ -56,7 +56,7 @@
  */
 /**
  * @swagger
- *  /tables/{id}:
+ *  /table/{id}:
  *   patch:
  *      description: update table content
  *      tags:
@@ -88,7 +88,7 @@
  */
 /**
  * @swagger
- *  /tables/{id}:
+ *  /table/{id}:
  *   delete:
  *      description: delete table content
  *      tags:

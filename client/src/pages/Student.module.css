@@ -41,7 +41,7 @@ tbody tr td {
   font-size: 1.25rem;
   cursor: pointer;
   border-radius: 6px;
-  background-color: #111142;
+  background-color: #43766c;
   color: #fff;
   transition: 0.5s;
   display: flex;
@@ -51,12 +51,17 @@ tbody tr td {
   margin: 0 auto 3rem;
   transition: 0.5s ease;
 }
+.delete {
+  background-color: #9f8565 !important;
+  cursor: pointer;
+  color: #ececec;
+}
 .container button a {
   color: #fff;
   text-decoration: none;
 }
 .container button:hover {
-  background-color: #262669;
+  background-color: #43766c;
 }
 .container form {
   display: flex;

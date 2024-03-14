@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./Student.module.css";
+import { RiChatDeleteLine } from "react-icons/ri";
+import Spinner from "../components/utilsComponents/Spinner";
+
 function Student() {
   const { id } = useParams();
   const [studentData, setStudentData] = useState([]);
   const [showformTable, setShowFormTable] = useState(false);
 
   const [loadingTables, setLoadingTables] = useState(true);
-
+  const [loadingDelMap, setLoadingDelMap] = useState({});
   const [error, setError] = useState("");
 
   const [tableUser, setTableUser] = useState({
@@ -28,26 +31,27 @@ function Student() {
     ? JSON.parse(localStorage.getItem("data"))
     : undefined;
 
-  const stdToken = data?.accessToken;
+  const stdToken = data?.user?.role === "student" ? data?.accessToken : null;
   const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
   // const adminToken = data?.user.role === "admin" ? data.accessToken : null;
 
-  const stdId = id ? id : data?.user._id;
+  const stdId = id
+    ? id
+    : data?.user?.role === "student"
+    ? data?.user._id
+    : null;
 
   useEffect(() => {
     const getTables = async () => {
       try {
         setLoadingTables(true);
-        const response = await fetch(
-          "https://tahfeeth-system.onrender.com/table/" + stdId,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + stdToken,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:5000/table/" + stdId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + data?.accessToken,
+          },
+        });
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -56,7 +60,6 @@ function Student() {
         }
 
         const tables = await response.json();
-
         setStudentData(tables);
       } catch (err) {
         setError(err);
@@ -65,9 +68,7 @@ function Student() {
       }
     };
     getTables();
-  }, [stdId, stdToken]);
-
-  // console.log(studentData);
+  }, [data?.accessToken, stdId, stdToken]);
 
   //     if (data?.user.isAdmin) {
   //       getName();
@@ -80,7 +81,7 @@ function Student() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("https://tahfeeth-system.onrender.com/tables", {
+      const res = await fetch("http://localhost:5000/table/create-table", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,10 +100,13 @@ function Student() {
           ownerId: id,
         }),
       });
+      if (!res.ok) {
+        throw new Error(await res.json());
+      }
       setTableUser({
         day: "السبت",
         quantity: "",
-        level: "ضعيف",
+        level: "مقبول",
         tasks: "",
         completed: false,
         questions: "",
@@ -112,9 +116,29 @@ function Student() {
         owner: "",
       });
 
-      // const d = await response.json();
+      const d = await res.json();
+      setStudentData([...studentData, d]);
     } catch (err) {
-      throw new Error(err);
+      console.log(err.message);
+    }
+  };
+
+  const deleteTable = async (id) => {
+    // console.log(id);
+    try {
+      setLoadingDelMap({ ...loadingDelMap, [id]: true });
+      await fetch("http://localhost:5000/table/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + teacherToken,
+        },
+      });
+      setStudentData((prev) => prev.filter((table) => table._id !== id));
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setLoadingDelMap({ ...loadingDelMap, [id]: false });
     }
   };
 
@@ -167,6 +191,16 @@ function Student() {
                       <td>{std.answers}</td>
                       <td className={styles.notes}>{std.notes}</td>
                       <td>{std.rate}</td>
+                      {loadingDelMap[std._id] ? (
+                        <Spinner />
+                      ) : (
+                        <td
+                          className={styles.delete}
+                          onClick={() => deleteTable(std._id)}
+                        >
+                          <RiChatDeleteLine />
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

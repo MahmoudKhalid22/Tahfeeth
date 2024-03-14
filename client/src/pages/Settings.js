@@ -171,7 +171,7 @@ const Settings = () => {
               >
                 عرض كل الطلبة
               </button>
-              <div className="flex gap-2 w-full flex-wrap overflow-x-scroll">
+              <div className="flex gap-2 w-full flex-wrap ">
                 {loading ? (
                   <p className="text-xl font-semibold">تحميل...</p>
                 ) : error ? (
@@ -181,7 +181,11 @@ const Settings = () => {
                 ) : (
                   state.students.length > 0 &&
                   state.students.map((student) => (
-                    <StudentCard key={student._id} student={student} />
+                    <StudentCard
+                      key={student._id}
+                      student={student}
+                      teacherToken={teacherToken}
+                    />
                   ))
                 )}
               </div>
