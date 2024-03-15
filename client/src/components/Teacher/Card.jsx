@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Card({ name, role, professional, avatar, price, id, information }) {
+function Card({
+  name,
+  role,
+  professional,
+  avatar,
+  price,
+  id,
+  information,
+  admin,
+}) {
   return (
     <>
       <div className="flex flex-col bg-white shadow-lg w-[80%] sm:w-52 h-80 py-8 items-center justify-between">
@@ -20,12 +29,26 @@ function Card({ name, role, professional, avatar, price, id, information }) {
           <p className="text-xl font-semibold">{price} ج</p>
           {information && <div>{information}</div>}
 
-          <Link
-            to={`/teacher/${id}`}
-            className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors mt-4 text-white text-md sm:text-lg py-1 px-2"
-          >
-            عرض التفاصيل
-          </Link>
+          {admin ? (
+            <div className="flex gap-4">
+              <button className="text-sm bg-[#43766C] hover:bg-[#34665c] transition-colors mt-4 text-white sm:text-md py-1 px-2">
+                معلومات
+              </button>
+              <button className="text-sm bg-[#9F8565] hover:bg-[#7f6a51] transition-colors mt-4 text-white sm:text-md py-1 px-2">
+                طلاب
+              </button>
+              <button className="text-sm bg-red-700 hover:bg-red-800 transition-colors mt-4 text-white sm:text-md py-1 px-2">
+                حظر
+              </button>
+            </div>
+          ) : (
+            <Link
+              to={`/teacher/${id}`}
+              className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors mt-4 text-white text-md sm:text-lg py-1 px-2"
+            >
+              عرض التفاصيل
+            </Link>
+          )}
         </div>
       </div>
     </>

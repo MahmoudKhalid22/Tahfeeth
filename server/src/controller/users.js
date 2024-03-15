@@ -13,6 +13,7 @@ const {
   findAllMessages,
   getTeacher,
   deleteStudent,
+  getTeachersRolesFromDB,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -287,28 +288,6 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// const updateUser = async (req, res) => {
-//   const updates = Object.keys(req.body);
-//   const allowedUpdates = ["name", "email", "password"];
-
-//   const isValidUpdate = updates.every((update) =>
-//     allowedUpdates.includes(update)
-//   );
-
-//   if (!isValidUpdate) {
-//     return res.status(400).send("No valid Update");
-//   }
-
-//   try {
-//     updates.forEach((update) => (req.user[0][update] = req.body[update]));
-
-//     await req.user[0].save();
-//     res.send(req.user);
-//   } catch (err) {
-//     res.status(500).send(err);
-//   }
-// };
-
 const getUser = async (req, res) => {
   try {
     res.send(req.user);
@@ -417,6 +396,16 @@ const deleteStd = async (req, res) => {
   }
 };
 
+const getAllStatusTeachers = async (req, res) => {
+  try {
+    const teachers = await getTeachersRolesFromDB();
+
+    res.send(teachers);
+  } catch (err) {
+    res.status(500).send({ error: "internal server error" });
+  }
+};
+
 module.exports = {
   newUser,
   verificationEmail,
@@ -444,4 +433,5 @@ module.exports = {
   getOneTeacher,
   uploadAvatar,
   deleteStd,
+  getAllStatusTeachers,
 };

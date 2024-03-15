@@ -1,16 +1,16 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useReducer, useState } from "react";
 import UpdateForm from "../components/UpdateForm";
-import Student from "./Student";
-import Teacher from "./Teacher";
 import AddUserForm from "../components/AddUserForm";
 import StudentCard from "../components/StudentCard";
 import { Link } from "react-router-dom";
+import Spinner from "../components/utilsComponents/Spinner";
+import Card from "../components/Teacher/Card";
 
 const data = JSON.parse(localStorage.getItem("data"));
 
 const adminToken = data?.user?.role === "admin" ? data.accessToken : null;
 const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
-const studentToken = data?.user?.role === "student" ? data.accessToken : null;
+// const studentToken = data?.user?.role === "student" ? data.accessToken : null;
 
 const initialState = {
   showTeacherForm: false,
@@ -73,7 +73,7 @@ const Settings = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/admin",
+        "https://tahfeeth-system.onrender.com/user/admin/teachers",
         {
           method: "GET",
           headers: {
@@ -112,7 +112,21 @@ const Settings = () => {
       setLoading(false);
     }
   };
-  if (!data) return <p>يجب تسجيل الدخول</p>;
+  if (!data || data.length === 0) {
+    return (
+      <div className="overflow-hidden h-screen w-[80%] absolute left-0 flex flex-col items-center justify-center">
+        <h2 className="text-red-700 text-3xl font-semibold text-center overflow-y-hidden">
+          يجب تسجيل الدخول
+        </h2>
+        <Link
+          to="/register?mode=login"
+          className="text-white bg-[#959689] text-3xl font-semibold text-center mx-auto block mt-12 w-fit p-4 rounded-lg hover:bg-[#67685e] transition-colors"
+        >
+          تسجيل الدخول
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="w-[80%] mr-20 lg:mr-80 mt-16">
       {/* ADMIN DASHBOARD */}
@@ -129,12 +143,30 @@ const Settings = () => {
               >
                 عرض كل المعلمين
               </button>
-              {state.info && (
-                <div>
-                  {state.teachers?.map((user) => (
-                    <div key={user._id}>{user.name}</div>
-                  ))}
+              {error ? (
+                <p className="text-red-600 font-semibold text-2xl mt-6">
+                  حدث بعض الخطأ
+                </p>
+              ) : loading ? (
+                <div className="w-16 mt-4">
+                  <Spinner />
                 </div>
+              ) : (
+                state.info && (
+                  <div className="flex gap-6 flex-wrap mt-4">
+                    {state.teachers?.map((user) => (
+                      <Card
+                        key={user?._id}
+                        name={user?.name}
+                        role={user?.role}
+                        professional={user?.professional}
+                        avatar={user?.avatar}
+                        price={user?.price}
+                        admin={true}
+                      />
+                    ))}
+                  </div>
+                )
               )}
             </div>
             <div>

@@ -73,14 +73,6 @@ function Student() {
     getTables();
   }, [data?.accessToken, stdId, stdToken]);
 
-  //     if (data?.user.isAdmin) {
-  //       getName();
-  //     }
-  //     getTables();
-  //   } catch (err) {
-  //     throw new Error(err);
-  //   }
-  // }, [token, data, id, stdId]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -160,12 +152,6 @@ function Student() {
             <Link to="/details">العودة للصفحة الرئيسية</Link>
           </button>
         )}
-
-        {/* {data?.user.role === "teacher" && (
-          <h2>
-            {stdName} {data.user.role}{" "}
-          </h2>
-        )} */}
         {loadingTables ? (
           <h4 className="loading loading-details">تحميل ...</h4>
         ) : (
@@ -340,8 +326,6 @@ function Student() {
             </button>
           </form>
         )}
-
-        {/* )} */}
       </div>
     </div>
   );

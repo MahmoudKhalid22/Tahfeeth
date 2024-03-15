@@ -773,3 +773,35 @@
  *                              example: {message: internal server error}
  *
  */
+/**
+ * @swagger
+ *  /user/admin/teachers:
+ *      get:
+ *          tags:
+ *              - Admin
+ *          description: get all teachers only
+ *          parameters:
+ *              - in: headers
+ *                name: Authorization
+ *                description: access token for admin
+ *                example: Bearer abcxyz1237540
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: student has been deleted}
+ *              '400':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: you are not a teacher or the student is not found}
+ *              '500':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: internal server error}
+ */

@@ -124,6 +124,13 @@ const deleteStudent = async (teacherId, studentId) => {
   return true;
 };
 
+const getTeachersRolesFromDB = async () => {
+  const teachers = await User.find({
+    role: "teacher",
+  });
+  return teachers;
+};
+
 module.exports = {
   getUserById,
   verificationToken,
@@ -139,4 +146,5 @@ module.exports = {
   findAllMessages,
   getTeacher,
   deleteStudent,
+  getTeachersRolesFromDB,
 };

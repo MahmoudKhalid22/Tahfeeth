@@ -227,7 +227,7 @@ function Edit() {
         {modal && (
           <form
             onSubmit={updatePassword}
-            className={`absolute  left-1/2 top-1/2 -translate-x-1/2
+            className={`absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
            flex flex-col gap-8 bg-[#ececec] rounded-md py-12 px-4 z-20 w-[80%] md:w-[50%] xl:w-[32rem] items-start justify-start
            ${styles.form}
            

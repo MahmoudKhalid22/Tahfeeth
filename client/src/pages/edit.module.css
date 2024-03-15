@@ -1,5 +1,5 @@
 .modal {
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.521);
   left: 0;
   top: 0;

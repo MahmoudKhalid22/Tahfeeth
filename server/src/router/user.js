@@ -27,6 +27,7 @@ const {
   getOneTeacher,
   uploadAvatar,
   deleteStd,
+  getAllStatusTeachers,
 } = require("../controller/users");
 const { getTables, getTablesStd } = require("../controller/tables");
 const { GridFsStorage } = require("multer-gridfs-storage");
@@ -36,6 +37,7 @@ const path = require("path");
 const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
 const multer = require("multer");
+const { getAllTeachers } = require("../dbQueries/user");
 
 // START AUTHENTICATION //
 
@@ -126,7 +128,7 @@ router.get("/teacher/:id", getOneTeacher);
 
 // FOR ADMIN //
 router.get("/admin", auth, getUsers);
-// router.get("/join/teacher", auth, joinTeacher);
+router.get("/admin/teachers", auth, getAllStatusTeachers);
 router.delete("/:id", auth, deleteUser);
 
 router.get("/admin/:id", getOneUser);
