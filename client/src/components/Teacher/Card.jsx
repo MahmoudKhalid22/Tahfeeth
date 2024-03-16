@@ -19,13 +19,16 @@ function Card({
   const deleteTeacher = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/user/" + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + adminToken,
-        },
-      });
+      const response = await fetch(
+        "https://tahfeeth-system.onrender.com/user/" + id,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + adminToken,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error(await response.json());
       }

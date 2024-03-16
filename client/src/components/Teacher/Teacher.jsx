@@ -77,7 +77,7 @@ const Teacher = () => {
     try {
       setLoadingStd(true);
       const response = await fetch(
-        "http://localhost:5000/user/students/" + id,
+        "https://tahfeeth-system.onrender.com/user/students/" + id,
         {
           method: "GET",
           headers: {

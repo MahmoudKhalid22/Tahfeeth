@@ -26,7 +26,7 @@ function AddUserForm({ role, admin, teachers }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:5000/user/teacher/signup",
+        "https://tahfeeth-system.onrender.com/user/teacher/signup",
         {
           method: "POST",
           body: JSON.stringify({
