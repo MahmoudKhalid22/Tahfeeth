@@ -356,7 +356,7 @@ const getOneTeacher = async (req, res) => {
     if (!teacher) {
       res.status(500).send({ error: "this is not a teacher" });
     }
-    res.send(teacher);
+    res.send({ teacher: teacher, studentsNumber: teacher.students.length });
   } catch (err) {
     res.status(500).send({ err: err.message });
   }

@@ -35,15 +35,16 @@ const StudentCard = ({ student, teacherToken }) => {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col p-4 flex-wrap justify-around px-8 my-4 w-[15rem] sm:w-auto">
       <div className="flex items-center justify-between mb-2 gap-6 flex-col">
+        <div className="sm:w-16 sm:h-16 w-28 h-28 rounded-full flex items-center justify-center shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+          <img
+            src={student?.avatar ? student?.avatar : "/assets/dummyImage.jpg"}
+            alt={student?.name}
+            className="rounded-full w-full h-full object-cover"
+          />
+        </div>
         <h2 className="text-sm md:text-xl font-bold text-gray-800">
           {student?.name}
         </h2>
-        <p className="text-gray-500 font-semibold text-sm md:text-lg">
-          {student?.email}
-        </p>
-        <p className="text-gray-500 font-semibold text-sm md:text-lg">
-          {student?.status === "verified" ? "نشط" : "محظور"}
-        </p>
       </div>
       <p className="text-gray-700 text-base"></p>
       <div className="flex mt-4 gap-2 justify-between items-center">

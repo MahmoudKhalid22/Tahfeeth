@@ -96,6 +96,10 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    age: {
+      type: Number,
+      default: 20,
+    },
   },
   {
     timestamps: true,
