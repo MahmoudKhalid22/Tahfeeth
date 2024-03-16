@@ -4,6 +4,7 @@ const passport = require("passport");
 const session = require("express-session");
 const cors = require("cors");
 const path = require("path");
+const hpp = require("hpp");
 require("./config/dbConnection");
 require("./controller/OAuth");
 const { test } = require("./utils/testReq");
@@ -18,6 +19,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("trust proxy", 1);
 
 app.use(express.json());
+app.use(hpp());
 app.use(cors());
 app.use(
   session({

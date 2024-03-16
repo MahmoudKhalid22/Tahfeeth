@@ -60,7 +60,7 @@ function Links({ isLogin, onSetIsLogin }) {
   };
 
   return (
-    <div className="flex-1 w-[20%] lg:w-64 fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden">
+    <div className="flex-1 w-[20%] fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden">
       <Logo />
       <div className="flex items-center justify-between flex-col h-full  overflow-hidden">
         <ul className="flex flex-col items-center justify-center gap-4">

@@ -21,6 +21,7 @@
     "express-swagger-generator": "^1.1.17",
     "google-auth-library": "^9.6.1",
     "gridfs-stream": "^1.1.1",
+    "hpp": "^0.2.3",
     "joi": "^17.12.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.9.1",

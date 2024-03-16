@@ -67,13 +67,31 @@ const internalSignup = async (req, res) => {
     if (!name || !email || !password || !role || !verified || !status) {
       return res.status(400).send("يجب إدخال البيانات أولا");
     }
-    const student = new User({ ...req.body });
-    const teacherId = req.user[0]._id;
-    await student.save();
-    await addStudentToTeacher(teacherId, student._id);
-    res.status(201).send({ message: "تمت إضافة الطالب" });
+    if (req.body.role === "student") {
+      const student = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role,
+        verified: req.body.verified,
+        status: req.body.status,
+      });
+      const isTeacher = req.user[0].role === "teacher";
+      let teacherId;
+      if (isTeacher) {
+        teacherId = req.user[0]._id;
+      } else {
+        teacherId = req.body.id;
+      }
+      await addStudentToTeacher(teacherId, student._id);
+      await student.save();
+      return res.status(201).send({ message: "تمت إضافة الطالب" });
+    }
+    const teacher = new User(req.body);
+    await teacher.save();
+    return res.status(201).send({ message: "تمت إضافة المعلم" });
   } catch (err) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -242,12 +260,13 @@ const joinToTeacher = async (req, res) => {
 // for teachers
 const getStudents = async (req, res) => {
   try {
-    const isTeacher = req.user[0].role === "teacher";
+    const isTeacher =
+      req.user[0].role === "teacher" || req.user[0].role === "admin";
     if (!isTeacher) {
       res.status(400).send({ error: "You are not a teacher" });
     }
-    const teacher = req.user[0];
-    const students = await findStudents(teacher._id);
+    const teacherId = req.params.id;
+    const students = await findStudents(teacherId);
     res.send({ students });
   } catch (err) {
     res.status(500).send({ err });
@@ -272,19 +291,19 @@ const addUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const admins = req.user.filter((user) => user.isAdmin === true);
-    if (admins.length > 0) {
+    const isAdmin = req.user[0].role === "admin";
+    if (isAdmin) {
       const user = await User.findByIdAndDelete(req.params.id);
       if (!user) {
         throw new Error("User is not found");
       } else {
-        res.send("User has been deleted");
+        res.send({ message: "User has been deleted" });
       }
     } else {
-      res.status(400).send("You're not the admin");
+      res.status(400).send({ error: "You're not the admin" });
     }
   } catch (e) {
-    res.status(500).send(e);
+    res.status(500).send({ error: e.message });
   }
 };
 
@@ -383,7 +402,7 @@ const deleteStd = async (req, res) => {
   try {
     const teacher = req.user[0];
     const stdId = req.params.id;
-    const isTeacher = teacher.role === "teacher";
+    const isTeacher = teacher.role === "teacher" || teacher.role === "admin";
     if (!isTeacher) {
       res.status(400).send({ error: "you're not a teacher" });
     }
@@ -405,6 +424,8 @@ const getAllStatusTeachers = async (req, res) => {
     res.status(500).send({ error: "internal server error" });
   }
 };
+
+const getStudentsByTeacherId = async () => {};
 
 module.exports = {
   newUser,

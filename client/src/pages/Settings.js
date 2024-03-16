@@ -47,7 +47,6 @@ const Settings = () => {
   const [loading, setLoading] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const getData = async () => {
     try {
       setLoading(true);
@@ -112,6 +111,7 @@ const Settings = () => {
       setLoading(false);
     }
   };
+
   if (!data || data.length === 0) {
     return (
       <div className="overflow-hidden h-screen w-[80%] absolute left-0 flex flex-col items-center justify-center">
@@ -163,6 +163,8 @@ const Settings = () => {
                         avatar={user?.avatar}
                         price={user?.price}
                         admin={true}
+                        id={user?._id}
+                        adminToken={adminToken}
                       />
                     ))}
                   </div>
@@ -177,7 +179,9 @@ const Settings = () => {
                 إضافة معلم
               </button>
 
-              {state.showTeacherForm && <AddUserForm role="teacher" />}
+              {state.showTeacherForm && (
+                <AddUserForm admin={true} role="teacher" />
+              )}
             </div>
             <div>
               <button
@@ -186,7 +190,13 @@ const Settings = () => {
               >
                 إضافة طالب
               </button>
-              {state.showStudentForm && <AddUserForm role="student" />}{" "}
+              {state.showStudentForm && (
+                <AddUserForm
+                  role="student"
+                  admin={true}
+                  teachers={state.teachers}
+                />
+              )}
             </div>
           </div>
         </div>

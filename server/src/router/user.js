@@ -137,7 +137,9 @@ router.post("", auth, addUser);
 
 // FOR TEACHER
 router.get("/join/student", auth, joinStudent);
-router.get("/students", auth, getStudents);
+
+// FOR TEACHER AND ADMIN
+router.get("/students/:id", auth, getStudents);
 router.delete("/student/:id", auth, deleteStd);
 
 // FOR STUDENT
