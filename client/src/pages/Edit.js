@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Spinner from "../components/utilsComponents/Spinner";
 import styles from "./edit.module.css";
+import ReactCrop from "react-image-crop";
 
 const data = JSON.parse(localStorage.getItem("data"))
   ? JSON.parse(localStorage.getItem("data"))
@@ -12,6 +13,16 @@ function Edit() {
   const [error, setError] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [modal, setModal] = useState(false);
+  // IMAGE CROP
+  const [crop, setCrop] = useState({
+    unit: "%", // Can be 'px' or '%'
+    x: 25,
+    y: 25,
+    width: 50,
+    height: 50,
+  });
+  const [imgUrl, setImgUrl] = useState("");
+
   // PASSWORD
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -137,6 +148,17 @@ function Edit() {
     }
   };
 
+  const imageCropper = (src) => {
+    const file = src;
+    if (!file) return;
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      const imageUrl = reader.result?.toString() || "";
+      setImgUrl(imageUrl);
+    });
+    reader.readAsDataURL(file);
+  };
+
   return (
     <>
       {modal && (
@@ -152,6 +174,22 @@ function Edit() {
             alt="user img"
             className="rounded-full w-40 h-40 object-cover"
           />
+          {avatar && (
+            <div className="flex flex-col items-center">
+              <ReactCrop
+                src={URL.createObjectURL(avatar)}
+                crop={crop}
+                onChange={(c) => setCrop(c)}
+                circularCrop
+                keepSelection
+                aspect={1}
+                minWidth={200}
+                minHeight={200}
+              >
+                <img src={imgUrl} alt="upload" />
+              </ReactCrop>
+            </div>
+          )}
           {error && (
             <p className="mx-auto text-center text-red-600 text-2xl">
               حدث بعض الخطأ
@@ -171,7 +209,10 @@ function Edit() {
             accept="image/*"
             className="hidden"
             ref={fileInputRef}
-            onChange={(e) => setAvatar(e.target.files[0])}
+            onChange={(e) => {
+              setAvatar(e.target.files[0]);
+              imageCropper(e.target.files[0]);
+            }}
           />
           {avatar && (
             <>

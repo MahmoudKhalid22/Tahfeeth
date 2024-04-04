@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { GiExitDoor } from "react-icons/gi";
-import { FaGooglePlus, FaFacebook } from "react-icons/fa";
+import { FaGooglePlus, FaFacebook, FaRegEyeSlash } from "react-icons/fa";
+import ReactCrop from "react-image-crop";
 
 function Form({ onSetIsLogin }) {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -173,15 +176,21 @@ function Form({ onSetIsLogin }) {
           البريد الإلكتروني
         </label>
       </div>
-      <div className=" flex flex-row-reverse justify-between items-start w-full">
+      <div className=" flex flex-row-reverse justify-between items-start w-full relative">
         <input
-          type="password"
+          type={showPassword ? "password" : "text"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="كلمة السر"
           id="pass"
           className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
         />
+        <div
+          onClick={() => setShowPassword(!showPassword)}
+          className=" absolute top-0 left-0 bottom-0 flex items-center pl-3 cursor-pointer text-3xl"
+        >
+          <FaRegEyeSlash />
+        </div>
         <label
           className="hidden md:block text-[#43766C] text-2xl"
           htmlFor="pass"
