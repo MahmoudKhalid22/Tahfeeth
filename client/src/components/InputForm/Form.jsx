@@ -178,7 +178,7 @@ function Form({ onSetIsLogin }) {
       </div>
       <div className=" flex flex-row-reverse justify-between items-start w-full relative">
         <input
-          type={showPassword ? "password" : "text"}
+          type={!showPassword ? "password" : "text"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="كلمة السر"
@@ -198,6 +198,13 @@ function Form({ onSetIsLogin }) {
           كلمة السر
         </label>
       </div>
+      {isLogin && (
+        <div className="flex items-center justify-end w-full">
+          <Link className="underline" to={"/forget-password"}>
+            هل نسيت كلمة السر
+          </Link>
+        </div>
+      )}
       {!isLogin && (
         <div className=" flex flex-row-reverse justify-between items-start w-full">
           <select

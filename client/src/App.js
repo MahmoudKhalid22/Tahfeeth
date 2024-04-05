@@ -14,6 +14,7 @@ import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Verified from "./pages/Verified";
 import Edit from "./pages/Edit";
+import ForgetPassword from "./pages/ForgetPassword";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
 
@@ -49,6 +50,7 @@ function App() {
             <Route index element={<Settings />} />
             <Route path="edit" element={<Edit />} />
           </Route>
+          <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
