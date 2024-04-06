@@ -8,12 +8,31 @@ function Proposal({ onSetActiveLink, observer }) {
       className=" relative pt-28 flex items-start min-h-screen text-right justify-start flex-col overflow-x-hidden"
     >
       <div className=" home absolute top-0 left-0 w-full h-screen">
-        <img
-          alt="background"
-          loading="lazy"
-          src="/assets/02-01.jpg"
-          className="w-full h-full object-cover"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcSet="
+          /assets/02-01.webp,
+          /assets/02-01.webp?width=200 200vw,
+          /assets/02-01.webp?width=400 400vw,
+          /assets/02-01.webp?width=800 800vw,
+          "
+          />
+          <img
+            alt="background"
+            loading="lazy"
+            role="presentation"
+            decoding="async"
+            fetchPriority="high"
+            srcSet="
+            /assets/02-01.jpg?width=100 100w
+            /assets/02-01.jpg?width=200 200w
+            /assets/02-01.jpg?width=400 400w
+            /assets/02-01.jpg?width=800 800w            
+            "
+            className="w-full h-full object-cover"
+          />
+        </picture>
       </div>
       <div className="z-10 mr-[2.5%] text-[#f5f5f5]">
         <h1 className="text-right font-bold text-xl sm:text-3xl block">

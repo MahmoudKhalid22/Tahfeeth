@@ -5,22 +5,22 @@ function Footer() {
   return (
     <footer className="h-60 mt-36 w-full bg-[#9F8565] overflow-x-hidden ">
       <ul className="h-[11.5rem] w-[80%] absolute left-0  md:flex md:flex-row grid grid-cols-2 items-center justify-center gap-12">
-        <li className="text-md sm:text-2xl text-white">
+        <li className="text-md sm:text-2xl mr-4 md:mr-0 text-white">
           <HashLink smooth to="/#home">
             الصفحة الرئيسية
           </HashLink>
         </li>
-        <li className="text-md sm:text-2xl text-white">
+        <li className="text-md sm:text-2xl mr-4 md:mr-0 text-white">
           <HashLink smooth to={"/#about"}>
             من نحن
           </HashLink>
         </li>
-        <li className="text-md sm:text-2xl text-white">
+        <li className="text-md sm:text-2xl mr-4 md:mr-0 text-white">
           <HashLink smooth to={"/#teachers"}>
             المعلمين
           </HashLink>
         </li>
-        <li className="text-md sm:text-2xl text-white">
+        <li className="text-md sm:text-2xl mr-4 md:mr-0 text-white">
           <HashLink smooth to={"/#contact"}>
             تواصل معنا
           </HashLink>
