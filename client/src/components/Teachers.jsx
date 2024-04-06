@@ -33,10 +33,7 @@ function Teachers() {
   //   teachers.length > 6 ? Array.from(teachers => ) : teachers;
 
   return (
-    <div
-      id="teachers"
-      className="mr-[3.75rem] sm:mr-[4.5rem] lg:mr-[17rem] py-8 "
-    >
+    <div id="teachers" className="py-8 ">
       <h3 className="text-center py-4 my-12 text-xl sm:text-3xl font-bold border-b-4 w-fit mx-auto border-black">
         المعلمون والقراء
       </h3>

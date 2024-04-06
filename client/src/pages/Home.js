@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Home.css";
 import Proposal from "../components/Proposal";
 import About from "../components/About";
 import Teachers from "../components/Teachers";
@@ -9,11 +9,17 @@ import Footer from "../components/Footer";
 function Home() {
   return (
     <>
-      <Proposal />
-      <About />
-      <Teachers />
-      <Contact />
-      <Footer />
+      <div className="mr-[20%]">
+        <Proposal />
+      </div>
+      <div className="mr-[22.5%]">
+        <About />
+        <Teachers />
+        <Contact />
+      </div>
+      <div className="mr-[20%]">
+        <Footer />
+      </div>
     </>
   );
 }

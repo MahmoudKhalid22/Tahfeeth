@@ -128,7 +128,7 @@ const Settings = () => {
     );
   }
   return (
-    <div className="w-[80%] mr-20 lg:mr-80 mt-16">
+    <div className="w-[80%] mr-[22.5%] mt-16">
       {/* ADMIN DASHBOARD */}
       {data?.user?.role === "admin" && (
         <div className="text-2xl ">

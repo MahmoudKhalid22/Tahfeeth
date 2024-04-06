@@ -61,7 +61,7 @@ function Contact() {
     <>
       <div
         id="contact"
-        className="flex items-center justify-center flex-row-reverse py-16 mt-16 gap-12 mr-16 lg:mr-[16rem] overflow-x-hidden"
+        className="flex items-center justify-center flex-row-reverse py-16 mt-16 gap-12 overflow-x-hidden"
       >
         <div className="w-80 lg:w-[25.75rem] h-[33.875rem] flex-1/2 md:block hidden">
           <img

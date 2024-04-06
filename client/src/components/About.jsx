@@ -4,7 +4,7 @@ function About() {
   return (
     <div
       id="about"
-      className=" mr-20 sm:mr-28 lg:mr-[20rem] py-8 flex items-start flex-col overflow-x-hidden"
+      className=" py-8 flex items-start flex-col overflow-x-hidden"
     >
       <h2 className="text-xl sm:text-3xl font-bold text-[#000] mb-8">من نحن</h2>
 
