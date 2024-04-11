@@ -13,6 +13,9 @@ const tableRouter = require("./router/tables");
 const { docs } = require("./utils/swagger");
 
 const app = express();
+const corsOptions = {
+	origin: ['https://tahfeeth.vercel.app', 'http://localhost:3000']
+}
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -20,7 +23,7 @@ app.set("trust proxy", 1);
 
 app.use(express.json());
 app.use(hpp());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
