@@ -1,14 +1,24 @@
 import React, { useRef, useState } from "react";
 import Spinner from "../components/utilsComponents/Spinner";
 import styles from "./edit.module.css";
-import ReactCrop from "react-image-crop";
+import ReactCrop, {
+  convertToPixelCrop,
+  makeAspectCrop,
+} from "react-image-crop";
+import useCanvasPreview from "../utilities/useCanvasPreview";
 
 const data = JSON.parse(localStorage.getItem("data"))
   ? JSON.parse(localStorage.getItem("data"))
   : null;
 
+const ASPECT_RATION = 1;
+const MIN_DIMENSION = 150;
+
 function Edit() {
   const fileInputRef = useRef(null);
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [avatar, setAvatar] = useState(null);
@@ -22,6 +32,8 @@ function Edit() {
     height: 50,
   });
   const [imgUrl, setImgUrl] = useState("");
+  const [imgError, setImgError] = useState(false);
+  const [chosed, setChosed] = useState(false);
 
   // PASSWORD
   const [oldPassword, setOldPassword] = useState("");
@@ -41,6 +53,7 @@ function Edit() {
     e.preventDefault();
     try {
       const formData = new FormData();
+
       formData.append("avatar", avatar);
       setLoading(true);
       const response = await fetch(
@@ -54,7 +67,7 @@ function Edit() {
         }
       );
       if (!response.ok) {
-        console.log(await response.json());
+        // console.log(await response.json());
         throw new Error();
       }
 
@@ -66,9 +79,9 @@ function Edit() {
       userData.user.avatar = userAvatar;
       const updatedData = JSON.stringify(userData);
       localStorage.setItem("data", updatedData);
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setError(true);
     } finally {
       setLoading(false);
@@ -95,7 +108,7 @@ function Edit() {
       );
       const result = await res.json();
       if (!res.ok) {
-        console.log(result);
+        // console.log(result);
         throw new Error(result.error);
       }
       setModal(false);
@@ -133,7 +146,7 @@ function Edit() {
       }
 
       const updatedData = await response.json();
-      console.log(updatedData);
+      // console.log(updatedData);
 
       const existingData = JSON.parse(localStorage.getItem("data"));
       existingData.user.name = updatedData.name;
@@ -153,11 +166,43 @@ function Edit() {
     if (!file) return;
     const reader = new FileReader();
     reader.addEventListener("load", () => {
+      const imageEl = new Image();
+
       const imageUrl = reader.result?.toString() || "";
+      imageEl.src = imageUrl;
+      imageEl.addEventListener("load", (e) => {
+        const { naturalHeight, naturalWidth } = e.currentTarget;
+        setImgError(false);
+        if (naturalHeight < MIN_DIMENSION || naturalWidth < MIN_DIMENSION) {
+          setImgError(true);
+          return setImgUrl("");
+        }
+      });
+
       setImgUrl(imageUrl);
     });
     reader.readAsDataURL(file);
   };
+
+  function onImageLoad(e) {
+    const { width, height } = e.currentTarget;
+    const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
+    const crop = makeAspectCrop(
+      {
+        // You don't need to pass a complete crop into
+        // makeAspectCrop or centerCrop.
+        unit: "%",
+        width: cropWidthInPercent,
+      },
+      ASPECT_RATION,
+      width,
+      height
+    );
+
+    // const s = centerCrop(crop, width, height);
+
+    setCrop(crop);
+  }
 
   return (
     <>
@@ -174,22 +219,72 @@ function Edit() {
             alt="user img"
             className="rounded-full w-40 h-40 object-cover"
           />
-          {avatar && (
-            <div className="flex flex-col items-center">
-              <ReactCrop
-                src={URL.createObjectURL(avatar)}
-                crop={crop}
-                onChange={(c) => setCrop(c)}
-                circularCrop
-                keepSelection
-                aspect={1}
-                minWidth={200}
-                minHeight={200}
-              >
-                <img src={imgUrl} alt="upload" />
-              </ReactCrop>
-            </div>
+          {avatar && !imgError && (
+            <>
+              {chosed && (
+                <div
+                  className="absolute left-0 top-0 w-full h-screen bg-[#000000c0] "
+                  onClick={() => setChosed(false)}
+                ></div>
+              )}
+              {chosed && (
+                <div className="flex flex-col items-center absolute  bg-slate-600 z-10">
+                  <ReactCrop
+                    src={URL.createObjectURL(avatar)}
+                    crop={crop}
+                    onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
+                    circularCrop
+                    keepSelection
+                    aspect={1}
+                    minWidth={MIN_DIMENSION}
+                  >
+                    <img
+                      ref={imgRef}
+                      src={imgUrl}
+                      alt="upload"
+                      onLoad={onImageLoad}
+                      className="w-full h-1/2"
+                      style={{ maxHeight: "70vh" }}
+                    />
+                  </ReactCrop>
+                </div>
+              )}
+              {chosed && (
+                <button
+                  className="z-10 bg-slate-300 py-2 px-4 mt-[27rem]"
+                  onClick={() => {
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    useCanvasPreview(
+                      imgRef.current, // HTMLImageElement
+                      previewCanvasRef.current, // HTMLCanvasElement
+                      convertToPixelCrop(
+                        crop,
+                        imgRef.current.width,
+                        imgRef.current.height
+                      )
+                    );
+                    previewCanvasRef.current.toBlob(async (blob) => {
+                      if (blob) {
+                        const file = new File([blob], avatar.name, {
+                          type: blob.type,
+                        });
+                        setAvatar(file);
+                      }
+                    }, "image/jpeg");
+                  }}
+                >
+                  Crop
+                </button>
+              )}
+            </>
           )}
+          {crop && chosed && (
+            <canvas
+              ref={previewCanvasRef}
+              className="mt-4 object-contain w-[150px] h-[150px] border border-slate-900 z-10"
+            />
+          )}
+
           {error && (
             <p className="mx-auto text-center text-red-600 text-2xl">
               حدث بعض الخطأ
@@ -198,7 +293,10 @@ function Edit() {
           <div className="flex gap-6 text-2xl justify-center mt-6">
             <button
               className="bg-[#8A7A5F] hover:bg-[#6e624c] transition-colors duration-300 text-[#ececec] rounded-md px-4 py-2 "
-              onClick={handleUploadClick}
+              onClick={() => {
+                handleUploadClick();
+                setChosed(true);
+              }}
             >
               تغيير الصورة
             </button>
@@ -214,18 +312,23 @@ function Edit() {
               imageCropper(e.target.files[0]);
             }}
           />
-          {avatar && (
+          {imgError && (
+            <p className="text-red-500 text-md">
+              Image must be 150 x 150 at least
+            </p>
+          )}
+          {avatar && !imgError && chosed && (
             <>
               <form
                 className="flex gap-4 items-center mt-6"
                 onSubmit={uploadAvatar}
               >
-                <p className="text-2xl font-semibold ">
+                <p className="text-2xl font-semibold z-10 block relative bg-white py-2 px-4">
                   أنت اخترت: {avatar.name}
                 </p>
                 <button
                   type="submit"
-                  className="bg-[#9F8565] hover:bg-[#6e624c] transition-colors duration-300 text-[#ececec] rounded-md p-1  "
+                  className="bg-[#9F8565] hover:bg-[#6e624c] transition-colors duration-300 text-[#ececec] rounded-md p-2 z-10 text-lg"
                 >
                   تأكيد
                 </button>

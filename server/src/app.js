@@ -13,9 +13,10 @@ const tableRouter = require("./router/tables");
 const { docs } = require("./utils/swagger");
 
 const app = express();
+
 const corsOptions = {
-	origin: ['https://tahfeeth.vercel.app', 'http://localhost:3000']
-}
+  origin: ["https://tahfeeth.vercel.app", "http://localhost:3000"],
+};
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

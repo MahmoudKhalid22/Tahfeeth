@@ -70,7 +70,7 @@ function Teachers() {
         </p>
       )}
       {error && !loading && (
-        <p className="text-center font-semibold text-3xl text-rose-700">
+        <p className="text-center  text-md text-rose-700">
           يوجد خطأ داخلي في السيرفر، للأسف لا يمكننا عرض المعلمين
         </p>
       )}
