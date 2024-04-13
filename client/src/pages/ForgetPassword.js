@@ -1,67 +1,85 @@
 import React, { useState } from "react";
+import Spinner from "../components/utilsComponents/Spinner";
+import { Link } from "react-router-dom";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
+  const [inform, setInform] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Add your logic to handle the submission of the forget password form
-    console.log("Forget password form submitted with email:", email);
+    try {
+      setLoading(true);
+      setErr(false);
+      const res = await fetch("http://localhost:5000/user/forget-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.message);
+      }
+      setInform(true);
+    } catch (e) {
+      setErr(e.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 w-[80%] absolute left-0">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-[#C1A98D]">
-            هل نسيت كلمة السر
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <input type="hidden" name="remember" value="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#43766C] hover:bg-[#397569] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <svg
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-10a1 1 0 00-2 0v3a1 1 0 102 0v-3zm-.707 7.707a1 1 0 011.414 0l2 2a1 1 0 01-1.414 1.414l-2-2a1 1 0 010-1.414zM11 6a1 1 0 012 0v1a1 1 0 11-2 0V6z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-              Reset Password
-            </button>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 w-[80%] absolute left-0">
+      <div className="max-w-md w-full bg-white shadow-md rounded-md p-8">
+        <h2 className="text-2xl font-semibold mb-4">هل نسيت كلمة السر</h2>
+        <p className="text-gray-600 mb-6">
+          أدخل بريدك الإلكتروني وسوف نرسل لك رابط بإعادة تعيين كلمة السر
+        </p>
+        <form className="mb-6" onSubmit={handleSubmit}>
+          <label htmlFor="email" className="block text-gray-700">
+            البريد الإلكتروني
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="border border-gray-300 rounded-md px-4 py-2 w-full"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="mt-4 w-full bg-[#43766C] hover:bg-[#365e56] text-white py-2 rounded-md  transition duration-300"
+          >
+            إعادة تعيين كلمة السر{" "}
+          </button>
+          <div className="mt-4">
+            {loading && <Spinner />}
+            {err.length > 0 && (
+              <p className="text-xl text-center text-red-600">{err}</p>
+            )}
+            {inform && (
+              <p className="text-center text-green-500">
+                تم إرسال الرابط إلى بريدك الإلكتروني ، من فضلك تفقد بريدك
+              </p>
+            )}
           </div>
         </form>
+        <p className="text-gray-600 text-center">
+          تذكرت كلمة السر{" "}
+          <Link
+            to="/register?mode=login"
+            className="text-[#9F8565] hover:underline"
+          >
+            سجل الدخول من هنا{" "}
+          </Link>
+        </p>
       </div>
     </div>
   );

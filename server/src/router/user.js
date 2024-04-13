@@ -28,6 +28,7 @@ const {
   uploadAvatar,
   deleteStd,
   getAllStatusTeachers,
+  verifyResetPasswordToken,
 } = require("../controller/users");
 const { getTables, getTablesStd } = require("../controller/tables");
 const { GridFsStorage } = require("multer-gridfs-storage");
@@ -59,8 +60,11 @@ router.post("/logout", auth, logoutUser);
 // forget password
 router.post("/forget-password", forgetPassword);
 
+// get token from email
+router.get("/get-forget-password/:token", verifyResetPasswordToken);
+
 // reset password
-router.post("/reset-password/:token", resetPassword);
+router.post("/reset-password", resetPassword);
 
 // refresh tooken
 router.get("/refresh-token", authByRefreshToken, newToken);

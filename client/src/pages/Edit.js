@@ -6,6 +6,7 @@ import ReactCrop, {
   makeAspectCrop,
 } from "react-image-crop";
 import useCanvasPreview from "../utilities/useCanvasPreview";
+import BadRequest from "./BadRequest";
 
 const data = JSON.parse(localStorage.getItem("data"))
   ? JSON.parse(localStorage.getItem("data"))
@@ -49,6 +50,10 @@ function Edit() {
     fileInputRef.current.click();
   };
 
+  if (!data || data.length === 0 || data === undefined) {
+    return <BadRequest />;
+  }
+
   const uploadAvatar = async (e) => {
     e.preventDefault();
     try {
@@ -56,16 +61,13 @@ function Edit() {
 
       formData.append("avatar", avatar);
       setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/upload-avatar",
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: "Bearer " + data?.accessToken,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:5000/user/upload-avatar", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + data?.accessToken,
+        },
+      });
       if (!response.ok) {
         // console.log(await response.json());
         throw new Error();
@@ -79,7 +81,7 @@ function Edit() {
       userData.user.avatar = userAvatar;
       const updatedData = JSON.stringify(userData);
       localStorage.setItem("data", updatedData);
-      // window.location.reload();
+      window.location.reload();
     } catch (err) {
       // console.log(err);
       setError(true);
@@ -128,7 +130,7 @@ function Edit() {
     try {
       setLoadingName(true);
       const response = await fetch(
-        `https://tahfeeth-system.onrender.com/user/update-username`,
+        `http://localhost:5000/user/update-username`,
         {
           method: "PUT",
           headers: {

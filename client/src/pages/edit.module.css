@@ -9,16 +9,17 @@
   z-index: 19;
 }
 .form {
-  animation: form 0.7s;
+  transition: all 0.7s ease-in-out;
+  animation: form 0.7s ease-in-out;
 }
 
 @keyframes form {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translate(-50%, -30%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
   }
 }

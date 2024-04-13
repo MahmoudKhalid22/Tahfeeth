@@ -135,10 +135,11 @@ const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await findUserByEmail(email);
-    if (!user)
+    if (!user) {
       return res
         .status(400)
         .send({ message: "هذا البريد الإلكتروني غير مسجل" });
+    }
     const token = jwt.sign(
       { id: user._id.toString() },
       process.env.RESET_PASSWORD_SECRET,
@@ -153,15 +154,28 @@ const forgetPassword = async (req, res) => {
     res.status(500).send({ err });
   }
 };
-const resetPassword = async (req, res) => {
+let user = null;
+const verifyResetPasswordToken = async (req, res) => {
   try {
     const token = req.params.token;
-    const user = await verifyToken(token, process.env.RESET_PASSWORD_SECRET);
-    if (!user) return res.status(400).send({ message: "token expired" });
+    const decoded = await jwt.verify(token, process.env.RESET_PASSWORD_SECRET);
+    if (!decoded) {
+      throw new Error("token has been expired");
+    }
+    user = await User.findOne({ _id: decoded._id });
+    res.redirect("http://localhost:3000/reset-password");
+  } catch (err) {
+    res.status(500).send({ err: err.message });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    if (!user) return res.status(400).send({ error: "user is not exist" });
     await updatePassword(user._id, req.body.password);
     res.send({ message: "password has been updated" });
   } catch (error) {
-    res.status(500).send({ error });
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -455,4 +469,5 @@ module.exports = {
   uploadAvatar,
   deleteStd,
   getAllStatusTeachers,
+  verifyResetPasswordToken,
 };
