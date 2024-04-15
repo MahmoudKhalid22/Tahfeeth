@@ -14,6 +14,7 @@ const {
   getTeacher,
   deleteStudent,
   getTeachersRolesFromDB,
+  findTeacherByName,
 } = require("../dbQueries/user");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
@@ -439,7 +440,16 @@ const getAllStatusTeachers = async (req, res) => {
   }
 };
 
-const getStudentsByTeacherId = async () => {};
+const getTeacherSearch = async (req, res) => {
+  try {
+    const teacherWord = req.query.name;
+    const teacher = await findTeacherByName(teacherWord);
+    if (!teacher) return res.status(500).send({ err: "Teacher is not found" });
+    res.send(teacher);
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+};
 
 module.exports = {
   newUser,
@@ -470,4 +480,5 @@ module.exports = {
   deleteStd,
   getAllStatusTeachers,
   verifyResetPasswordToken,
+  getTeacherSearch,
 };

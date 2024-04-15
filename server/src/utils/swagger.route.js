@@ -805,3 +805,35 @@
  *                              type: object
  *                              example: {message: internal server error}
  */
+/**
+ * @swagger
+ *  /user/search:
+ *      get:
+ *          tags:
+ *                - For all Users
+ *          description: get all teachers only
+ *          parameters:
+ *              - in: query
+ *                name: name
+ *                description: the name of the teacher you want to get
+ *                example: name=mahmoud
+ *          responses:
+ *              '200':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              $ref: '#/components/schemas/User'
+ *              '400':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: not found}
+ *              '500':
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              example: {message: internal server error}
+ */

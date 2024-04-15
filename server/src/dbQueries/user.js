@@ -131,6 +131,17 @@ const getTeachersRolesFromDB = async () => {
   return teachers;
 };
 
+const findTeacherByName = async (name) => {
+  const teachers = await User.findOne({
+    name: { $regex: name, $options: "i" },
+    role: "teacher",
+    verified: true,
+  });
+  if (!teachers) return false;
+
+  return teachers;
+};
+
 module.exports = {
   getUserById,
   verificationToken,
@@ -147,4 +158,5 @@ module.exports = {
   getTeacher,
   deleteStudent,
   getTeachersRolesFromDB,
+  findTeacherByName,
 };

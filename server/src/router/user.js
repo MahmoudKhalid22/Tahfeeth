@@ -29,11 +29,9 @@ const {
   deleteStd,
   getAllStatusTeachers,
   verifyResetPasswordToken,
+  getTeacherSearch,
 } = require("../controller/users");
 const { getTables, getTablesStd } = require("../controller/tables");
-const { GridFsStorage } = require("multer-gridfs-storage");
-const crypto = require("crypto");
-const path = require("path");
 
 const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
@@ -129,6 +127,7 @@ router.get(
 router.get("/teachers", getTeachers);
 router.post("/message", messageForm);
 router.get("/teacher/:id", getOneTeacher);
+router.get("/search", getTeacherSearch);
 
 // FOR ADMIN //
 router.get("/admin", auth, getUsers);
@@ -150,9 +149,11 @@ router.delete("/student/:id", auth, deleteStd);
 router.get("/tables", auth, getTablesStd);
 router.post("/join/:id", auth, joinToTeacher);
 
+// SEARCHING FOR A TEACHER
+
 // TEST REQUEST
-router.get("/test", (req, res) => {
-  res.send({ msg: "test" });
-});
+// router.get("/test", (req, res) => {
+//   res.send({ msg: "test" });
+// });
 
 module.exports = router;
