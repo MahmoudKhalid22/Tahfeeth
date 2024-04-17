@@ -12,6 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { GiEntryDoor } from "react-icons/gi";
 import { RxGear } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
+import { IoIosSearch } from "react-icons/io";
+import Spinner from "../utilsComponents/Spinner";
 
 const data = localStorage.getItem("data")
   ? JSON.parse(localStorage.getItem("data"))
@@ -23,6 +25,10 @@ function Links({ isLogin, onSetIsLogin }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [status, setStatus] = useState(isLogin);
+  // SEARCH FOR TEACHER
+  const [teacherName, setTeacherName] = useState("");
+  const [searchErr, setSearchErr] = useState(false);
+  const [loadingSearch, setLoadingSearch] = useState(false);
   // console.log(status);
 
   useEffect(() => {
@@ -56,6 +62,23 @@ function Links({ isLogin, onSetIsLogin }) {
       setError(true);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const searchForTeacher = async (name) => {
+    name = name.toString();
+    try {
+      setLoadingSearch(true);
+      setSearchErr(false);
+      const res = await fetch(
+        "http://localhost:5000/user/search?name=" + name.toString()
+      );
+      const result = await res.json();
+      console.log(result);
+    } catch (err) {
+      setSearchErr(true);
+    } finally {
+      setLoadingSearch(false);
     }
   };
 
@@ -97,8 +120,36 @@ function Links({ isLogin, onSetIsLogin }) {
             </HashLink>
           </li>
         </ul>
+
         {!isLogin ? (
           <div className="flex flex-col items-center justify-center gap-8">
+            <form
+              className="flex items-center justify-between bg-slate-100"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                await searchForTeacher(teacherName);
+              }}
+            >
+              <input
+                type="text"
+                placeholder="البحث عن معلم"
+                className="py-2 px-4 text-md outline-none border border-green-900"
+                onChange={(e) => setTeacherName(e.target.value)}
+              />
+              <button
+                type="submit"
+                disabled={loadingSearch}
+                className="border-none py-0 outline-none text-xl px-2 cursor-pointer bg-slate-200 hover:bg-slate-300 transition-colors h-full"
+              >
+                {loadingSearch ? (
+                  <div>
+                    <Spinner width="80" height="80" />
+                  </div>
+                ) : (
+                  <IoIosSearch />
+                )}
+              </button>
+            </form>
             <Link to={"/register?mode=login"}>
               <div className="block lg:hidden">
                 <RiLoginBoxLine className="w-8 h-16 text-bold text-[#C1A98D] hover:text-[#9F8565] transition-colors" />
@@ -118,6 +169,26 @@ function Links({ isLogin, onSetIsLogin }) {
           </div>
         ) : (
           <div className="flex flex-col gap-4">
+            <form
+              className="flex items-center justify-between bg-slate-100 mx-4 w-[80%]"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                await searchForTeacher(teacherName);
+              }}
+            >
+              <input
+                type="text"
+                placeholder="البحث عن معلم"
+                className="py-2 px-4 text-md outline-none border border-green-900"
+                onChange={(e) => setTeacherName(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="border-none py-0 outline-none text-xl px-2 cursor-pointer bg-slate-200 hover:bg-slate-300 transition-colors h-full"
+              >
+                <IoIosSearch />
+              </button>
+            </form>
             <Link
               to="/details"
               className=" text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
