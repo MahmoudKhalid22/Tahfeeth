@@ -28,7 +28,7 @@ const Teacher = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://tahfeeth-system.onrender.com/user/teacher/" + id
+          "http://localhost:5000/user/teacher/" + id
         );
         if (!response.ok) {
           throw new Error();
@@ -48,16 +48,13 @@ const Teacher = () => {
   const joinToTeacher = async () => {
     try {
       setLoadingJoin(true);
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/join/" + id,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + data?.accessToken,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:5000/user/join/" + id, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + data?.accessToken,
+        },
+      });
       if (!response.ok) {
         const err = await response.json();
         throw new Error(err.err);
@@ -77,7 +74,7 @@ const Teacher = () => {
     try {
       setLoadingStd(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/students/" + id,
+        "http://localhost:5000/user/students/" + id,
         {
           method: "GET",
           headers: {

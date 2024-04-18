@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { HashLink } from "react-router-hash-link";
 
 function Proposal({ onSetActiveLink, observer }) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div
       id="home"
       className=" relative pt-28 flex items-start min-h-screen text-right justify-start flex-col overflow-x-hidden"
     >
-      <div className=" home absolute top-0 left-0 w-full h-screen">
+      {/* Blurred image */}
+      <div className=" home absolute top-0 left-0 w-full h-screen overflow-hidden">
+        <div>
+          <img
+            src="/assets/blurred.webp"
+            alt="background"
+            loading="lazy"
+            className={`w-full h-full object-cover ${
+              loaded
+                ? "opacity-0 -z-10 absolute"
+                : "opacity-1 transition-opacity duration-500"
+            }`}
+            onLoad={() => setLoaded(true)}
+          />
+        </div>
         <picture>
           <source
             type="image/webp"
@@ -15,8 +31,11 @@ function Proposal({ onSetActiveLink, observer }) {
           /assets/02-01.webp,
           /assets/02-01.webp?width=200 200vw,
           /assets/02-01.webp?width=400 400vw,
-          /assets/02-01.webp?width=800 800vw,
+          /assets/02-01.webp?width=800 800vw,          
           "
+            className={`w-full h-full object-cover ${
+              loaded ? "opacity-1 transition-opacity duration-500" : "opacity-0"
+            }`}
           />
           <img
             alt="background"
@@ -25,12 +44,14 @@ function Proposal({ onSetActiveLink, observer }) {
             decoding="async"
             fetchPriority="high"
             srcSet="
-            /assets/02-01.jpg?width=100 100w
+            /assets/02-01.webp?width=100 100w
             /assets/02-01.jpg?width=200 200w
             /assets/02-01.jpg?width=400 400w
             /assets/02-01.jpg?width=800 800w            
             "
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover ${
+              loaded ? "opacity-1 transition-opacity duration-500" : "opacity-0"
+            }`}
           />
         </picture>
       </div>

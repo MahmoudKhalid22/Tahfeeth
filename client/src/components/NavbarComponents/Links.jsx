@@ -65,22 +65,23 @@ function Links({ isLogin, onSetIsLogin }) {
     }
   };
 
-  const searchForTeacher = async (name) => {
-    name = name.toString();
-    try {
-      setLoadingSearch(true);
-      setSearchErr(false);
-      const res = await fetch(
-        "http://localhost:5000/user/search?name=" + name.toString()
-      );
-      const result = await res.json();
-      console.log(result);
-    } catch (err) {
-      setSearchErr(true);
-    } finally {
-      setLoadingSearch(false);
-    }
-  };
+  // const searchForTeacher = async (name) => {
+  //   name = name.toString();
+  //   try {
+  //     setLoadingSearch(true);
+  //     setSearchErr(false);
+  //     const res = await fetch(
+  //       "http://localhost:5000/user/search?name=" + name.toString()
+  //     );
+  //     const result = await res.json();
+  //     console.log(result);
+  //     navigate("/searched-teacher");
+  //   } catch (err) {
+  //     setSearchErr(true);
+  //   } finally {
+  //     setLoadingSearch(false);
+  //   }
+  // };
 
   return (
     <div className="flex-1 w-[20%] fixed top-0 right-0 z-40 h-screen pt-[2rem] pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 flex-col overflow-hidden">
@@ -123,7 +124,7 @@ function Links({ isLogin, onSetIsLogin }) {
 
         {!isLogin ? (
           <div className="flex flex-col items-center justify-center gap-8">
-            <form
+            {/* <form
               className="flex items-center justify-between bg-slate-100"
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -133,7 +134,7 @@ function Links({ isLogin, onSetIsLogin }) {
               <input
                 type="text"
                 placeholder="البحث عن معلم"
-                className="py-2 px-4 text-md outline-none border border-green-900"
+                className="py-2 px-4 text-md outline-none "
                 onChange={(e) => setTeacherName(e.target.value)}
               />
               <button
@@ -149,7 +150,7 @@ function Links({ isLogin, onSetIsLogin }) {
                   <IoIosSearch />
                 )}
               </button>
-            </form>
+            </form> */}
             <Link to={"/register?mode=login"}>
               <div className="block lg:hidden">
                 <RiLoginBoxLine className="w-8 h-16 text-bold text-[#C1A98D] hover:text-[#9F8565] transition-colors" />
@@ -169,7 +170,7 @@ function Links({ isLogin, onSetIsLogin }) {
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            <form
+            {/* <form
               className="flex items-center justify-between bg-slate-100 mx-4 w-[80%]"
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -188,7 +189,7 @@ function Links({ isLogin, onSetIsLogin }) {
               >
                 <IoIosSearch />
               </button>
-            </form>
+            </form> */}
             <Link
               to="/details"
               className=" text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"

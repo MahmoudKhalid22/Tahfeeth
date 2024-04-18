@@ -10,9 +10,7 @@ function Teachers() {
   useEffect(() => {
     const getTeachers = async () => {
       try {
-        const response = await fetch(
-          "https://tahfeeth-system.onrender.com/user/teachers"
-        );
+        const response = await fetch("http://localhost:5000/user/teachers");
         setLoading(true);
         setError(false);
         const teachers = await response.json();
