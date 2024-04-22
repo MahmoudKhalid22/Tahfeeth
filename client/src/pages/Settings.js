@@ -51,7 +51,7 @@ const Settings = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/me",
+        "https://tahfeeth-production.up.railway.app/user/me",
         {
           method: "GET",
           headers: {
@@ -72,7 +72,7 @@ const Settings = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/admin/teachers",
+        "https://tahfeeth-production.up.railway.app/user/admin/teachers",
         {
           method: "GET",
           headers: {
@@ -93,7 +93,7 @@ const Settings = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/students",
+        "https://tahfeeth-production.up.railway.app/user/students",
         {
           method: "GET",
           headers: {

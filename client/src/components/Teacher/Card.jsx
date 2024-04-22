@@ -20,7 +20,7 @@ function Card({
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/" + id,
+        "https://tahfeeth-production.up.railway.app/user/" + id,
         {
           method: "DELETE",
           headers: {

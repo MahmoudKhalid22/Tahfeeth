@@ -30,7 +30,7 @@ function Form({ onSetIsLogin }) {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/signup",
+        "https://tahfeeth-production.up.railway.app/user/signup",
         {
           method: "POST",
           headers: {
@@ -86,7 +86,7 @@ function Form({ onSetIsLogin }) {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/login",
+        "https://tahfeeth-production.up.railway.app/user/login",
         {
           method: "POST",
           headers: {
@@ -121,7 +121,7 @@ function Form({ onSetIsLogin }) {
   const handleGoogleRegister = async () => {
     try {
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/auth/google"
+        "https://tahfeeth-production.up.railway.app/user/auth/google"
       );
       const result = await response.json();
       console.log(result);

@@ -19,15 +19,18 @@ const ResetPasswordForm = () => {
         return;
       }
       setLoading(true);
-      const res = await fetch("http://localhost:5000/user/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password: newPassword,
-        }),
-      });
+      const res = await fetch(
+        "https://tahfeeth-production.up.railway.app/user/reset-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: newPassword,
+          }),
+        }
+      );
       const result = await res.json();
       console.log(result);
     } catch (err) {

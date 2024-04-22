@@ -40,7 +40,7 @@ function Links({ isLogin, onSetIsLogin }) {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/logout",
+        "https://tahfeeth-production.up.railway.app/user/logout",
         {
           method: "POST",
           headers: {

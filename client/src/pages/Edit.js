@@ -61,13 +61,16 @@ function Edit() {
 
       formData.append("avatar", avatar);
       setLoading(true);
-      const response = await fetch("http://localhost:5000/user/upload-avatar", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: "Bearer " + data?.accessToken,
-        },
-      });
+      const response = await fetch(
+        "https://tahfeeth-production.up.railway.app/user/upload-avatar",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: "Bearer " + data?.accessToken,
+          },
+        }
+      );
       if (!response.ok) {
         // console.log(await response.json());
         throw new Error();
@@ -95,7 +98,7 @@ function Edit() {
     try {
       setLoadingPass(true);
       const res = await fetch(
-        "https://tahfeeth-system.onrender.com/user/update-password",
+        "https://tahfeeth-production.up.railway.app/user/update-password",
         {
           method: "PUT",
           headers: {
@@ -130,7 +133,7 @@ function Edit() {
     try {
       setLoadingName(true);
       const response = await fetch(
-        `http://localhost:5000/user/update-username`,
+        `https://tahfeeth-production.up.railway.app/user/update-username`,
         {
           method: "PUT",
           headers: {
