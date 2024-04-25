@@ -85,6 +85,7 @@ function Form({ onSetIsLogin }) {
 
     try {
       setLoading(true);
+      setError(null);
       const response = await fetch(
         "https://tahfeeth-production.up.railway.app/user/login",
         {
@@ -98,7 +99,6 @@ function Form({ onSetIsLogin }) {
           }),
         }
       );
-      setError(null);
       if (!response.ok) {
         setLoading(false);
         const errorData = await response.json();
@@ -112,6 +112,7 @@ function Form({ onSetIsLogin }) {
       navigate("/details");
       // Reset the form data
     } catch (error) {
+      console.log(error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -262,7 +263,7 @@ function Form({ onSetIsLogin }) {
               className="hidden md:block text-[#43766C] text-2xl"
               htmlFor="price"
             >
-              مقدار الأجر الذي تتقاضاه{" "}
+              مقدار الأجر الذي تتقاضاه
             </label>
           </div>
           <div className=" flex flex-row-reverse justify-between items-start w-full">
@@ -278,7 +279,7 @@ function Form({ onSetIsLogin }) {
               className="hidden md:block text-[#43766C] text-2xl w-52"
               htmlFor="price"
             >
-              معلومات عن كيفية تعليم الطلاب{" "}
+              معلومات عن كيفية تعليم الطلاب
             </label>
           </div>
         </>

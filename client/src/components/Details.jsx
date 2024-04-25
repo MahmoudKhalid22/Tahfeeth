@@ -16,7 +16,7 @@ function Details({ onSetIsLogin }) {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://tahfeeth-production.up.railway.app//user/me/",
+          "https://tahfeeth-production.up.railway.app/user/me/",
           {
             method: "GET",
             headers: {

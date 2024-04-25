@@ -26,7 +26,7 @@ function AddUserForm({ role, admin, teachers }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app//user/teacher/signup",
+        "https://tahfeeth-production.up.railway.app/user/teacher/signup",
         {
           method: "POST",
           body: JSON.stringify({
