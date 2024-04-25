@@ -280,6 +280,8 @@ const getStudents = async (req, res) => {
     if (!isTeacher) {
       res.status(400).send({ error: "You are not a teacher" });
     }
+
+    
     const teacherId = req.params.id;
     const students = await findStudents(teacherId);
     res.send({ students });

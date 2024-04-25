@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { GiExitDoor } from "react-icons/gi";
 import { FaGooglePlus, FaFacebook, FaRegEyeSlash } from "react-icons/fa";
-import ReactCrop from "react-image-crop";
 
 function Form({ onSetIsLogin }) {
   const [searchParams] = useSearchParams();

@@ -45,11 +45,12 @@ const Settings = () => {
   const [userData, setUserData] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const getData = async () => {
     try {
-      setLoading(true);
+      setLoadingData(true);
       const response = await fetch(
         "https://tahfeeth-production.up.railway.app/user/me",
         {
@@ -61,11 +62,14 @@ const Settings = () => {
         }
       );
       const result = await response.json();
+      if (!response.ok) {
+        throw new Error(await response.json());
+      }
       setUserData(result);
     } catch (err) {
       setError(true);
     } finally {
-      setLoading(false);
+      setLoadingData(false);
     }
   };
   const getTeachers = async () => {
@@ -91,9 +95,12 @@ const Settings = () => {
   };
   const getStudents = async () => {
     try {
+      const isTeacher = data?.user?.role === "teacher";
+      let id;
+      if (isTeacher) id = data.user._id;
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/students",
+        "https://tahfeeth-production.up.railway.app/user/students/" + id,
         {
           method: "GET",
           headers: {
@@ -103,9 +110,11 @@ const Settings = () => {
         }
       );
       const students = await response.json();
+      if (!response.ok) {
+        throw new Error(students);
+      }
       dispatch({ type: "students", payload: students?.students });
     } catch (err) {
-      console.log(err);
       setError(true);
     } finally {
       setLoading(false);
@@ -219,7 +228,7 @@ const Settings = () => {
                   <p className="text-xl font-semibold">تحميل...</p>
                 ) : error ? (
                   <p className="text-red-600 text-xl font-semibold">
-                    حدث بعض الخطأ الداخلي.{" "}
+                    حدث بعض الخطأ الداخلي.
                   </p>
                 ) : (
                   state.students.length > 0 &&
@@ -258,8 +267,8 @@ const Settings = () => {
         </button>
         {show && (
           <div>
-            {loading ? (
-              <p className="text-2xl">loading...</p>
+            {loadingData ? (
+              <Spinner />
             ) : error ? (
               <p>حدث بعض الخطأ</p>
             ) : userData ? (
