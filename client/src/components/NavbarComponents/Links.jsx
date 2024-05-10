@@ -19,6 +19,8 @@ const data = localStorage.getItem("data")
   ? JSON.parse(localStorage.getItem("data"))
   : null;
 
+console.log(data);
+
 function Links({ isLogin, onSetIsLogin }) {
   const navigate = useNavigate();
 

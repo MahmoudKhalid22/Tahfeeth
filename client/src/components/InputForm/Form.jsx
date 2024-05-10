@@ -120,11 +120,11 @@ function Form({ onSetIsLogin }) {
 
   const handleGoogleRegister = async () => {
     try {
-      const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/auth/google"
-      );
-      const result = await response.json();
-      console.log(result);
+      window.location.href =
+        "https://tahfeeth-production.up.railway.app/user/auth/google";
+
+      // const result = await response.json();
+      // console.log(result);
     } catch (err) {
       console.log(err);
       setError(true);
@@ -133,196 +133,206 @@ function Form({ onSetIsLogin }) {
     }
   };
 
+  const handleFacebookRegister = async () => {
+    try {
+      // window.location.href = ;
+      window.open("http://localhost:5000/user/auth/facebook", "_self");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <form
-      className={`bg-none flex items-center
+    <div className="flex flex-col items-center w-full">
+      <form
+        className={`bg-none flex items-center
     justify-center flex-col gap-6 p-4 ${
       role === "teacher" && !isLogin ? "mt-80" : "mt-8"
     } rounded-tr-xl rounded-br-xl w-full md:w-full md:h-[40rem]`}
-      onSubmit={isLogin ? handleSubmit : newUser}
-      style={{ width: "80%" }}
-    >
-      {!isLogin && (
-        <div className=" flex flex-row-reverse justify-between items-start w-full">
-          <input
-            type="text"
-            placeholder="الاسم"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[100%]  md:h-16"
-          />
-          <label
-            className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="name"
-          >
-            الاسم
-          </label>
-        </div>
-      )}
-      <div className="flex flex-row-reverse justify-between items-start w-full">
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="البريد الإلكتروني"
-          id="email"
-          className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
-        />
-        <label
-          className="hidden md:block text-[#43766C] text-2xl"
-          htmlFor="email"
-        >
-          البريد الإلكتروني
-        </label>
-      </div>
-      <div className=" flex flex-row-reverse justify-between items-start w-full relative">
-        <input
-          type={!showPassword ? "password" : "text"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="كلمة السر"
-          id="pass"
-          className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
-        />
-        <div
-          onClick={() => setShowPassword(!showPassword)}
-          className=" absolute top-0 left-0 bottom-0 flex items-center pl-3 cursor-pointer text-3xl"
-        >
-          <FaRegEyeSlash />
-        </div>
-        <label
-          className="hidden md:block text-[#43766C] text-2xl"
-          htmlFor="pass"
-        >
-          كلمة السر
-        </label>
-      </div>
-      {isLogin && (
-        <div className="flex items-center justify-end w-full">
-          <Link className="underline" to={"/forget-password"}>
-            هل نسيت كلمة السر
-          </Link>
-        </div>
-      )}
-      {!isLogin && (
-        <div className=" flex flex-row-reverse justify-between items-start w-full">
-          <select
-            type="text"
-            placeholder="الاسم"
-            id="role"
-            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option>التسجيل ك</option>
-            <option value={"teacher"}>معلم</option>
-            <option value={"student"}>طالب</option>
-          </select>
-          <label
-            className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="role"
-          >
-            التسجيل كدورك
-          </label>
-        </div>
-      )}
-      {!isLogin && role === "teacher" && (
-        <div className=" flex flex-row-reverse justify-between items-start w-full">
-          <select
-            type="text"
-            placeholder="الاسم"
-            id="prof"
-            onChange={(e) => setProfessional(e.target.value)}
-            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
-          >
-            <option>هل أنت مجاز</option>
-            <option value={true}>نعم</option>
-            <option value={false}>لا</option>
-          </select>
-          <label
-            className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="prof"
-          >
-            هل أنت مجاز
-          </label>
-        </div>
-      )}
-      {!isLogin && role === "teacher" && (
-        <>
+        onSubmit={isLogin ? handleSubmit : newUser}
+        style={{ width: "80%" }}
+      >
+        {!isLogin && (
           <div className=" flex flex-row-reverse justify-between items-start w-full">
             <input
-              type="number"
-              placeholder="السعر"
-              step={10}
-              id="price"
-              onChange={(e) => setPrice(e.target.value)}
-              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+              type="text"
+              placeholder="الاسم"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[100%]  md:h-16"
             />
             <label
               className="hidden md:block text-[#43766C] text-2xl"
-              htmlFor="price"
+              htmlFor="name"
             >
-              مقدار الأجر الذي تتقاضاه
+              الاسم
             </label>
           </div>
+        )}
+        <div className="flex flex-row-reverse justify-between items-start w-full">
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="البريد الإلكتروني"
+            id="email"
+            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+          />
+          <label
+            className="hidden md:block text-[#43766C] text-2xl"
+            htmlFor="email"
+          >
+            البريد الإلكتروني
+          </label>
+        </div>
+        <div className=" flex flex-row-reverse justify-between items-start w-full relative">
+          <input
+            type={!showPassword ? "password" : "text"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="كلمة السر"
+            id="pass"
+            className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+          />
+          <div
+            onClick={() => setShowPassword(!showPassword)}
+            className=" absolute top-0 left-0 bottom-0 flex items-center pl-3 cursor-pointer text-3xl"
+          >
+            <FaRegEyeSlash />
+          </div>
+          <label
+            className="hidden md:block text-[#43766C] text-2xl"
+            htmlFor="pass"
+          >
+            كلمة السر
+          </label>
+        </div>
+        {isLogin && (
+          <div className="flex items-center justify-end w-full">
+            <Link className="underline" to={"/forget-password"}>
+              هل نسيت كلمة السر
+            </Link>
+          </div>
+        )}
+        {!isLogin && (
           <div className=" flex flex-row-reverse justify-between items-start w-full">
-            <textarea
-              type="number"
-              placeholder="معلومات عن كيفية تعليم الطلاب"
-              step={10}
-              id="price"
-              onChange={(e) => setInformation(e.target.value)}
-              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-60"
-            />
-            <label
-              className="hidden md:block text-[#43766C] text-2xl w-52"
-              htmlFor="price"
+            <select
+              type="text"
+              placeholder="الاسم"
+              id="role"
+              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+              onChange={(e) => setRole(e.target.value)}
             >
-              معلومات عن كيفية تعليم الطلاب
+              <option>التسجيل ك</option>
+              <option value={"teacher"}>معلم</option>
+              <option value={"student"}>طالب</option>
+            </select>
+            <label
+              className="hidden md:block text-[#43766C] text-2xl"
+              htmlFor="role"
+            >
+              التسجيل كدورك
             </label>
           </div>
-        </>
-      )}
-
-      <p className="text-2xl text-red-800 text-center md:text-red-500">{`${
-        error ? error : ""
-      }`}</p>
-      {loading && (
-        <p className="text-[#2b2121] md:text-[#43766C] text-2xl font-semibold">
-          تــحمــيل ...
-        </p>
-      )}
-      <button className="p-2 border-slate-700  text-xl md:text-2xl cursor-pointer rounded-md transition-colors flex gap-2 items-center justify-center w-full md:h-16 bg-[#9F8565] hover:bg-[#8a7762] text-[#ececec] duration-300">
-        <GiExitDoor />
-        {isLogin ? <span>دخول</span> : <span>تسجيل</span>}
-      </button>
-      <p className="flex flex-col items-center md:flex-row gap-4 text-[#2b2121] md:text-[#43766C]">
-        {isLogin ? (
+        )}
+        {!isLogin && role === "teacher" && (
+          <div className=" flex flex-row-reverse justify-between items-start w-full">
+            <select
+              type="text"
+              placeholder="الاسم"
+              id="prof"
+              onChange={(e) => setProfessional(e.target.value)}
+              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+            >
+              <option>هل أنت مجاز</option>
+              <option value={true}>نعم</option>
+              <option value={false}>لا</option>
+            </select>
+            <label
+              className="hidden md:block text-[#43766C] text-2xl"
+              htmlFor="prof"
+            >
+              هل أنت مجاز
+            </label>
+          </div>
+        )}
+        {!isLogin && role === "teacher" && (
           <>
-            <span>ليس لديك حساب بعد</span>
-            <Link to="/register?mode=signup" className="underline">
-              سجل حساب جديد الآن{" "}
-            </Link>
-          </>
-        ) : (
-          <>
-            <span>لديك حساب بالفعل</span>
-            <Link to="/register?mode=login" className="underline">
-              سجل دخول الآن{" "}
-            </Link>
+            <div className=" flex flex-row-reverse justify-between items-start w-full">
+              <input
+                type="number"
+                placeholder="السعر"
+                step={10}
+                id="price"
+                onChange={(e) => setPrice(e.target.value)}
+                className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+              />
+              <label
+                className="hidden md:block text-[#43766C] text-2xl"
+                htmlFor="price"
+              >
+                مقدار الأجر الذي تتقاضاه
+              </label>
+            </div>
+            <div className=" flex flex-row-reverse justify-between items-start w-full">
+              <textarea
+                type="number"
+                placeholder="معلومات عن كيفية تعليم الطلاب"
+                step={10}
+                id="price"
+                onChange={(e) => setInformation(e.target.value)}
+                className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-60"
+              />
+              <label
+                className="hidden md:block text-[#43766C] text-2xl w-52"
+                htmlFor="price"
+              >
+                معلومات عن كيفية تعليم الطلاب
+              </label>
+            </div>
           </>
         )}
-      </p>
 
-      <div className="flex gap-12">
+        <p className="text-2xl text-red-800 text-center md:text-red-500">{`${
+          error ? error : ""
+        }`}</p>
+        {loading && (
+          <p className="text-[#2b2121] md:text-[#43766C] text-2xl font-semibold">
+            تــحمــيل ...
+          </p>
+        )}
+        <button className="p-2 border-slate-700  text-xl md:text-2xl cursor-pointer rounded-md transition-colors flex gap-2 items-center justify-center w-full md:h-16 bg-[#9F8565] hover:bg-[#8a7762] text-[#ececec] duration-300">
+          <GiExitDoor />
+          {isLogin ? <span>دخول</span> : <span>تسجيل</span>}
+        </button>
+        <p className="flex flex-col items-center md:flex-row gap-4 text-[#2b2121] md:text-[#43766C]">
+          {isLogin ? (
+            <>
+              <span>ليس لديك حساب بعد</span>
+              <Link to="/register?mode=signup" className="underline">
+                سجل حساب جديد الآن{" "}
+              </Link>
+            </>
+          ) : (
+            <>
+              <span>لديك حساب بالفعل</span>
+              <Link to="/register?mode=login" className="underline">
+                سجل دخول الآن{" "}
+              </Link>
+            </>
+          )}
+        </p>
+      </form>
+      <div className="flex gap-12 items-center mt-2">
         <button onClick={handleGoogleRegister}>
           <FaGooglePlus className="text-5xl fill-green-600 " />
         </button>
-        <button>
+        <button onClick={handleFacebookRegister}>
           <FaFacebook className="text-5xl fill-green-600 " />
         </button>
       </div>
-    </form>
+    </div>
   );
 }
 

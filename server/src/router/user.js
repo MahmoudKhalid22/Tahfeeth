@@ -118,7 +118,17 @@ router.get(
   passport.authenticate("facebook", { failureRedirect: "/user/login" }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect("https://tahfeeth.vercel.app");
+
+    // Combine user data and additional data
+    const userData = {
+      ...req.user,
+    };
+
+    // Handle the user data as needed
+    // For example, redirect to dashboard and pass user data
+    res.redirect(
+      `http://localhost:3000/redirect?user=${JSON.stringify(userData)}`
+    );
   }
 );
 

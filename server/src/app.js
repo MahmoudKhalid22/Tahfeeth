@@ -5,6 +5,7 @@ const session = require("express-session");
 const cors = require("cors");
 const path = require("path");
 const hpp = require("hpp");
+const cookieParser = require("cookie-parser");
 require("./config/dbConnection");
 require("./controller/OAuth");
 const { test } = require("./utils/testReq");
@@ -25,15 +26,18 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(hpp());
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: true },
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use("/user", userRouter);
 app.use("/table", tableRouter);
 

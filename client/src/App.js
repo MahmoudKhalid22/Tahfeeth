@@ -16,6 +16,7 @@ import Verified from "./pages/Verified";
 import Edit from "./pages/Edit";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
+import RedirectPage from "./pages/redirectedPage";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
 
@@ -54,7 +55,10 @@ function App() {
 
           <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-
+          <Route
+            path="/redirect"
+            element={<RedirectPage onSetIsLogin={setIsLogin} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

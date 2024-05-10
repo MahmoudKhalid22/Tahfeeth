@@ -146,7 +146,7 @@ function Student() {
       </h2>
 
       <div className={styles.container}>
-        {data?.user.role === "teacher" && (
+        {data?.userData.role === "teacher" && (
           <button>
             <Link to="/details">العودة للصفحة الرئيسية</Link>
           </button>
@@ -199,7 +199,7 @@ function Student() {
             </table>
           </div>
         )}
-        {data?.user.role === "teacher" && (
+        {data?.userData.role === "teacher" && (
           <button onClick={() => setShowFormTable((prev) => !prev)}>
             إضافة جدول
           </button>
