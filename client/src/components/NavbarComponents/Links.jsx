@@ -12,14 +12,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { GiEntryDoor } from "react-icons/gi";
 import { RxGear } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
-import { IoIosSearch } from "react-icons/io";
-import Spinner from "../utilsComponents/Spinner";
 
 const data = localStorage.getItem("data")
   ? JSON.parse(localStorage.getItem("data"))
   : null;
-
-console.log(data);
 
 function Links({ isLogin, onSetIsLogin }) {
   const navigate = useNavigate();

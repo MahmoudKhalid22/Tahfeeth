@@ -281,7 +281,6 @@ const getStudents = async (req, res) => {
       res.status(400).send({ error: "You are not a teacher" });
     }
 
-    
     const teacherId = req.params.id;
     const students = await findStudents(teacherId);
     res.send({ students });
@@ -400,10 +399,10 @@ const getOneTeacher = async (req, res) => {
 
 const uploadAvatar = async (req, res) => {
   try {
-    const base64Data = req.file.buffer.toString("base64");
-    imgsrc = `data:${req.file.mimetype};base64,${base64Data}`;
+    // const base64Data = req.file.buffer.toString("base64");
+    // imgsrc = `data:${req.file.mimetype};base64,${base64Data}`;
 
-    req.user[0].avatar = imgsrc;
+    req.user[0].avatar = req.file.buffer;
     await req.user[0].save();
 
     res.send({

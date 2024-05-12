@@ -68,46 +68,44 @@ function Details({ onSetIsLogin }) {
         <div className="w-full absolute left-0 flex flex-col items-center justify-center gap-2 sm:gap-4">
           <img
             src={
-              data.userData?.avatar
-                ? data.userData?.avatar
-                : "/assets/dummyImage.jpg"
+              data.user?.avatar ? data.user?.avatar : "/assets/dummyImage.jpg"
             }
-            alt={data.userData?.name}
+            alt={data.user?.name}
             className="rounded-full w-40 h-40 object-cover "
           />
           <p className="text-center text-xl sm:text-3xl text-[#43766C]">
-            {data.userData?.name}
+            {data.user?.name}
           </p>
           <p className="text-center text-xl sm:text-3xl text-[#43766C]">
-            {data.userData?.role === "teacher"
+            {data.user?.role === "teacher"
               ? "معلم"
-              : data.userData?.role === "student"
+              : data.user?.role === "student"
               ? "طالب"
               : "مدير"}
           </p>
           <p className="text-center  text-xl sm:text-2xl font-semibold text-[#43766C]">
-            {data.userData?.professional ? "مجاز" : "غير مجاز"}
+            {data.user?.professional ? "مجاز" : "غير مجاز"}
           </p>
-          {data.userData?.role === "student" && (
+          {data.user?.role === "student" && (
             <Link
-              to={`/details/${data.userData?._id}`}
+              to={`/details/${data.user?._id}`}
               className="bg-[#8A7A5F] hover:bg-[#6e624c] transition-colors duration-300 text-[#ececec] rounded-md px-4 py-2"
             >
               عرض الجداول
             </Link>
           )}
 
-          {data.userData?.role === "teacher" && (
+          {data.user?.role === "teacher" && (
             <>
               <p className="text-center ml-4 text-xl sm:text-3xl font-bold text-[#43766C]">
-                {data.userData?.price} ج
+                {data.user?.price} ج
               </p>
 
               <p className="text-center ml-2 text-md sm:text-xl   text-[#43766C] w-[95%] mt-4 sm:mt-12 leading-loose font-semibold">
                 وصف طريقة التعليم
               </p>
               <p className="text-center ml-2 text-md sm:text-xl   text-[#43766C] lg:w-[50rem] w-[90%] leading-loose">
-                {data.userData?.information}
+                {data.user?.information}
               </p>
             </>
           )}

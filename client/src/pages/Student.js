@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styles from "./Student.module.css";
 import { RiChatDeleteLine } from "react-icons/ri";
 import Spinner from "../components/utilsComponents/Spinner";
+import { formatDate } from "../utilities/dateFormat";
 
 function Student() {
   const { id } = useParams();
@@ -146,7 +147,7 @@ function Student() {
       </h2>
 
       <div className={styles.container}>
-        {data?.userData.role === "teacher" && (
+        {data?.user.role === "teacher" && (
           <button>
             <Link to="/details">العودة للصفحة الرئيسية</Link>
           </button>
@@ -173,12 +174,17 @@ function Student() {
                 <tbody>
                   {studentData?.map((std) => (
                     <tr key={std._id}>
-                      <td>{std.day}</td>
+                      <td>
+                        <p>{std.day}</p>
+                        <p className="whitespace-nowrap">
+                          {formatDate(std.createdAt)}
+                        </p>
+                      </td>
                       <td className={styles.notes}>{std.quantity}</td>
                       <td>{std.level}</td>
                       <td className={styles.notes}>{std.tasks}</td>
                       <td>{std.completed ? "مكتملة" : "غير مكتملة"}</td>
-                      <td>{std.questions}</td>
+                      <td className="whitespace-pre">{std.questions}</td>
                       <td>{std.answers}</td>
                       <td className={styles.notes}>{std.notes}</td>
                       <td>{std.rate}</td>
@@ -199,7 +205,7 @@ function Student() {
             </table>
           </div>
         )}
-        {data?.userData.role === "teacher" && (
+        {data?.user.role === "teacher" && (
           <button onClick={() => setShowFormTable((prev) => !prev)}>
             إضافة جدول
           </button>

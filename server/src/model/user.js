@@ -124,6 +124,7 @@ userSchema.methods.toJSON = function () {
   delete userObj.students;
   delete userObj.teachers;
   delete userObj.admins;
+  delete userObj.avatar;
 
   return userObj;
 };

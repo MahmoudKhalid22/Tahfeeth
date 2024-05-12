@@ -8,7 +8,6 @@ const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 require("./config/dbConnection");
 require("./controller/OAuth");
-const { test } = require("./utils/testReq");
 const userRouter = require("./router/user");
 const tableRouter = require("./router/tables");
 const { docs } = require("./utils/swagger");
@@ -50,5 +49,4 @@ const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log("Server is running on port http://localhost:" + port);
-  test();
 });

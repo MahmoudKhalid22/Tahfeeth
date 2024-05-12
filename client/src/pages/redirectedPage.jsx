@@ -7,18 +7,18 @@ const RedirectPage = ({ onSetIsLogin }) => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const userData = JSON.parse(searchParams.get("user"));
-    console.log(userData);
-
-    const user = {
-      userData: userData?.existingUser || userData?.user,
-      refreshToken: userData.refreshToken,
-      accessToken: userData.accessToken,
-    };
-
+    const user = JSON.parse(searchParams.get("user"));
     console.log(user);
 
-    localStorage.setItem("data", JSON.stringify(user));
+    const userData = {
+      user: user?.existingUser || user?.user,
+      refreshToken: user.refreshToken,
+      accessToken: user.accessToken,
+    };
+
+    console.log(userData);
+
+    localStorage.setItem("data", JSON.stringify(userData));
 
     navigate("/details");
     onSetIsLogin(true);

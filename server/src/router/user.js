@@ -37,6 +37,7 @@ const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
 const multer = require("multer");
 const { getAllTeachers } = require("../dbQueries/user");
+const User = require("../model/user");
 
 // START AUTHENTICATION //
 
@@ -78,7 +79,16 @@ router.put("/update-password", auth, updateUserPassword);
 
 // upload avatar
 
-const upload = multer();
+const upload = multer({
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.endsWith("jpg" || "png" || "jpeg")) {
+      return cb(new Error("please upload jpg or png or jpeg file"));
+    }
+  },
+});
 router.post(
   "/upload-avatar",
   auth,
@@ -89,6 +99,16 @@ router.post(
 
 // READ SPECIFIC USER
 router.get("/me", auth, getUser);
+
+// GET AN AVATAR
+router.get("/avatar", auth, async (req, res) => {
+  console.log(req.user);
+  const user = await User.findOne(req.user[0]._id);
+  res.set({ "Content-Type": "image/jpg" });
+  res.send(user.avatar); // which has the type buffer
+
+  // res.send("test");
+});
 
 // GOOGLE OAUTH
 // redirect to register page
@@ -120,15 +140,13 @@ router.get(
     // Successful authentication, redirect home.
 
     // Combine user data and additional data
-    const userData = {
+    const user = {
       ...req.user,
     };
 
     // Handle the user data as needed
     // For example, redirect to dashboard and pass user data
-    res.redirect(
-      `http://localhost:3000/redirect?user=${JSON.stringify(userData)}`
-    );
+    res.redirect(`http://localhost:3000/redirect?user=${JSON.stringify(user)}`);
   }
 );
 
