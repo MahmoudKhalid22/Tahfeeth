@@ -118,29 +118,29 @@ function Form({ onSetIsLogin }) {
     }
   };
 
-  const handleGoogleRegister = async () => {
-    try {
-      window.location.href =
-        "https://tahfeeth-production.up.railway.app/user/auth/google";
+  // const handleGoogleRegister = async () => {
+  //   try {
+  //     window.location.href =
+  //       "https://tahfeeth-production.up.railway.app/user/auth/google";
 
-      // const result = await response.json();
-      // console.log(result);
-    } catch (err) {
-      console.log(err);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     // const result = await response.json();
+  //     // console.log(result);
+  //   } catch (err) {
+  //     console.log(err);
+  //     setError(true);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const handleFacebookRegister = async () => {
-    try {
-      // window.location.href = ;
-      window.open("http://localhost:5000/user/auth/facebook", "_self");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handleFacebookRegister = async () => {
+  //   try {
+  //     // window.location.href = ;
+  //     window.open("http://localhost:5000/user/auth/facebook", "_self");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -324,14 +324,14 @@ function Form({ onSetIsLogin }) {
           )}
         </p>
       </form>
-      <div className="flex gap-12 items-center mt-2">
+      {/* <div className="flex gap-12 items-center mt-2">
         <button onClick={handleGoogleRegister}>
           <FaGooglePlus className="text-5xl fill-green-600 " />
         </button>
         <button onClick={handleFacebookRegister}>
           <FaFacebook className="text-5xl fill-green-600 " />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
