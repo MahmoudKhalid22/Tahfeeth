@@ -4,7 +4,7 @@ import { HashLink } from "react-router-hash-link";
 
 function Logo() {
   return (
-    <div className="ml-1 sm:m-0 w-16 sm:w-20  ">
+    <div className="ml-1 sm:m-0 w-16 sm:w-20 hidden md:block  ">
       <HashLink smooth to={"/#home"}>
         <img className="w-full object-cover" src={logo} alt="logo" />
       </HashLink>

@@ -17,6 +17,7 @@ body {
   background-color: #ececec;
   font-family: "Tajawal", sans-serif;
   overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
 }
 

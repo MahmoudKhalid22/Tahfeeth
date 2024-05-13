@@ -9,15 +9,15 @@ import Footer from "./Footer";
 function Home() {
   return (
     <>
-      <div className="mr-[20%]">
+      <div className="md:mr-[20%]">
         <Proposal />
       </div>
-      <div className="mr-[22.5%]">
+      <div className="px-6 md:mr-[22.5%]">
         <About />
         <Teachers />
         <Contact />
       </div>
-      <div className="mr-[20%]">
+      <div className="md:mr-[20%]">
         <Footer />
       </div>
     </>

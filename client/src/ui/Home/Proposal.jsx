@@ -55,7 +55,7 @@ function Proposal({ onSetActiveLink, observer }) {
           />
         </picture>
       </div>
-      <div className="z-10 mr-[2.5%] text-[#f5f5f5]">
+      <div className="px-6 z-10 mr-[2.5%] text-[#f5f5f5]">
         <h1 className="text-right font-bold text-xl sm:text-3xl block">
           منصة
           <span className="text-[#8a7762] text-2xl sm:text-4xl">
