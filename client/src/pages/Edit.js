@@ -5,7 +5,7 @@ import ReactCrop, {
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
-import useCanvasPreview from "../utilities/useCanvasPreview";
+import useCanvasPreview from "../utils/useCanvasPreview";
 import BadRequest from "./BadRequest";
 
 const data = JSON.parse(localStorage.getItem("data"))

@@ -14,7 +14,6 @@ function ButtonsMobile({ activeState, onSetActive }) {
         : null
     );
   }, []);
-  console.log(loggedIn);
   return (
     <>
       <div

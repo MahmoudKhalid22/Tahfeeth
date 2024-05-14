@@ -1,43 +1,25 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Teacher/Card";
+import Card from "../../components/Teacher/Card";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import getTeachers from "../../services/allowedApi";
 
 function Teachers() {
-  const [teachers, setTeachers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const getTeachers = async () => {
-      try {
-        const response = await fetch(
-          "https://tahfeeth-production.up.railway.app/user/teachers"
-        );
-        setLoading(true);
-        setError(false);
-        const teachers = await response.json();
-        if (!response.ok) {
-          throw new Error(teachers);
-        }
-        setTeachers(teachers);
-      } catch (err) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getTeachers();
-  }, []);
-
-  // const derivedTeachers =
-  //   teachers.length > 6 ? Array.from(teachers => ) : teachers;
+  const {
+    isPending,
+    data: teachers,
+    error,
+  } = useQuery({
+    queryKey: ["teachers"],
+    queryFn: getTeachers,
+  });
 
   return (
     <div id="teachers" className="py-8 ">
       <h3 className="text-center py-4 my-12 text-xl sm:text-3xl font-bold border-b-4 w-fit mx-auto border-black">
         المعلمون والقراء
       </h3>
-      {!error && !loading && (
+      {!error && !isPending && (
         <div className="flex flex-wrap gap-4 lg:gap-8 justify-center">
           {teachers.length > 0 ? (
             teachers?.map((teacher) => (
@@ -59,17 +41,17 @@ function Teachers() {
           )}
         </div>
       )}
-      {!error && !loading && teachers.length > 6 && (
+      {!error && !isPending && teachers.length > 6 && (
         <button className="bg-[#43766C] hover:bg-[#2f534c] transition-colors text-md sm:text-xl block mx-auto px-4 py-2 font-semibold text-white my-8">
           <Link to="/teacher">المزيد من المعلمين</Link>
         </button>
       )}
-      {!error && loading && (
+      {!error && isPending && (
         <p className="text-center font-semibold text-3xl text-[#43766C]">
           تحميل...
         </p>
       )}
-      {error && !loading && (
+      {error && !isPending && (
         <p className="text-center  text-md text-rose-700">
           يوجد خطأ داخلي في السيرفر، للأسف لا يمكننا عرض المعلمين
         </p>

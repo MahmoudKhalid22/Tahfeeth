@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import Proposal from "../components/Proposal";
-import About from "../components/About";
-import Teachers from "../components/Teachers";
-import Contact from "../components/Contact";
-import Footer from "../components/Footer";
+import Proposal from "./Proposal";
+import About from "./About";
+import Teachers from "./Teachers";
+import Contact from "./Contact";
+import Footer from "./Footer";
 
 function Home() {
   return (
