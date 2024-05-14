@@ -17,7 +17,7 @@ function Home() {
         <Teachers />
         <Contact />
       </div>
-      <div className="md:mr-[20%]">
+      <div className="relative  md:mr-[20%]">
         <Footer />
       </div>
     </>

@@ -151,7 +151,7 @@ function Links({ isLogin, onSetIsLogin }) {
             </form> */}
             <Link to={"/register?mode=login"}>
               <div className="block lg:hidden">
-                <RiLoginBoxLine className="w-8 h-8 text-bold pb-2 border-white text-[#C1A98D] hover:text-[#9F8565] transition-colors" />
+                <RiLoginBoxLine className="w-12 h-12 text-bold pb-2 border-white text-[#C1A98D] hover:text-[#9F8565] transition-colors" />
               </div>
               <button className="text-white text-2xl hidden lg:block">
                 تسجيل الدخول
@@ -159,7 +159,7 @@ function Links({ isLogin, onSetIsLogin }) {
             </Link>
             <HashLink to={"/register?mode=signup"}>
               <div className="block lg:hidden">
-                <LiaUserPlusSolid className="w-8 h-8 text-bold pb-2 border-white text-[#9F8565] hover:text-[#8a7762] transition-colors " />
+                <LiaUserPlusSolid className="w-12 h-12 text-bold pb-2 border-white text-[#9F8565] hover:text-[#8a7762] transition-colors " />
               </div>
               <button className="bg-[#9F8565] hover:bg-[#8a7762] transition-colors px-5 py-3 w-48 text-white text-2xl hidden lg:block">
                 إنشاء حساب

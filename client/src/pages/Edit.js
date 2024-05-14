@@ -214,7 +214,7 @@ function Edit() {
       {modal && (
         <div className={styles.modal} onClick={() => setModal(false)}></div>
       )}
-      <div className="absolute left-0 mr-8 w-[80%]  mt-12 flex justify-center flex-col gap-6 items-center">
+      <div className="absolute left-0 md:mr-8 w-full mb-[11.5rem] md:mb-0 md:w-[80%]  mt-12 flex justify-center flex-col gap-6 items-center">
         <h2 className="text-lg md:text-3xl font-semibold">المعلومات الشخصية</h2>
         <div className="flex flex-col items-center">
           <img

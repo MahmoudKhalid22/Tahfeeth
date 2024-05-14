@@ -42,7 +42,7 @@ function Details({ onSetIsLogin }) {
 
   if (!data || data.length === 0) {
     return (
-      <div className="overflow-hidden h-screen w-[80%] absolute left-0 flex flex-col items-center justify-center">
+      <div className="overflow-hidden h-screen w-full md:w-[80%] absolute left-0 flex flex-col items-center justify-center">
         <h2 className="text-red-700 text-3xl font-semibold text-center overflow-y-hidden">
           يجب تسجيل الدخول
         </h2>
@@ -57,7 +57,7 @@ function Details({ onSetIsLogin }) {
   }
 
   return (
-    <div className="w-[80%]  absolute left-0  mt-8">
+    <div className="w-full md:w-[80%]  absolute left-0  mt-8">
       {error ? (
         <p className="text-red-600 font-semibold text-2xl mx-auto text-center">
           حدث بعض الخطأ

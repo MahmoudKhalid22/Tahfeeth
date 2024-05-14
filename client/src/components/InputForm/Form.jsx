@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { GiExitDoor } from "react-icons/gi";
 import { FaGooglePlus, FaFacebook, FaRegEyeSlash } from "react-icons/fa";
+import { IoMdEye } from "react-icons/io";
 
 function Form({ onSetIsLogin }) {
   const [searchParams] = useSearchParams();
@@ -147,8 +148,8 @@ function Form({ onSetIsLogin }) {
       <form
         className={`bg-none flex items-center
     justify-center flex-col gap-6 p-4 ${
-      role === "teacher" && !isLogin ? "mt-80" : "mt-8"
-    } rounded-tr-xl rounded-br-xl w-full md:w-full md:h-[40rem]`}
+      role === "teacher" && !isLogin ? "mt-2" : ""
+    } rounded-tr-xl rounded-br-xl w-full md:w-full mb-[11.5rem]`}
         onSubmit={isLogin ? handleSubmit : newUser}
         style={{ width: "80%" }}
       >
@@ -199,7 +200,7 @@ function Form({ onSetIsLogin }) {
             onClick={() => setShowPassword(!showPassword)}
             className=" absolute top-0 left-0 bottom-0 flex items-center pl-3 cursor-pointer text-3xl"
           >
-            <FaRegEyeSlash />
+            {showPassword ? <FaRegEyeSlash /> : <IoMdEye />}
           </div>
           <label
             className="hidden md:block text-[#43766C] text-2xl"

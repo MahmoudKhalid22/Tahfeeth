@@ -95,7 +95,7 @@ const Teacher = () => {
     }
   };
   return (
-    <div className="w-[80%] absolute left-0 h-full mt-8">
+    <div className="w-full mb-[11.5] md:mb-0 md:w-[80%] absolute left-0 h-full mt-8">
       {error ? (
         <p className="text-red-600 font-semibold text-2xl w-full mx-auto text-center">
           حدث بعض الخطأ

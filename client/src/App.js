@@ -5,7 +5,6 @@ import Details from "./components/Details";
 import Student from "./pages/Student";
 import Register from "./pages/Register";
 import Teacher from "./components/Teacher/Teacher";
-import TeacherPage from "./pages/TeacherPage";
 import Verification from "./pages/Verification";
 import { useEffect, useState } from "react";
 import Settings from "./pages/Settings";
@@ -52,7 +51,6 @@ function App() {
             />
             <Route path="/details/:id" element={<Student />} />
             <Route path="/teacher/:id" element={<Teacher />} />
-            <Route path="/teacher/:id" element={<TeacherPage />} />
             <Route path="/settings">
               <Route index element={<Settings />} />
               <Route path="edit" element={<Edit />} />
