@@ -3,7 +3,7 @@ import { HashLink } from "react-router-hash-link";
 
 function Footer() {
   return (
-    <footer className="h-60 mt-36  w-full bg-[#9F8565] overflow-x-hidden md:mb-0 mb-[11.5rem]">
+    <footer className="h-60 mt-36  w-full bg-[#9F8565] overflow-x-hidden md:mb-0 mb-[4.5rem] sm:mb-24">
       <ul className="h-full w-full left-0  md:flex md:flex-row grid grid-cols-2 items-center justify-center gap-12 relative md:mb-0">
         <li className="text-md sm:text-2xl text-center mr-4 md:mr-0 text-white">
           <HashLink smooth to="/#home">

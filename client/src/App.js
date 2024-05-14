@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import "./App.css";
 import "react-image-crop/dist/ReactCrop.css";
 import Details from "./components/Details";
 import Student from "./pages/Student";
-import Register from "./pages/Register";
 import Teacher from "./components/Teacher/Teacher";
 import Verification from "./pages/Verification";
 import { useEffect, useState } from "react";
@@ -16,8 +16,8 @@ import ResetPassword from "./pages/ResetPassword";
 import RedirectPage from "./pages/redirectedPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Toaster } from "react-hot-toast";
 import { AppLayout, Home } from "./ui/index";
+import { Register } from "./pages";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
 const queryClient = new QueryClient();

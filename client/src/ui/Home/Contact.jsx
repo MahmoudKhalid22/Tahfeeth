@@ -6,7 +6,7 @@ import addMessage from "../../services/messageApi";
 import toast from "react-hot-toast";
 
 function Contact() {
-  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { register, handleSubmit, reset, formState } = useForm();
 
   const { errors } = formState;
 

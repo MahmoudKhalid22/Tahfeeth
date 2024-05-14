@@ -20,6 +20,8 @@ const data = localStorage.getItem("data")
 function Links({ isLogin, onSetIsLogin }) {
   const navigate = useNavigate();
 
+  const [mobileMenu, setMobileMenu] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [status, setStatus] = useState(isLogin);
@@ -82,46 +84,72 @@ function Links({ isLogin, onSetIsLogin }) {
   // };
 
   return (
-    <div className="fixed bottom-0 md:flex-1 md:w-[20%] md:top-0 right-0 z-40 md:h-screen md:pt-[2rem] md:pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 md:flex-col h-[10rem] w-full">
+    <div className="fixed bottom-0 md:flex-1 md:w-[20%] md:top-0 right-0 z-40 md:min-h-screen md:pt-[2rem] md:pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 md:flex-col sm:h-[4rem] h-[3rem] w-full">
       <Logo />
-      <div className="flex w-full md:w-auto h-full flex-wrap items-center justify-between md:flex-col py-4 gap-6">
+      <div className="flex w-full md:w-auto h-full flex-wrap items-center justify-between md:flex-col py-2 md:py-4 gap-6">
         <ul className="flex md:flex-col w-full md:w-auto items-center justify-around gap-4">
-          <li className={`text-[#fff] text-2xl font-medium pb-2`}>
+          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
             <HashLink smooth to="/#home">
               <div className="block lg:hidden">
-                <AiFillHome className="w-8 h-8 text-bold" />
+                <AiFillHome className="w-8 h-8 " />
               </div>
               <p className="hidden lg:block">الصفحة الرئيسية</p>
             </HashLink>
           </li>
-          <li className={`text-[#fff] text-2xl font-medium pb-2`}>
+          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
             <HashLink smooth to="/#about">
               <div className="block lg:hidden">
-                <IoMdInformationCircle className="w-8 h-8 text-bold" />
+                <IoMdInformationCircle className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
               <p className="hidden lg:block">من نحن</p>
             </HashLink>
           </li>
-          <li className={`text-[#fff] text-2xl font-medium pb-2`}>
+          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
             <HashLink smooth to="/#teachers">
               <div className="block lg:hidden">
-                <FaChalkboardTeacher className="w-8 h-8 text-bold" />
+                <FaChalkboardTeacher className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
               <p className="hidden lg:block">المعلمين</p>
             </HashLink>
           </li>
-          <li className={`text-[#fff] text-2xl font-medium pb-2`}>
+          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
             <HashLink smooth to="/#contact">
               <div className="block lg:hidden">
-                <FaRegMessage className="w-8 h-8 text-bold" />
+                <FaRegMessage className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
               <p className="hidden lg:block">تواصل معنا</p>
             </HashLink>
           </li>
+          <li
+            className={`flex md:hidden text-[#fff] text-2xl font-medium md:pb-2`}
+          >
+            <button onClick={() => setMobileMenu(!mobileMenu)}>
+              <div className="block lg:hidden">
+                <RxGear className="w-6 h-6 sm:w-8 sm:h-8 " />
+              </div>
+            </button>
+          </li>
         </ul>
 
+        {mobileMenu && (
+          <ul
+            className={`absolute flex flex-col gap-[1px] bottom-[3rem] sm:bottom-[4rem] z-20  transition-transform h-auto md:hidden ${
+              mobileMenu ? "min-h-2" : "min-h-0"
+            } left-0 bg-[#ececec] `}
+          >
+            <Link to={"/register?mode=login"}>
+              <button className="text-md p-2   w-full border-b border-black">
+                تسجيل الدخول
+              </button>
+            </Link>
+            <Link to={"/register?mode=signup"}>
+              <button className="text-md p-2">إنشاء حساب</button>
+            </Link>
+          </ul>
+        )}
+
         {!isLogin ? (
-          <div className="flex md:flex-col items-center justify-center gap-8 w-full">
+          <div className="hidden md:flex md:flex-col items-center justify-center gap-8 w-full">
             {/* <form
               className="flex items-center justify-between bg-slate-100"
               onSubmit={async (e) => {
