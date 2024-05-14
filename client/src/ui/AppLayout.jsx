@@ -8,7 +8,7 @@ function AppLayout({ isLogin, onSetIsLogin }) {
       <nav className="flex-grow-1">
         <Navbar isLogin={isLogin} onSetIsLogin={onSetIsLogin} />
       </nav>
-      <main className="flex-grow-4 w-full">
+      <main className="flex-grow-4 w-full overflow-hidden">
         <Outlet />
       </main>
     </div>

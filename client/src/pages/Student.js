@@ -141,7 +141,7 @@ function Student() {
   };
 
   return (
-    <div className="w-full absolute left-0">
+    <div className="w-full mb-[11.5rem] md:mb-0 md:w-[80%] absolute left-0">
       <h2 className="text-xl font-semibold text-[#43766C] text-center mt-12">
         جدول المتابعة
       </h2>
