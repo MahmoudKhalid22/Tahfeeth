@@ -18,45 +18,48 @@ function NewUser({ isLogin, role }) {
   };
 
   return (
-    <div>
+    <div className="md:w-[80%]">
       <form
         onSubmit={handleSubmit(submit)}
         className={`bg-none flex items-center
 justify-center flex-col gap-6 p-4 ${
           role === "teacher" && !isLogin ? "mt-2" : ""
-        } rounded-tr-xl rounded-br-xl w-full  mb-[11.5rem] md:mb-0`}
+        } rounded-tr-xl rounded-br-xl w-full min-h-screen mb-[4rem] md:mb-0`}
       >
         {!isLogin && (
-          <div className=" flex flex-row-reverse justify-between items-start w-full">
-            <div>
-              <input
-                type="text"
-                placeholder="الاسم"
-                id="name-1"
-                className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[100%]  md:h-16"
-                {...register("name-1", {
-                  required: "من فضلك أدخل اسمك",
-                })}
-              />
-              {errors["name-1"]?.message && (
-                <Error>{errors["name-1"]?.message}</Error>
-              )}
+          <>
+            {/* NAME */}
+            <div className="flex items-center justify-start flex-row-reverse gap-6 w-full">
+              <div className="w-[50%]">
+                <input
+                  type="text"
+                  placeholder="الاسم"
+                  id="name-1"
+                  className="block mx-auto text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3  max-w-[30rem] w-full md:h-16"
+                  {...register("name-1", {
+                    required: "من فضلك أدخل اسمك",
+                  })}
+                />
+                {errors["name-1"]?.message && (
+                  <Error>{errors["name-1"]?.message}</Error>
+                )}
+              </div>
+              <label
+                className="hidden md:block text-[#43766C] text-2xl"
+                htmlFor="name-1"
+              >
+                الاسم
+              </label>
             </div>
-            <label
-              className="hidden md:block text-[#43766C] text-2xl"
-              htmlFor="name"
-            >
-              الاسم
-            </label>
-          </div>
+          </>
         )}
-        <div className="flex flex-row-reverse justify-between items-start w-full">
-          <div>
+        <div className="flex flex-row-reverse justify-start items-center w-full gap-6">
+          <div className="w-[50%]">
             <input
               type="text"
               placeholder="البريد الإلكتروني"
               id="email-1"
-              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+              className="block mx-auto text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3  max-w-[30rem] w-full md:h-16"
               {...register("email-1", {
                 required: "من فضلك أدخل بريدك الإلكتروني",
               })}
@@ -67,18 +70,18 @@ justify-center flex-col gap-6 p-4 ${
           </div>
           <label
             className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="email"
+            htmlFor="email-1"
           >
             البريد الإلكتروني
           </label>
         </div>
-        <div className=" flex flex-row-reverse justify-between items-start w-full relative">
-          <div>
+        <div className=" flex flex-row-reverse justify-start items-center w-full gap-8 relative">
+          <div className="w-1/2">
             <input
               type={!showPassword ? "password" : "text"}
               placeholder="كلمة السر"
               id="pass-1"
-              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+              className="block mx-auto text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3  max-w-[30rem] w-full md:h-16"
               {...register("pass-1", {
                 required: "من فضلك أدخل كلمة السر",
               })}
@@ -89,32 +92,32 @@ justify-center flex-col gap-6 p-4 ${
           </div>
           <div
             onClick={() => setShowPassword(!showPassword)}
-            className=" absolute top-0 left-0 bottom-0 flex items-center pl-3 cursor-pointer text-3xl"
+            className=" absolute top-0 left-0 bottom-0 flex items-center ml-6 cursor-pointer text-3xl"
           >
             {showPassword ? <FaRegEyeSlash /> : <IoMdEye />}
           </div>
           <label
             className="hidden md:block text-[#43766C] text-2xl"
-            htmlFor="pass"
+            htmlFor="pass-1"
           >
             كلمة السر
           </label>
         </div>
         {isLogin && (
-          <div className="flex items-center justify-end w-full">
+          <div className="flex items-start justify-end w-full gap-8">
             <Link className="underline" to={"/forget-password"}>
               هل نسيت كلمة السر
             </Link>
           </div>
         )}
         {!isLogin && (
-          <div className=" flex flex-row-reverse justify-between items-start w-full">
-            <div>
+          <div className=" flex flex-row-reverse justify-start items-start w-full gap-8">
+            <div className="md:w-1/2">
               <select
                 type="text"
                 placeholder="الاسم"
                 id="role"
-                className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+                className="block mx-auto text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3  max-w-[30rem] w-full md:h-16"
                 {...register("role", {
                   required: "من فضلك حدد هل أنت طالب أم معلم",
                 })}
@@ -141,7 +144,7 @@ justify-center flex-col gap-6 p-4 ${
               type="text"
               placeholder="الاسم"
               id="prof"
-              className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+              className="block mx-auto text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
               {...register("prof", {
                 required: "من فضلك حدد هل أنت مجاز أم لا",
               })}
@@ -166,7 +169,7 @@ justify-center flex-col gap-6 p-4 ${
                 placeholder="السعر"
                 step={10}
                 id="price"
-                className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
+                className="block mx-auto text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-16"
                 {...register("price", {
                   required: "من فضلك أدخل الأجر الذي تتقاضاه شهريا",
                 })}
@@ -184,7 +187,7 @@ justify-center flex-col gap-6 p-4 ${
                 placeholder="معلومات عن كيفية تعليم الطلاب"
                 step={10}
                 id="information"
-                className="text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-60"
+                className="block mx-auto text-md  border py-4 md:text-xl rounded-md border-slate-700  px-3 md:w-[50%] lg:w-[58%]  w-[120%] md:h-60"
                 {...register("information", {
                   required: "من فضلك أدخل معلومات عن كيفية إدارتك للدرس",
                 })}
@@ -199,11 +202,15 @@ justify-center flex-col gap-6 p-4 ${
           </>
         )}
 
-        <button className="p-2 border-slate-700  text-xl md:text-2xl cursor-pointer rounded-md transition-colors flex gap-2 items-center justify-center w-full md:h-16 bg-[#9F8565] hover:bg-[#8a7762] text-[#ececec] duration-300">
+        <button
+          className="p-2 text-xl md:text-2xl cursor-pointer rounded-md transition-colors flex gap-2 items-center justify-center md:w-[50%] md:h-16 bg-[#9F8565] hover:bg-[#8a7762] text-[#ececec] duration-300 
+        text-md  border py-4  px-3   max-w-[30rem] w-full md:mr-auto 
+        "
+        >
           <GiExitDoor />
           {isLogin ? <span>دخول</span> : <span>تسجيل</span>}
         </button>
-        <p className="flex flex-col items-center md:flex-row gap-4 text-[#2b2121] md:text-[#43766C]">
+        <p className="flex flex-col  md:mr-auto text-center md:flex-row gap-8 text-[#2b2121] md:text-[#43766C]">
           {isLogin ? (
             <>
               <span>ليس لديك حساب بعد</span>

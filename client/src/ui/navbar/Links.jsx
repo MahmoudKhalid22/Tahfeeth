@@ -135,15 +135,17 @@ function Links({ isLogin, onSetIsLogin }) {
           <ul
             className={`absolute flex flex-col gap-[1px] bottom-[3rem] sm:bottom-[4rem] z-20  transition-transform h-auto md:hidden ${
               mobileMenu ? "min-h-2" : "min-h-0"
-            } left-0 bg-[#ececec] `}
+            } left-0 bg-[#9fcfca] `}
           >
             <Link to={"/register?mode=login"}>
-              <button className="text-md p-2   w-full border-b border-black">
+              <button className="text-md p-2 hover:bg-slate-400 transition-colors  w-full border-b border-black">
                 تسجيل الدخول
               </button>
             </Link>
             <Link to={"/register?mode=signup"}>
-              <button className="text-md p-2">إنشاء حساب</button>
+              <button className="text-md p-2 hover:bg-slate-400 w-full transition-colors">
+                إنشاء حساب
+              </button>
             </Link>
           </ul>
         )}

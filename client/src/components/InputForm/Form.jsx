@@ -144,16 +144,18 @@ function Form({ onSetIsLogin }) {
   // };
 
   return (
-    <div className="flex flex-col items-center w-full">
-      {/* <div className="flex gap-12 items-center mt-2">
+    // <div className="flex flex-col items-center w-full">
+    {
+      /* <div className="flex gap-12 items-center mt-2">
         <button onClick={handleGoogleRegister}>
           <FaGooglePlus className="text-5xl fill-green-600 " />
         </button>
         <button onClick={handleFacebookRegister}>
           <FaFacebook className="text-5xl fill-green-600 " />
         </button>
-      </div> */}
-    </div>
+      </div> */
+    }
+    // </div>
   );
 }
 
