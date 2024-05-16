@@ -20,7 +20,12 @@ body {
   overflow-y: auto;
   position: relative;
 }
-
+@media (min-width: 667px) {
+  .applayout {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
+}
 .loading {
   font-size: 1.5rem;
   color: #111142;

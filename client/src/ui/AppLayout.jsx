@@ -4,11 +4,11 @@ import Navbar from "./navbar/Navbar";
 
 function AppLayout({ isLogin, onSetIsLogin }) {
   return (
-    <div className="flex">
-      <nav className="flex-grow-1">
+    <div className="applayout">
+      <nav>
         <Navbar isLogin={isLogin} onSetIsLogin={onSetIsLogin} />
       </nav>
-      <main className="flex-grow-4 w-full overflow-hidden">
+      <main className="overflow-hidden">
         <Outlet />
       </main>
     </div>
