@@ -1,27 +1,10 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { GiExitDoor } from "react-icons/gi";
-import { FaGooglePlus, FaFacebook, FaRegEyeSlash } from "react-icons/fa";
-import { IoMdEye } from "react-icons/io";
+import { useState } from "react";
 
 function Form({ onSetIsLogin }) {
-  const [searchParams] = useSearchParams();
-  const isLogin = searchParams.get("mode") === "login";
-
-  const [showPassword, setShowPassword] = useState(false);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [professional, setProfessional] = useState(false);
-  const [price, setPrice] = useState(0);
-  const [information, setInformation] = useState("");
-
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   const newUser = async (e) => {
     e.preventDefault();

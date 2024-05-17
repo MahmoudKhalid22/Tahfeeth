@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Verification() {
   return (
-    <div className="mr-[22rem]">
+    <div className="">
       <h2 className="text-4xl font-semibold mt-36 leading-loose overflow-hidden">
         من فضلك تفقد بريدك الإلكتروني لتفعيل الحساب وعد لتسجيل الدخول
       </h2>

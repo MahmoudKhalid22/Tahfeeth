@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Error from "../utils/Error";
 import { useMutation } from "@tanstack/react-query";
-import addMessage from "../../services/messageApi";
+import { addMessage } from "../../services/messageApi";
 import toast from "react-hot-toast";
 
 function Contact() {
@@ -91,7 +91,7 @@ function Contact() {
 
       {/* {time && (
         <p
-          className={`flex items-center justify-center flex-row-reverse mt-4 gap-12 mr-16 lg:mr-[16rem] overflow-hidden text-3xl font-semibold  ${
+          className={`flex items-center justify-center flex-row-reverse mt-4 gap-12 mr-16 overflow-hidden text-3xl font-semibold  ${
             error ? "text-red-600" : "text-[#948366]"
           } `}
         >

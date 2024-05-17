@@ -20,7 +20,7 @@ body {
   overflow-y: auto;
   position: relative;
 }
-@media (min-width: 667px) {
+@media (min-width: 768px) {
   .applayout {
     display: grid;
     grid-template-columns: 1fr 3fr;

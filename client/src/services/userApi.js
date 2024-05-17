@@ -10,7 +10,7 @@ async function newUser(data) {
         role: data.role || "student",
         professional: data?.professional || undefined,
         price: data?.price || undefined,
-        description: data?.description || undefined,
+        information: data?.information || undefined,
       }
     );
 
@@ -21,8 +21,24 @@ async function newUser(data) {
   }
 }
 
-async function loginUser() {}
+async function loginUserApi(data) {
+  try {
+    const res = await axios.post(
+      "https://tahfeeth-production.up.railway.app/user/login",
+      {
+        email: data.email,
+        password: data.password,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err.response.data.message);
+  }
+}
 
 async function logoutUser() {}
 
 async function getUser() {}
+
+export { newUser, loginUserApi };

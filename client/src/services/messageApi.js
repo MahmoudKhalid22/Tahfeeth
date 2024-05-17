@@ -11,4 +11,4 @@ async function addMessage(data) {
   return res.data;
 }
 
-export default addMessage;
+export { addMessage };

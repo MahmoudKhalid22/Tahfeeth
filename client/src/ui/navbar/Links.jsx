@@ -91,7 +91,7 @@ function Links({ isLogin, onSetIsLogin }) {
           <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
             <HashLink smooth to="/#home">
               <div className="block lg:hidden">
-                <AiFillHome className="w-8 h-8 " />
+                <AiFillHome className="w-6 h-6 sm:w-8 sm:h-8  " />
               </div>
               <p className="hidden lg:block">الصفحة الرئيسية</p>
             </HashLink>
@@ -138,12 +138,18 @@ function Links({ isLogin, onSetIsLogin }) {
             } left-0 bg-[#9fcfca] `}
           >
             <Link to={"/register?mode=login"}>
-              <button className="text-md p-2 hover:bg-slate-400 transition-colors  w-full border-b border-black">
+              <button
+                className="text-md p-2 hover:bg-slate-400 transition-colors  w-full border-b border-black"
+                onClick={() => setMobileMenu(!mobileMenu)}
+              >
                 تسجيل الدخول
               </button>
             </Link>
             <Link to={"/register?mode=signup"}>
-              <button className="text-md p-2 hover:bg-slate-400 w-full transition-colors">
+              <button
+                className="text-md p-2 hover:bg-slate-400 w-full transition-colors"
+                onClick={() => setMobileMenu(!mobileMenu)}
+              >
                 إنشاء حساب
               </button>
             </Link>

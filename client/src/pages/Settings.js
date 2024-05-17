@@ -123,7 +123,7 @@ const Settings = () => {
 
   if (!data || data.length === 0) {
     return (
-      <div className="overflow-hidden h-screen w-[80%] absolute left-0 flex flex-col items-center justify-center">
+      <div className="overflow-hidden h-screen absolute left-0 flex flex-col items-center justify-center">
         <h2 className="text-red-700 text-3xl font-semibold text-center overflow-y-hidden">
           يجب تسجيل الدخول
         </h2>
@@ -137,7 +137,7 @@ const Settings = () => {
     );
   }
   return (
-    <div className="md:w-[80%] md:mr-[22.5%] w-full mr-4 mb-[11.5rem] md:mb-0 mt-16">
+    <div className="md:w-[80%] w-full mr-4 mb-[11.5rem] md:mb-0 mt-16">
       {/* ADMIN DASHBOARD */}
       {data?.user?.role === "admin" && (
         <div className="text-2xl ">
