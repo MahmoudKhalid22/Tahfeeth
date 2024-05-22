@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdInformationCircle } from "react-icons/io";
@@ -12,29 +12,32 @@ import { Link, useNavigate } from "react-router-dom";
 import { GiEntryDoor } from "react-icons/gi";
 import { RxGear } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
+import { AuthContext } from "../../utils/context";
 
 const data = localStorage.getItem("data")
   ? JSON.parse(localStorage.getItem("data"))
   : null;
 
-function Links({ isLogin, onSetIsLogin }) {
+function Links({ onSetIsLogin }) {
   const navigate = useNavigate();
+  const { isLogin } = useContext(AuthContext);
+  console.log(isLogin);
 
   const [mobileMenu, setMobileMenu] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [status, setStatus] = useState(isLogin);
+  // const [status, setStatus] = useState(isLogin);
   // SEARCH FOR TEACHER
   const [teacherName, setTeacherName] = useState("");
   const [searchErr, setSearchErr] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   // console.log(status);
 
-  useEffect(() => {
-    const isLoggedInStatus = JSON.parse(localStorage.getItem("status"));
-    setStatus(isLoggedInStatus);
-  }, [isLogin]);
+  // useEffect(() => {
+  //   const isLoggedInStatus = JSON.parse(localStorage.getItem("status"));
+  //   setStatus(isLoggedInStatus);
+  // }, [isLogin]);
 
   const logout = async () => {
     try {

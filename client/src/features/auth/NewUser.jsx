@@ -20,7 +20,6 @@ function NewUser({ isLogin, role }) {
   const { isPending: isLogging, loginUser } = useLogin();
 
   const submitNewUser = (data) => {
-    console.log(data);
     createNewUser({
       name: data["name-1"],
       email: data["email-1"],

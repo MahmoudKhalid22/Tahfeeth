@@ -18,6 +18,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppLayout, Home } from "./ui/index";
 import { Register } from "./pages";
+import { AuthProvider } from "./utils/context";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
 const queryClient = new QueryClient();
@@ -32,46 +33,53 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={<AppLayout isLogin={isLogin} onSetIsLogin={setIsLogin} />}
-          >
-            <Route index element={<Home />} />
-            <Route path="/verify" element={<Verification />} />
-            <Route path="/verified" element={<Verified />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
             <Route
-              path="/details"
-              element={<Details onSetIsLogin={setIsLogin} />}
-            />
-            <Route
-              path="/register"
-              element={<Register onSetIsLogin={setIsLogin} />}
-            />
-            <Route path="/details/:id" element={<Student />} />
-            <Route path="/teacher/:id" element={<Teacher />} />
-            <Route path="/settings">
-              <Route index element={<Settings />} />
-              <Route path="edit" element={<Edit />} />
-            </Route>
+              path="/"
+              element={
+                <AppLayout isLogin={isLogin} onSetIsLogin={setIsLogin} />
+              }
+            >
+              <Route index element={<Home />} />
+              <Route path="/verify" element={<Verification />} />
+              <Route path="/verified" element={<Verified />} />
+              <Route
+                path="/details"
+                element={<Details onSetIsLogin={setIsLogin} />}
+              />
+              <Route
+                path="/register"
+                element={<Register onSetIsLogin={setIsLogin} />}
+              />
+              <Route path="/details/:id" element={<Student />} />
+              <Route path="/teacher/:id" element={<Teacher />} />
+              <Route path="/settings">
+                <Route index element={<Settings />} />
+                <Route path="edit" element={<Edit />} />
+              </Route>
 
-            <Route path="/forget-password" element={<ForgetPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route
-              path="/redirect"
-              element={<RedirectPage onSetIsLogin={setIsLogin} />}
-            />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+              <Route path="/forget-password" element={<ForgetPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route
+                path="/redirect"
+                element={<RedirectPage onSetIsLogin={setIsLogin} />}
+              />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
       <Toaster
         position="top-center"
         gutter={12}
         containerStyle={{ marginTop: "12px" }}
         toastOptions={{
           duration: 3000,
+          error: {
+            style: { background: "#8b0000", color: "#fff" },
+          },
         }}
       />
     </QueryClientProvider>
