@@ -19,12 +19,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppLayout, Home } from "./ui/index";
 import { Register } from "./pages";
 import { AuthProvider } from "./utils/context";
+import useMedia from "./utils/toastQuery";
 
 const initialStatus = JSON.parse(localStorage.getItem("status"));
 const queryClient = new QueryClient();
 
 function App() {
   const [isLogin, setIsLogin] = useState(initialStatus?.isLogin ? true : false);
+  const bigScreen = useMedia("(min-width: 768px)");
 
   useEffect(() => {
     localStorage.setItem("status", JSON.stringify({ isLogin }));
@@ -74,11 +76,18 @@ function App() {
       <Toaster
         position="top-center"
         gutter={12}
-        containerStyle={{ marginTop: "12px" }}
+        containerStyle={{
+          marginTop: "12px",
+          width: bigScreen ? "80%" : "auto",
+          marginRight: bigScreen ? "auto" : "0",
+        }}
         toastOptions={{
-          duration: 3000,
+          duration: 3500,
           error: {
-            style: { background: "#8b0000", color: "#fff" },
+            style: {
+              background: "#8b0000",
+              color: "#fff",
+            },
           },
         }}
       />
