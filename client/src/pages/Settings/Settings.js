@@ -1,12 +1,12 @@
 import React, { useContext, useReducer, useState } from "react";
-import UpdateForm from "../components/UpdateForm";
-import AddUserForm from "../components/AddUserForm";
-import StudentCard from "../components/StudentCard";
+import UpdateForm from "../../components/UpdateForm";
+import AddUserForm from "../../components/AddUserForm";
+import StudentCard from "../../components/StudentCard";
 import { Link } from "react-router-dom";
-import Spinner from "../components/utilsComponents/Spinner";
-import Card from "../components/Teacher/Card";
-import { AuthContext } from "../utils/context";
-import BadRequest from "./BadRequest";
+import Spinner from "../../ui/utils/Spinner";
+import Card from "../../components/Teacher/Card";
+import { AuthContext } from "../../utils/context";
+import BadRequest from "../../ui/utils/BadRequest";
 
 const data = JSON.parse(localStorage.getItem("data"));
 

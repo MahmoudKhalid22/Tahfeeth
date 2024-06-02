@@ -1,12 +1,12 @@
 import React, { useContext, useRef, useState } from "react";
-import Spinner from "../components/utilsComponents/Spinner";
+import Spinner from "../ui/utils/Spinner";
 import styles from "./edit.module.css";
 import ReactCrop, {
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
 import useCanvasPreview from "../utils/useCanvasPreview";
-import BadRequest from "./BadRequest";
+import BadRequest from "../ui/utils/BadRequest";
 import { AuthContext } from "../utils/context";
 
 const data = JSON.parse(localStorage.getItem("data"))

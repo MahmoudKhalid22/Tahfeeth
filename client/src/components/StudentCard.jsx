@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Spinner from "./utilsComponents/Spinner";
+import Spinner from "../ui/utils/Spinner";
 
 const StudentCard = ({ student, teacherToken }) => {
   const [error, setError] = useState(false);

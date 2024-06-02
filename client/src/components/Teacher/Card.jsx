@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Spinner from "../utilsComponents/Spinner";
+import Spinner from "../../ui/utils/Spinner";
 
 function Card({
   name,
@@ -20,7 +20,7 @@ function Card({
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/" + id,
+        "https://tahfeeth-system.onrender.com/user/" + id,
         {
           method: "DELETE",
           headers: {

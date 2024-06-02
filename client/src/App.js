@@ -1,33 +1,31 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
 import "react-image-crop/dist/ReactCrop.css";
 import Details from "./components/Details";
-import Student from "./pages/Student";
 import Teacher from "./components/Teacher/Teacher";
-import Verification from "./pages/Verification";
-import { useContext, useEffect, useState } from "react";
-import Settings from "./pages/Settings";
-import NotFound from "./pages/NotFound";
-import Verified from "./pages/Verified";
-import Edit from "./pages/Edit";
-import ForgetPassword from "./pages/ForgetPassword";
-import ResetPassword from "./pages/ResetPassword";
-import RedirectPage from "./pages/redirectedPage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppLayout, Home } from "./ui/index";
-import { Register } from "./pages";
-import { AuthContext, AuthProvider } from "./utils/context";
+import {
+  Register,
+  Student,
+  Settings,
+  Edit,
+  NotFound,
+  Verification,
+  Verified,
+  ForgetPassword,
+  RedirectPage,
+  ResetPasswordForm,
+} from "./pages/index";
+import { AuthProvider } from "./utils/context";
 import useMedia from "./utils/toastQuery";
 
 const queryClient = new QueryClient();
 
 function App() {
   const bigScreen = useMedia("(min-width: 768px)");
-
-  const { isLogin, setIsLogin } = useContext(AuthContext);
-  console.log(isLogin);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -49,7 +47,7 @@ function App() {
               </Route>
 
               <Route path="/forget-password" element={<ForgetPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/reset-password" element={<ResetPasswordForm />} />
               <Route path="/redirect" element={<RedirectPage />} />
               <Route path="*" element={<NotFound />} />
             </Route>

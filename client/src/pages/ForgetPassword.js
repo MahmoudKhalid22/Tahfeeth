@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Spinner from "../components/utilsComponents/Spinner";
+import Spinner from "../ui/utils/Spinner";
 import { Link } from "react-router-dom";
 
 const ForgetPassword = () => {
@@ -15,7 +15,7 @@ const ForgetPassword = () => {
       setLoading(true);
       setErr(false);
       const res = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/forget-password",
+        "https://tahfeeth.onrender.com/user/forget-password",
         {
           method: "POST",
           headers: {

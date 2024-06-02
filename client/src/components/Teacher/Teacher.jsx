@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import StudentCard from "../StudentCard";
-import Spinner from "../utilsComponents/Spinner";
+import Spinner from "../../ui/utils/Spinner";
 
 const data = JSON.parse(localStorage.getItem("data"));
 const adminToken = data?.user?.role === "admin" ? data?.accessToken : null;
@@ -28,7 +28,7 @@ const Teacher = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://tahfeeth-production.up.railway.app/user/teacher/" + id
+          "https://tahfeeth-system.onrender.com/user/teacher/" + id
         );
         if (!response.ok) {
           throw new Error();
@@ -49,7 +49,7 @@ const Teacher = () => {
     try {
       setLoadingJoin(true);
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/join/" + id,
+        "https://tahfeeth-system.onrender.com/user/join/" + id,
         {
           method: "POST",
           headers: {
@@ -77,7 +77,7 @@ const Teacher = () => {
     try {
       setLoadingStd(true);
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/students/" + id,
+        "https://tahfeeth-system.onrender.com/user/students/" + id,
         {
           method: "GET",
           headers: {

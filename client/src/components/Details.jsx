@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Spinner from "./utilsComponents/Spinner";
+import Spinner from "../ui/utils/Spinner";
 import { AuthContext } from "../utils/context";
-import BadRequest from "../pages/BadRequest";
+import BadRequest from "../ui/utils/BadRequest";
 
 function Details() {
   const { isLogin } = useContext(AuthContext);

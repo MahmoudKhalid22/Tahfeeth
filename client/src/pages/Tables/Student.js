@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./Student.module.css";
 import { RiChatDeleteLine } from "react-icons/ri";
-import Spinner from "../components/utilsComponents/Spinner";
-import { formatDate } from "../utils/dateFormat";
+import Spinner from "../../ui/utils/Spinner";
+import { formatDate } from "../../utils/dateFormat";
 
 function Student() {
   const { id } = useParams();
