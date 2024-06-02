@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdInformationCircle } from "react-icons/io";
@@ -8,133 +8,83 @@ import { FaRegMessage } from "react-icons/fa6";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { LiaUserPlusSolid } from "react-icons/lia";
 import Logo from "./Logo";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GiEntryDoor } from "react-icons/gi";
 import { RxGear } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
 import { AuthContext } from "../../utils/context";
+import { useLogout } from "./useLogout";
 
-const data = localStorage.getItem("data")
-  ? JSON.parse(localStorage.getItem("data"))
-  : null;
-
-function Links({ onSetIsLogin }) {
-  const navigate = useNavigate();
+function Links() {
   const { isLogin } = useContext(AuthContext);
-  console.log(isLogin);
 
   const [mobileMenu, setMobileMenu] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  // const [status, setStatus] = useState(isLogin);
-  // SEARCH FOR TEACHER
-  const [teacherName, setTeacherName] = useState("");
-  const [searchErr, setSearchErr] = useState(false);
-  const [loadingSearch, setLoadingSearch] = useState(false);
-  // console.log(status);
 
-  // useEffect(() => {
-  //   const isLoggedInStatus = JSON.parse(localStorage.getItem("status"));
-  //   setStatus(isLoggedInStatus);
-  // }, [isLogin]);
-
-  const logout = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/logout",
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + data.accessToken,
-          },
-        }
-      );
-      setLoading(false);
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log(errorData);
-        throw new Error(errorData.error);
-      }
-      onSetIsLogin(false);
-      localStorage.setItem("data", JSON.stringify([]));
-      return navigate("/");
-    } catch (err) {
-      console.log(err);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // const searchForTeacher = async (name) => {
-  //   name = name.toString();
-  //   try {
-  //     setLoadingSearch(true);
-  //     setSearchErr(false);
-  //     const res = await fetch(
-  //       "http://localhost:5000/user/search?name=" + name.toString()
-  //     );
-  //     const result = await res.json();
-  //     console.log(result);
-  //     navigate("/searched-teacher");
-  //   } catch (err) {
-  //     setSearchErr(true);
-  //   } finally {
-  //     setLoadingSearch(false);
-  //   }
-  // };
+  const { logoutUser } = useLogout();
 
   return (
     <div className="fixed bottom-0 md:flex-1 md:top-0 right-0 z-40 md:min-h-screen md:pt-[2rem] md:pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 md:flex-col sm:h-[4rem] w-full md:w-[25%] h-[3rem]">
       <Logo />
-      <div className="flex w-full md:w-auto h-full flex-wrap items-center justify-between md:flex-col py-2 md:py-4 gap-6">
-        <ul className="flex md:flex-col w-full md:w-auto items-center justify-around gap-4">
-          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
+      <div className="flex w-full md:w-auto h-full flex-wrap items-center justify-between md:flex-col  md:py-4 gap-6">
+        <ul className="flex md:flex-col w-full md:h-auto h-full md:w-auto items-center justify-around md:gap-4">
+          <li
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+          >
             <HashLink smooth to="/#home">
-              <div className="block lg:hidden">
+              <div className="flex justify-center lg:hidden w-full">
                 <AiFillHome className="w-6 h-6 sm:w-8 sm:h-8  " />
               </div>
               <p className="hidden lg:block">الصفحة الرئيسية</p>
             </HashLink>
           </li>
-          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
+          <li
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+          >
             <HashLink smooth to="/#about">
-              <div className="block lg:hidden">
+              <div className="flex justify-center lg:hidden w-full">
                 <IoMdInformationCircle className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
               <p className="hidden lg:block">من نحن</p>
             </HashLink>
           </li>
-          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
+          <li
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+          >
             <HashLink smooth to="/#teachers">
-              <div className="block lg:hidden">
+              <div className=" lg:hidden w-full flex justify-center">
                 <FaChalkboardTeacher className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
               <p className="hidden lg:block">المعلمين</p>
             </HashLink>
           </li>
-          <li className={`text-[#fff] text-2xl font-medium md:pb-2`}>
+          <li
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+          >
             <HashLink smooth to="/#contact">
-              <div className="block lg:hidden">
+              <div className="lg:hidden w-full flex justify-center">
                 <FaRegMessage className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
               <p className="hidden lg:block">تواصل معنا</p>
             </HashLink>
           </li>
           <li
-            className={`flex md:hidden text-[#fff] text-2xl font-medium md:pb-2`}
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
           >
-            <button onClick={() => setMobileMenu(!mobileMenu)}>
-              <div className="block lg:hidden">
+            <button
+              onClick={() => setMobileMenu(!mobileMenu)}
+              className="block mx-auto"
+            >
+              <div className="lg:hidden w-full flex justify-center">
                 <RxGear className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
             </button>
           </li>
         </ul>
 
-        {mobileMenu && (
+        {mobileMenu && !isLogin && (
           <ul
             className={`absolute flex flex-col gap-[1px] bottom-[3rem] sm:bottom-[4rem] z-20  transition-transform h-auto md:hidden ${
               mobileMenu ? "min-h-2" : "min-h-0"
@@ -156,6 +106,39 @@ function Links({ onSetIsLogin }) {
                 إنشاء حساب
               </button>
             </Link>
+          </ul>
+        )}
+        {mobileMenu && isLogin && (
+          <ul
+            className={`absolute flex flex-col gap-[1px] bottom-[3rem] sm:bottom-[4rem] z-20  transition-transform h-auto md:hidden ${
+              mobileMenu ? "min-h-2" : "min-h-0"
+            } left-0 bg-[#9fcfca] `}
+          >
+            <Link to={"/details"}>
+              <button
+                className="text-md p-2 hover:bg-slate-400 transition-colors  w-full border-b border-black"
+                onClick={() => setMobileMenu(!mobileMenu)}
+              >
+                حسابي{" "}
+              </button>
+            </Link>
+            <Link to={"/settings"}>
+              <button
+                className="text-md p-2 hover:bg-slate-400 transition-colors  w-full border-b border-black"
+                onClick={() => setMobileMenu(!mobileMenu)}
+              >
+                لوحة التحكم{" "}
+              </button>
+            </Link>
+            <button
+              className="text-md p-2 hover:bg-slate-400 w-full transition-colors"
+              onClick={() => {
+                logoutUser();
+                setMobileMenu(!mobileMenu);
+              }}
+            >
+              تسجيل الخروج{" "}
+            </button>
           </ul>
         )}
 
@@ -252,7 +235,7 @@ function Links({ onSetIsLogin }) {
                 <span>خطأ داخلي</span>
                 <p
                   className="text-[0.5rem] sm:text-[0.75rem] cursor-pointer"
-                  onClick={logout}
+                  onClick={logoutUser}
                 >
                   سجل خروج مرة أخرى
                 </p>
@@ -260,7 +243,7 @@ function Links({ onSetIsLogin }) {
             ) : (
               <button
                 className="text-center text-4xl lg:text-lg p-2 border-none outline-none cursor-pointer rounded-lg transition-colors flex items-center justify-center text-white hover:text-green-300"
-                onClick={logout}
+                onClick={logoutUser}
                 title="تسجيل الخروج"
               >
                 <span className="hidden lg:block">تسجيل الخروج</span>

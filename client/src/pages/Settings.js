@@ -1,10 +1,12 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import UpdateForm from "../components/UpdateForm";
 import AddUserForm from "../components/AddUserForm";
 import StudentCard from "../components/StudentCard";
 import { Link } from "react-router-dom";
 import Spinner from "../components/utilsComponents/Spinner";
 import Card from "../components/Teacher/Card";
+import { AuthContext } from "../utils/context";
+import BadRequest from "./BadRequest";
 
 const data = JSON.parse(localStorage.getItem("data"));
 
@@ -48,6 +50,8 @@ const Settings = () => {
   const [loadingData, setLoadingData] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { isLogin } = useContext(AuthContext);
   const getData = async () => {
     try {
       setLoadingData(true);
@@ -121,20 +125,8 @@ const Settings = () => {
     }
   };
 
-  if (!data || data.length === 0) {
-    return (
-      <div className="overflow-hidden h-screen absolute left-0 flex flex-col items-center justify-center">
-        <h2 className="text-red-700 text-3xl font-semibold text-center overflow-y-hidden">
-          يجب تسجيل الدخول
-        </h2>
-        <Link
-          to="/register?mode=login"
-          className="text-white bg-[#959689] text-3xl font-semibold text-center mx-auto block mt-12 w-fit p-4 rounded-lg hover:bg-[#67685e] transition-colors"
-        >
-          تسجيل الدخول
-        </Link>
-      </div>
-    );
+  if (!isLogin) {
+    return <BadRequest />;
   }
   return (
     <div className="md:w-[80%] w-full mr-4 mb-[11.5rem] md:mb-0 mt-16">

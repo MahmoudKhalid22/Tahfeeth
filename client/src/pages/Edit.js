@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Spinner from "../components/utilsComponents/Spinner";
 import styles from "./edit.module.css";
 import ReactCrop, {
@@ -7,6 +7,7 @@ import ReactCrop, {
 } from "react-image-crop";
 import useCanvasPreview from "../utils/useCanvasPreview";
 import BadRequest from "./BadRequest";
+import { AuthContext } from "../utils/context";
 
 const data = JSON.parse(localStorage.getItem("data"))
   ? JSON.parse(localStorage.getItem("data"))
@@ -46,11 +47,13 @@ function Edit() {
   const [username, setUsername] = useState("");
   const [loadingName, setLoadingName] = useState(false);
 
+  const { isLogin } = useContext(AuthContext);
+
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
 
-  if (!data || data.length === 0 || data === undefined) {
+  if (!isLogin) {
     return <BadRequest />;
   }
 

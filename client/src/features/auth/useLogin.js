@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../utils/context";
 
 function useLogin() {
-  const { isLogin, setIsLogin } = useContext(AuthContext);
+  const { setIsLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const queryClient = new QueryClient();
   const { isPending, mutate: loginUser } = useMutation({
@@ -17,7 +17,6 @@ function useLogin() {
       });
       localStorage.setItem("data", JSON.stringify(data));
       setIsLogin(true);
-      console.log(isLogin);
       navigate("/details");
     },
     onError: (err) => {

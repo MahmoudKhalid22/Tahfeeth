@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "./utilsComponents/Spinner";
+import { AuthContext } from "../utils/context";
+import BadRequest from "../pages/BadRequest";
 
-function Details({ onSetIsLogin }) {
+function Details() {
+  const { isLogin } = useContext(AuthContext);
+
+  console.log(isLogin);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [userData, setUserData] = useState({});
@@ -40,20 +46,8 @@ function Details({ onSetIsLogin }) {
   //   getUserData();
   // }, [data?.accessToken]);
 
-  if (!data || data.length === 0) {
-    return (
-      <div className="overflow-hidden h-screen w-full md:w-[80%] absolute left-0 flex flex-col items-center justify-center">
-        <h2 className="text-red-700 text-3xl font-semibold text-center overflow-y-hidden">
-          يجب تسجيل الدخول
-        </h2>
-        <Link
-          to="/register?mode=login"
-          className="text-white bg-[#959689] text-3xl font-semibold text-center mx-auto block mt-12 w-fit p-4 rounded-lg hover:bg-[#67685e] transition-colors"
-        >
-          تسجيل الدخول
-        </Link>
-      </div>
-    );
+  if (!isLogin) {
+    return <BadRequest />;
   }
 
   return (

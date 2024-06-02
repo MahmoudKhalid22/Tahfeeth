@@ -46,7 +46,7 @@ function Student() {
       try {
         setLoadingTables(true);
         const response = await fetch(
-          "https://tahfeeth-production.up.railway.app/table/" + stdId,
+          "https://tahfeeth-system.onrender.com/table/" + stdId,
           {
             method: "GET",
             headers: {
@@ -77,7 +77,7 @@ function Student() {
     e.preventDefault();
     try {
       const res = await fetch(
-        "https://tahfeeth-production.up.railway.app/table/create-table",
+        "https://tahfeeth-system.onrender.com/table/create-table",
         {
           method: "POST",
           headers: {
@@ -125,7 +125,7 @@ function Student() {
     // console.log(id);
     try {
       setLoadingDelMap({ ...loadingDelMap, [id]: true });
-      await fetch("https://tahfeeth-production.up.railway.app/table/" + id, {
+      await fetch("https://tahfeeth-system.onrender.com/table/" + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
