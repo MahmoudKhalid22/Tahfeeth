@@ -26,14 +26,18 @@ function Links() {
   const { logoutUser } = useLogout();
 
   return (
-    <div className="fixed bottom-0 md:flex-1 md:top-0 right-0 z-40 md:min-h-screen md:pt-[2rem] md:pb-[27px] bg-[#43766C] px-6 flex items-center gap-8 md:flex-col sm:h-[4rem] w-full md:w-[25%] h-[3rem]">
+    <div className="fixed bottom-0 md:flex-1 md:top-0 right-0 z-40 md:min-h-screen md:pt-[2rem] md:pb-[27px] bg-[#43766C] md:px-6 flex items-center gap-8 md:flex-col sm:h-[4rem] w-full md:w-[25%] h-[3rem]">
       <Logo />
       <div className="flex w-full md:w-auto h-full flex-wrap items-center justify-between md:flex-col  md:py-4 gap-6">
         <ul className="flex md:flex-col w-full md:h-auto h-full md:w-auto items-center justify-around md:gap-4">
           <li
             className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
           >
-            <HashLink smooth to="/#home">
+            <HashLink
+              className="w-full h-full flex items-center"
+              smooth
+              to="/#home"
+            >
               <div className="flex justify-center lg:hidden w-full">
                 <AiFillHome className="w-6 h-6 sm:w-8 sm:h-8  " />
               </div>
@@ -43,7 +47,11 @@ function Links() {
           <li
             className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
           >
-            <HashLink smooth to="/#about">
+            <HashLink
+              className="w-full h-full flex items-center"
+              smooth
+              to="/#about"
+            >
               <div className="flex justify-center lg:hidden w-full">
                 <IoMdInformationCircle className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
@@ -53,7 +61,11 @@ function Links() {
           <li
             className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
           >
-            <HashLink smooth to="/#teachers">
+            <HashLink
+              className="w-full h-full flex items-center"
+              smooth
+              to="/#teachers"
+            >
               <div className=" lg:hidden w-full flex justify-center">
                 <FaChalkboardTeacher className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
@@ -63,7 +75,11 @@ function Links() {
           <li
             className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
           >
-            <HashLink smooth to="/#contact">
+            <HashLink
+              className="w-full h-full flex items-center"
+              smooth
+              to="/#contact"
+            >
               <div className="lg:hidden w-full flex justify-center">
                 <FaRegMessage className="w-6 h-6 sm:w-8 sm:h-8 " />
               </div>
@@ -75,7 +91,7 @@ function Links() {
           >
             <button
               onClick={() => setMobileMenu(!mobileMenu)}
-              className="block mx-auto"
+              className="block mx-auto w-full h-full cursor-pointer"
             >
               <div className="lg:hidden w-full flex justify-center">
                 <RxGear className="w-6 h-6 sm:w-8 sm:h-8 " />
@@ -179,7 +195,10 @@ function Links() {
                 تسجيل الدخول
               </button>
             </Link>
-            <HashLink to={"/register?mode=signup"}>
+            <HashLink
+              className="w-full h-full flex items-center"
+              to={"/register?mode=signup"}
+            >
               <div className="block lg:hidden">
                 <LiaUserPlusSolid className="w-12 h-12 text-bold pb-2 border-white text-[#9F8565] hover:text-[#8a7762] transition-colors " />
               </div>
