@@ -31,7 +31,7 @@ function Links() {
       <div className="flex w-full md:w-auto h-full flex-wrap items-center justify-between md:flex-col  md:py-4 gap-6">
         <ul className="flex md:flex-col w-full md:h-auto h-full md:w-auto items-center justify-around md:gap-4">
           <li
-            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 md:hover:bg-transparent hover:bg-[#2f534c]`}
           >
             <HashLink
               className="w-full h-full flex items-center"
@@ -45,7 +45,7 @@ function Links() {
             </HashLink>
           </li>
           <li
-            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c] md:hover:bg-transparent`}
           >
             <HashLink
               className="w-full h-full flex items-center"
@@ -59,7 +59,7 @@ function Links() {
             </HashLink>
           </li>
           <li
-            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c] md:hover:bg-transparent`}
           >
             <HashLink
               className="w-full h-full flex items-center"
@@ -73,7 +73,7 @@ function Links() {
             </HashLink>
           </li>
           <li
-            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 md:hover:bg-transparent hover:bg-[#2f534c]`}
           >
             <HashLink
               className="w-full h-full flex items-center"
@@ -87,7 +87,7 @@ function Links() {
             </HashLink>
           </li>
           <li
-            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 hover:bg-[#2f534c]`}
+            className={`lg:w-auto w-full flex items-center h-full md:h-auto justify-center text-[#fff] text-2xl font-medium md:pb-2 md:hover:bg-transparent hover:bg-[#2f534c]`}
           >
             <button
               onClick={() => setMobileMenu(!mobileMenu)}
