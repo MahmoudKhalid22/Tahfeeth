@@ -6,7 +6,6 @@ function Card({
   name,
   role,
   professional,
-  avatar,
   price,
   id,
   information,
@@ -45,7 +44,7 @@ function Card({
       <div className="flex flex-col bg-white shadow-lg w-[80%] sm:w-52 h-80 py-8 items-center justify-between">
         <div className="sm:w-32 sm:h-32 w-28 h-28 rounded-full flex items-center justify-center shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
           <img
-            src={avatar ? avatar : "/assets/dummyImage.jpg"}
+            src={"/assets/dummyImage.jpg"}
             alt={name}
             className="rounded-full w-full h-full object-cover"
           />

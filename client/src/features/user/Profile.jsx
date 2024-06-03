@@ -5,19 +5,13 @@ import { AuthContext } from "../../utils/context";
 import BadRequest from "../../ui/utils/BadRequest";
 import { useAvatar, useUser } from "./useUser";
 import Cookies from "js-cookie";
-import { QueryClient } from "@tanstack/react-query";
 
 function Profile() {
   const { isLogin } = useContext(AuthContext);
   const token = Cookies.get("accessToken");
-  const queryClient = new QueryClient();
-
-  // const cachedData = queryClient.getQueryData("users");
-
-  // console.log(cachedData);
 
   let { isPending, data, error } = useUser(token);
-  const { isPendingAvatar, avatar, avatarErr } = useAvatar(token);
+  const { isPendingAvatar, avatar } = useAvatar(token);
   data = data ? data[0] : null;
 
   if (!isLogin) {
@@ -36,7 +30,7 @@ function Profile() {
         <div className="w-full absolute left-0 flex flex-col items-center justify-center gap-2 sm:gap-4">
           <img
             src={avatar ? avatar : "/assets/dummyImage.jpg"}
-            alt={data.name}
+            alt={isPendingAvatar ? "تحميل" : data.name}
             className="rounded-full w-40 h-40 object-cover "
           />
           <p className="text-center text-xl sm:text-3xl text-[#43766C]">
@@ -45,7 +39,7 @@ function Profile() {
           <p className="text-center text-xl sm:text-3xl text-[#43766C]">
             {data.role === "teacher"
               ? "معلم"
-              : data.user?.role === "student"
+              : data?.role === "student"
               ? "طالب"
               : "مدير"}
           </p>

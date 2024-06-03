@@ -1,9 +1,9 @@
 import { QueryClient, useMutation } from "@tanstack/react-query";
-import { logoutUser as logoutUserApi } from "../../services/userApi";
 import { useContext } from "react";
 import { AuthContext } from "../../utils/context";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export function useLogout() {
   const queryClient = new QueryClient();
@@ -13,17 +13,19 @@ export function useLogout() {
   const navigate = useNavigate();
 
   const { isPending, mutate: logoutUser } = useMutation({
-    mutationFn: logoutUserApi,
+    mutationFn: () => Cookies.remove("accessToken"),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["users"],
-      });
+      queryClient.invalidateQueries("users");
+
       setIsLogin(false);
+
       toast.success("you logged out");
+
       navigate("/");
+      window.location.reload();
     },
-    onError: () => {
-      toast.error("some error occured, try again later");
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
   return { isPending, logoutUser };

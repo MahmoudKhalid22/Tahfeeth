@@ -38,17 +38,25 @@ async function loginUserApi(data) {
   }
 }
 
-async function logoutUser() {
+function logoutUserApi() {
   Cookies.remove("accessToken");
 }
 
 async function getUser(accessToken) {
-  const res = await axios.get("https://tahfeeth-system.onrender.com/user/me", {
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-  });
-  return res.data;
+  try {
+    const res = await axios.get(
+      "https://tahfeeth-system.onrender.com/user/me",
+      {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    throw new Error("خطأ داخلي");
+  }
 }
 
 async function getAvatar(token) {
@@ -65,4 +73,4 @@ async function getAvatar(token) {
   } catch (err) {}
 }
 
-export { newUser, loginUserApi, logoutUser, getAvatar, getUser };
+export { newUser, loginUserApi, logoutUserApi, getAvatar, getUser };

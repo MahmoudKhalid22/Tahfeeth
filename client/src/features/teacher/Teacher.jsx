@@ -3,6 +3,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 import StudentCard from "../../components/StudentCard";
 import Spinner from "../../ui/utils/Spinner";
 import { useTeacher } from "./useTeacher";
+import { useGetStudents } from "../settings/useGetStudents";
+import Cookies from "js-cookie";
 
 const data = JSON.parse(localStorage.getItem("data"));
 const adminToken = data?.user?.role === "admin" ? data?.accessToken : null;
@@ -16,14 +18,9 @@ const Teacher = () => {
 
   const isAdmin = search.get("admin");
 
-  const [loading, setLoading] = useState(false);
   const [loadingJoin, setLoadingJoin] = useState(false);
   const [errJoin, setErrJoin] = useState(false);
-  // const [error, setError] = useState("");
-  // STUDENTS
-  const [stds, setStds] = useState([]);
-  const [loadingStd, setLoadingStd] = useState(false);
-  const [errStd, setErrStd] = useState(false);
+  const [stdDisplay, setStdDisplay] = useState(false);
 
   const [message, setMessage] = useState("");
 
@@ -55,27 +52,12 @@ const Teacher = () => {
     }
   };
 
-  const getStudents = async () => {
-    try {
-      setLoadingStd(true);
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/students/" + id,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + adminToken,
-          },
-        }
-      );
-      const students = await response.json();
-      setStds(students.students);
-    } catch (err) {
-      setErrStd(true);
-    } finally {
-      setLoadingStd(false);
-    }
-  };
+  const {
+    isPending: isPendingStd,
+    data: students,
+    error: stdErr,
+  } = useGetStudents(id, Cookies.get("accessToken"));
+
   return (
     <div className="w-full mb-[11.5] md:mb-0 md:w-[75%]  absolute left-0 h-full mt-8">
       {error ? (
@@ -129,7 +111,7 @@ const Teacher = () => {
             <>
               <button
                 className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors text-white text-md sm:text-lg py-1 px-2 rounded-md"
-                onClick={getStudents}
+                onClick={() => setStdDisplay(!stdDisplay)}
               >
                 عرض الطلاب
               </button>
@@ -138,16 +120,17 @@ const Teacher = () => {
                   لا يوجد طلاب حتى الآن
                 </p>
               )}
-              {loadingStd ? (
+              {isPendingStd ? (
                 <Spinner />
-              ) : errStd ? (
+              ) : stdErr ? (
                 <p className="text-red-600 font-semibold text-2xl">
                   حدث بعض الخطأ
                 </p>
               ) : (
-                stds && (
+                stdDisplay &&
+                students && (
                   <div className="flex gap-4 flex-wrap">
-                    {stds?.map((student) => (
+                    {students?.map((student) => (
                       <StudentCard key={student?._id} student={student} />
                     ))}
                   </div>

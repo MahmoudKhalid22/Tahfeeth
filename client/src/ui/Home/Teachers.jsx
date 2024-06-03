@@ -1,18 +1,11 @@
 import React from "react";
 import Card from "../../features/teacher/Card";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getTeachers } from "../../services/allowedApi";
+
+import { useGetTeachers } from "../../features/settings/useGetTeachers";
 
 function Teachers() {
-  const {
-    isPending,
-    data: teachers,
-    error,
-  } = useQuery({
-    queryKey: ["teachers"],
-    queryFn: getTeachers,
-  });
+  const { isPending, data: teachers, error } = useGetTeachers();
 
   return (
     <div id="teachers" className="py-8 ">

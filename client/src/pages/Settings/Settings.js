@@ -9,12 +9,8 @@ import { AuthContext } from "../../utils/context";
 import BadRequest from "../../ui/utils/BadRequest";
 import { useUser } from "../../features/user/useUser";
 import Cookies from "js-cookie";
-
-const data = JSON.parse(localStorage.getItem("data"));
-
-const adminToken = data?.user?.role === "admin" ? data.accessToken : null;
-const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
-// const studentToken = data?.user?.role === "student" ? data.accessToken : null;
+import { useGetTeachers } from "../../features/settings/useGetTeachers";
+import { useGetStudents } from "../../features/settings/useGetStudents";
 
 const initialState = {
   showTeacherForm: false,
@@ -32,12 +28,6 @@ const reducer = (state, action) => {
       return { ...state, showStudentForm: !state.showStudentForm };
     case "allTeachers":
       return { ...state, info: !state.info };
-    case "dataLoading":
-      return { ...state, loading: true };
-    case "teachers":
-      return { ...state, teachers: action.payload };
-    case "students":
-      return { ...state, students: action.payload };
     default:
       break;
   }
@@ -46,10 +36,6 @@ const reducer = (state, action) => {
 const Settings = () => {
   const [show, setShow] = useState(false);
   const [formUpdate, setFormUpdate] = useState(false);
-  // const [userData, setUserData] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  // const [loadingData, setLoadingData] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -80,57 +66,59 @@ const Settings = () => {
   // };
 
   const token = Cookies.get("accessToken");
-  let { isPending, data: userData, error: errorInfo } = useUser(token);
-  userData = userData[0];
 
-  const getTeachers = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/admin/teachers",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + adminToken,
-          },
-        }
-      );
-      const result = await response.json();
-      dispatch({ type: "teachers", payload: result });
-    } catch (err) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const getStudents = async () => {
-    try {
-      const isTeacher = data?.user?.role === "teacher";
-      let id;
-      if (isTeacher) id = data.user._id;
-      setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/students/" + id,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + teacherToken,
-          },
-        }
-      );
-      const students = await response.json();
-      if (!response.ok) {
-        throw new Error(students);
-      }
-      dispatch({ type: "students", payload: students?.students });
-    } catch (err) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // get user info
+  let { isPending, data: userData, error: errorInfo } = useUser(token);
+  console.log(userData);
+  userData = userData ? userData[0] : null;
+
+  // get teacher info
+  const {
+    isPending: isPendingTeachers,
+    data: teachers,
+    error: errTeachers,
+  } = useGetTeachers();
+
+  // get students
+  let teacherId;
+  const isTeacher = userData?.role === "teacher";
+  if (isTeacher) teacherId = userData?._id;
+  const {
+    isPending: isPendingStd,
+    data: students,
+    error: stdErr,
+  } = useGetStudents(teacherId, token);
+
+  const adminToken = userData?.role === "admin" ? token : null;
+  const teacherToken = userData?.role === "teacher" ? token : null;
+
+  // const getStudents = async () => {
+  //   try {
+  //     const isTeacher = userData?.role === "teacher";
+  //     let id;
+  //     if (isTeacher) id = userData._id;
+  //     setLoading(true);
+  //     const response = await fetch(
+  //       "https://tahfeeth-production.up.railway.app/user/students/" + id,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: "Bearer " + teacherToken,
+  //         },
+  //       }
+  //     );
+  //     const students = await response.json();
+  //     if (!response.ok) {
+  //       throw new Error(students);
+  //     }
+  //     dispatch({ type: "students", payload: students?.students });
+  //   } catch (err) {
+  //     setError(true);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   if (!isLogin) {
     return <BadRequest />;
@@ -145,30 +133,29 @@ const Settings = () => {
               <button
                 className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg"
                 onClick={() => {
-                  getTeachers();
+                  // getTeachers();
                   dispatch({ type: "allTeachers" });
                 }}
               >
                 عرض كل المعلمين
               </button>
-              {error ? (
+              {errTeachers ? (
                 <p className="text-red-600 font-semibold text-2xl mt-6">
                   حدث بعض الخطأ
                 </p>
-              ) : loading ? (
+              ) : isPendingTeachers ? (
                 <div className="w-16 mt-4">
                   <Spinner />
                 </div>
               ) : (
                 state.info && (
                   <div className="flex gap-6 flex-wrap mt-4">
-                    {state.teachers?.map((user) => (
+                    {teachers?.map((user) => (
                       <Card
                         key={user?._id}
                         name={user?.name}
                         role={user?.role}
                         professional={user?.professional}
-                        avatar={user?.avatar}
                         price={user?.price}
                         admin={true}
                         id={user?._id}
@@ -210,28 +197,23 @@ const Settings = () => {
         </div>
       )}
 
-      {data?.user?.role === "teacher" && (
+      {userData?.role === "teacher" && (
         <div>
           <div>
             <div>
-              <button
-                className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg"
-                onClick={() => {
-                  getStudents();
-                }}
-              >
+              <button className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg">
                 عرض كل الطلبة
               </button>
               <div className="flex gap-2 w-full flex-wrap ">
-                {loading ? (
+                {isPendingStd ? (
                   <p className="text-xl font-semibold">تحميل...</p>
-                ) : error ? (
+                ) : stdErr ? (
                   <p className="text-red-600 text-xl font-semibold">
                     حدث بعض الخطأ الداخلي.
                   </p>
                 ) : (
-                  state.students.length > 0 &&
-                  state.students.map((student) => (
+                  students.length > 0 &&
+                  students.map((student) => (
                     <StudentCard
                       key={student._id}
                       student={student}
@@ -328,9 +310,7 @@ const Settings = () => {
           تحديث معلومات الحساب
         </Link>
         <div className="mt-6 w-fit border-none">
-          {formUpdate && (
-            <UpdateForm userId={data?.user._id} userToken={data?.accessToken} />
-          )}
+          {formUpdate && <UpdateForm userId={userData._id} userToken={token} />}
         </div>
       </div>
     </div>

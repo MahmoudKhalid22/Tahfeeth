@@ -25,7 +25,7 @@ import useMedia from "./utils/toastQuery";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 86400000,
+      staleTime: Infinity,
     },
   },
 });
