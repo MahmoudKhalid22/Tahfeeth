@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Spinner from "../ui/utils/Spinner";
+import Spinner from "../../ui/utils/Spinner";
 
 const StudentCard = ({ student, teacherToken }) => {
   const [error, setError] = useState(false);
@@ -62,7 +62,7 @@ const StudentCard = ({ student, teacherToken }) => {
           className="px-3 py-2 text-lg font-medium text-white bg-[#b84040] hover:bg-[#c92a2a] focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors "
           onClick={fireStd}
         >
-          طرد
+          حظر
         </button>
       </div>
       {loading && <Spinner />}

@@ -66,12 +66,6 @@ function Card({
               <button className="text-sm bg-[#9F8565] hover:bg-[#9F8565] transition-colors mt-4 text-white sm:text-md py-1 px-2">
                 حظر
               </button>
-              <button
-                className="text-sm bg-red-700 hover:bg-red-800 transition-colors mt-4 text-white sm:text-md py-1 px-2"
-                onClick={deleteTeacher}
-              >
-                حذف
-              </button>
             </div>
           ) : (
             <Link

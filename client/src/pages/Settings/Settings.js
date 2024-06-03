@@ -1,7 +1,7 @@
 import React, { useContext, useReducer, useState } from "react";
-import UpdateForm from "../../components/UpdateForm";
-import AddUserForm from "../../components/AddUserForm";
-import StudentCard from "../../components/StudentCard";
+import UpdateForm from "../../features/auth/UpdateForm";
+import AddUserForm from "../../features/teacher/AddUserForm";
+import StudentCard from "../../features/teacher/StudentCard";
 import { Link } from "react-router-dom";
 import Spinner from "../../ui/utils/Spinner";
 import Card from "../../features/teacher/Card";
@@ -15,10 +15,7 @@ import { useGetStudents } from "../../features/settings/useGetStudents";
 const initialState = {
   showTeacherForm: false,
   showStudentForm: false,
-  info: false,
-  loading: false,
-  teachers: [],
-  students: [],
+  stdShow: false,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -28,6 +25,8 @@ const reducer = (state, action) => {
       return { ...state, showStudentForm: !state.showStudentForm };
     case "allTeachers":
       return { ...state, info: !state.info };
+    case "displayStudents":
+      return { ...state, stdShow: !state.stdShow };
     default:
       break;
   }
@@ -126,6 +125,7 @@ const Settings = () => {
   return (
     <div className="md:w-[80%] w-full mr-4 mb-[11.5rem] md:mb-0 mt-16">
       {/* ADMIN DASHBOARD */}
+      {isPending && <Spinner />}
       {userData?.role === "admin" && (
         <div className="text-2xl ">
           <div className="flex flex-col gap-6">
@@ -149,7 +149,7 @@ const Settings = () => {
                 </div>
               ) : (
                 state.info && (
-                  <div className="flex gap-6 flex-wrap mt-4">
+                  <div className="flex gap-6 flex-wrap mt-4 md:justify-start justify-center">
                     {teachers?.map((user) => (
                       <Card
                         key={user?._id}
@@ -201,27 +201,32 @@ const Settings = () => {
         <div>
           <div>
             <div>
-              <button className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg">
+              <button
+                className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg"
+                onClick={() => dispatch({ type: "displayStudents" })}
+              >
                 عرض كل الطلبة
               </button>
-              <div className="flex gap-2 w-full flex-wrap ">
-                {isPendingStd ? (
-                  <p className="text-xl font-semibold">تحميل...</p>
-                ) : stdErr ? (
-                  <p className="text-red-600 text-xl font-semibold">
-                    حدث بعض الخطأ الداخلي.
-                  </p>
-                ) : (
-                  students.length > 0 &&
-                  students.map((student) => (
-                    <StudentCard
-                      key={student._id}
-                      student={student}
-                      teacherToken={teacherToken}
-                    />
-                  ))
-                )}
-              </div>
+              {state.stdShow && (
+                <div className="flex gap-2 w-full flex-wrap ">
+                  {isPendingStd ? (
+                    <p className="text-xl font-semibold">تحميل...</p>
+                  ) : stdErr ? (
+                    <p className="text-red-600 text-xl font-semibold">
+                      حدث بعض الخطأ الداخلي.
+                    </p>
+                  ) : (
+                    students.length > 0 &&
+                    students.map((student) => (
+                      <StudentCard
+                        key={student._id}
+                        student={student}
+                        teacherToken={teacherToken}
+                      />
+                    ))
+                  )}
+                </div>
+              )}
             </div>
             <div>
               <button

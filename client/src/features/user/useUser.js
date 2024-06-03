@@ -6,14 +6,11 @@ function useUser(token) {
   const { isPending, data, error } = useQuery({
     queryKey: ["users"],
     queryFn: () => getUser(token),
-    onSuccess: () => {
-      console.log(data);
-    },
+    onSuccess: () => {},
     onError: () => {
       toast.error("حدث بعض الخطأ");
     },
   });
-  console.log(data);
 
   return { isPending, data, error };
 }

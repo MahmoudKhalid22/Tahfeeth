@@ -250,7 +250,7 @@ justify-center flex-col gap-6 p-4 ${
         </button>
         <p className="flex flex-col  text-center md:flex-row text-[#2b2121] md:text-[#43766C]">
           {isLogin ? (
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <span>ليس لديك حساب بعد</span>
               <Link to="/register?mode=signup" className="underline">
                 سجل حساب جديد الآن{" "}

@@ -52,7 +52,6 @@ async function getUser(accessToken) {
         },
       }
     );
-    console.log(res.data);
     return res.data;
   } catch (err) {
     throw new Error("خطأ داخلي");

@@ -5,15 +5,17 @@ import styles from "./Student.module.css";
 import { RiChatDeleteLine } from "react-icons/ri";
 import Spinner from "../../ui/utils/Spinner";
 import { formatDate } from "../../utils/dateFormat";
+import { useUser } from "../../features/user/useUser";
+import Cookies from "js-cookie";
+import { useGetTable } from "./useTable";
 
 function Student() {
   const { id } = useParams();
-  const [studentData, setStudentData] = useState([]);
   const [showformTable, setShowFormTable] = useState(false);
 
-  const [loadingTables, setLoadingTables] = useState(true);
+  // const [loadingTables, setLoadingTables] = useState(true);
   const [loadingDelMap, setLoadingDelMap] = useState({});
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
   const [tableUser, setTableUser] = useState({
     day: "السبت",
@@ -28,131 +30,42 @@ function Student() {
     owner: "",
   });
 
-  const data = localStorage.getItem("data")
-    ? JSON.parse(localStorage.getItem("data"))
-    : null;
-  const stdToken = data?.user?.role === "student" ? data?.accessToken : null;
-  const teacherToken = data?.user?.role === "teacher" ? data.accessToken : null;
-  // const adminToken = data?.user.role === "admin" ? data.accessToken : null;
+  // const data = localStorage.getItem("data")
+  //   ? JSON.parse(localStorage.getItem("data"))
+  //   : null;
 
-  const stdId = id
-    ? id
-    : data?.user?.role === "student"
-    ? data?.user._id
-    : null;
+  const token = Cookies.get("accessToken");
+  let { isPending, data: userData, error } = useUser(token);
 
-  useEffect(() => {
-    const getTables = async () => {
-      try {
-        setLoadingTables(true);
-        const response = await fetch(
-          "https://tahfeeth-system.onrender.com/table/" + stdId,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + data?.accessToken,
-            },
-          }
-        );
+  userData = userData ? userData[0] : null;
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.log(errorData);
-          throw new Error(errorData.err);
-        }
+  const isStudent = userData?.role === "student";
+  let studentId;
+  if (isStudent) {
+    studentId = userData?._id;
+  } else {
+    studentId = id;
+  }
 
-        const tables = await response.json();
-        setStudentData(tables);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoadingTables(false);
-      }
-    };
-    getTables();
-  }, [data?.accessToken, stdId, stdToken]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(
-        "https://tahfeeth-system.onrender.com/table/create-table",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + teacherToken,
-          },
-          body: JSON.stringify({
-            day: tableUser.day,
-            quantity: tableUser.quantity,
-            level: tableUser.level,
-            tasks: tableUser.tasks,
-            completed: tableUser.completed,
-            questions: tableUser.questions,
-            answers: tableUser.answers,
-            notes: tableUser.notes,
-            rate: tableUser.rate,
-            ownerId: id,
-          }),
-        }
-      );
-      if (!res.ok) {
-        throw new Error(await res.json());
-      }
-      setTableUser({
-        day: "السبت",
-        quantity: "",
-        level: "مقبول",
-        tasks: "",
-        completed: false,
-        questions: "",
-        answers: 0,
-        notes: "",
-        rate: "",
-        owner: "",
-      });
-
-      const d = await res.json();
-      setStudentData([...studentData, d]);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
-  const deleteTable = async (id) => {
-    // console.log(id);
-    try {
-      setLoadingDelMap({ ...loadingDelMap, [id]: true });
-      await fetch("https://tahfeeth-system.onrender.com/table/" + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + teacherToken,
-        },
-      });
-      setStudentData((prev) => prev.filter((table) => table._id !== id));
-    } catch (err) {
-      console.log(err.message);
-    } finally {
-      setLoadingDelMap({ ...loadingDelMap, [id]: false });
-    }
-  };
+  const {
+    isPending: isPendingTable,
+    data: tablesData,
+    error: errorData,
+  } = useGetTable(token, studentId);
 
   return (
-    <div className="w-full mb-[11.5rem] md:mb-0 md:w-[80%] absolute left-0">
+    <div className="w-full mb-[11.5rem] md:mb-0 md:w-[75%] absolute left-0">
       <h2 className="text-xl font-semibold text-[#43766C] text-center mt-12">
         جدول المتابعة
       </h2>
 
       <div className={styles.container}>
-        {data?.user.role === "teacher" && (
+        {userData?.role === "teacher" && (
           <button>
             <Link to="/details">العودة للصفحة الرئيسية</Link>
           </button>
         )}
-        {loadingTables ? (
+        {isPendingTable ? (
           <h4 className="loading loading-details">تحميل ...</h4>
         ) : (
           <div className={styles.tableContainer}>
@@ -170,9 +83,9 @@ function Student() {
                   <th>التقييم</th>
                 </tr>
               </thead>
-              {studentData.length > 0 && (
+              {tablesData?.length > 0 && (
                 <tbody>
-                  {studentData?.map((std) => (
+                  {tablesData?.map((std) => (
                     <tr key={std._id}>
                       <td>
                         <p>{std.day}</p>
@@ -193,7 +106,7 @@ function Student() {
                       ) : (
                         <td
                           className={styles.delete}
-                          onClick={() => deleteTable(std._id)}
+                          // onClick={() => deleteTable(std._id)}
                         >
                           <RiChatDeleteLine />
                         </td>
@@ -205,13 +118,16 @@ function Student() {
             </table>
           </div>
         )}
-        {data?.user.role === "teacher" && (
+        {userData?.role === "teacher" && (
           <button onClick={() => setShowFormTable((prev) => !prev)}>
             إضافة جدول
           </button>
         )}
         {showformTable && (
-          <form className={`${styles.addTable}`} onSubmit={handleSubmit}>
+          <form
+            className={`${styles.addTable}`}
+            // onSubmit={handleSubmit}
+          >
             <select
               name="day"
               id="day"
