@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Card from "../../components/Teacher/Card";
+import React from "react";
+import Card from "../../features/teacher/Card";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import getTeachers from "../../services/allowedApi";
+import { getTeachers } from "../../services/allowedApi";
 
 function Teachers() {
   const {

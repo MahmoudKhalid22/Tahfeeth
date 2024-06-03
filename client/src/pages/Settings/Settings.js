@@ -4,9 +4,11 @@ import AddUserForm from "../../components/AddUserForm";
 import StudentCard from "../../components/StudentCard";
 import { Link } from "react-router-dom";
 import Spinner from "../../ui/utils/Spinner";
-import Card from "../../components/Teacher/Card";
+import Card from "../../features/teacher/Card";
 import { AuthContext } from "../../utils/context";
 import BadRequest from "../../ui/utils/BadRequest";
+import { useUser } from "../../features/user/useUser";
+import Cookies from "js-cookie";
 
 const data = JSON.parse(localStorage.getItem("data"));
 
@@ -44,38 +46,43 @@ const reducer = (state, action) => {
 const Settings = () => {
   const [show, setShow] = useState(false);
   const [formUpdate, setFormUpdate] = useState(false);
-  const [userData, setUserData] = useState([]);
+  // const [userData, setUserData] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [loadingData, setLoadingData] = useState(false);
+  // const [loadingData, setLoadingData] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { isLogin } = useContext(AuthContext);
-  const getData = async () => {
-    try {
-      setLoadingData(true);
-      const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/me",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + data?.accessToken,
-          },
-        }
-      );
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(await response.json());
-      }
-      setUserData(result);
-    } catch (err) {
-      setError(true);
-    } finally {
-      setLoadingData(false);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     setLoadingData(true);
+  //     const response = await fetch(
+  //       "https://tahfeeth-production.up.railway.app/user/me",
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: "Bearer " + data?.accessToken,
+  //         },
+  //       }
+  //     );
+  //     const result = await response.json();
+  //     if (!response.ok) {
+  //       throw new Error(await response.json());
+  //     }
+  //     setUserData(result);
+  //   } catch (err) {
+  //     setError(true);
+  //   } finally {
+  //     setLoadingData(false);
+  //   }
+  // };
+
+  const token = Cookies.get("accessToken");
+  let { isPending, data: userData, error: errorInfo } = useUser(token);
+  userData = userData[0];
+
   const getTeachers = async () => {
     try {
       setLoading(true);
@@ -131,7 +138,7 @@ const Settings = () => {
   return (
     <div className="md:w-[80%] w-full mr-4 mb-[11.5rem] md:mb-0 mt-16">
       {/* ADMIN DASHBOARD */}
-      {data?.user?.role === "admin" && (
+      {userData?.role === "admin" && (
         <div className="text-2xl ">
           <div className="flex flex-col gap-6">
             <div>
@@ -252,35 +259,35 @@ const Settings = () => {
           className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg"
           onClick={() => {
             setShow(!show);
-            getData();
+            // getData();
           }}
         >
           معلومات الحساب
         </button>
         {show && (
           <div>
-            {loadingData ? (
+            {isPending ? (
               <Spinner />
-            ) : error ? (
+            ) : errorInfo ? (
               <p>حدث بعض الخطأ</p>
             ) : userData ? (
               <div
-                key={userData[0]?._id}
+                key={userData?._id}
                 className="flex flex-col gap-4 border-2 border-[#43655c] py-4 px-6 w-fit justify-end items-start mt-6"
               >
                 <div className="flex flex-row-reverse gap-8">
-                  <p id="email">{userData[0]?.email}</p>
+                  <p id="email">{userData?.email}</p>
                   <label>البريد الإلكتروني</label>
                 </div>
                 <div className="flex flex-row-reverse gap-8">
-                  <p id="email">{userData[0]?.name}</p>
+                  <p id="email">{userData?.name}</p>
                   <label>الاسم</label>
                 </div>
                 <div className="flex flex-row-reverse gap-8">
                   <p id="email">
-                    {userData[0]?.role === "teacher"
+                    {userData?.role === "teacher"
                       ? "معلم"
-                      : userData[0]?.role === "student"
+                      : userData?.role === "student"
                       ? "طالب"
                       : "مدير"}
                   </p>
@@ -288,9 +295,9 @@ const Settings = () => {
                 </div>
                 <div className="flex flex-row-reverse gap-8">
                   <p id="email">
-                    {userData[0]?.status === "pending"
+                    {userData?.status === "pending"
                       ? "في الانتظار"
-                      : userData[0]?.status === "block"
+                      : userData?.status === "block"
                       ? "محظور"
                       : "نشط"}
                   </p>
@@ -298,7 +305,7 @@ const Settings = () => {
                 </div>
                 <div className="flex flex-row-reverse gap-8">
                   <p id="email">
-                    {userData[0]?.professional ? "مجاز" : "غير مجاز"}
+                    {userData?.professional ? "مجاز" : "غير مجاز"}
                   </p>
                   <label>حالة الإجازة</label>
                 </div>

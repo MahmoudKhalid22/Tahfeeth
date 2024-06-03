@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 function Verification() {
   return (
-    <div className="">
-      <h2 className="text-4xl font-semibold mt-36 leading-loose overflow-hidden">
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h2 className="text-4xl text-center font-medium px-6 leading-loose overflow-hidden">
         من فضلك تفقد بريدك الإلكتروني لتفعيل الحساب وعد لتسجيل الدخول
       </h2>
       <Link to={"/register?mode=login"}>

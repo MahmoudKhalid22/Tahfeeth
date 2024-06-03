@@ -1,11 +1,14 @@
 // utils/authContext.js
+import Cookies from "js-cookie";
 import React, { createContext, useState } from "react";
 
 // Create a context with default value false (not logged in)
-const data = JSON.parse(localStorage.getItem("data"));
-const status = data ? true : false;
 
-console.log(status);
+const accessToken = Cookies.get("accessToken");
+let status = false;
+if (accessToken) {
+  status = true;
+}
 
 export const AuthContext = createContext({
   isLogin: status,

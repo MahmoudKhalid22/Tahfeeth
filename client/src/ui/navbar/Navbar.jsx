@@ -1,8 +1,8 @@
 import React from "react";
 import Links from "./Links";
 
-function Navbar({ isLogin, onSetIsLogin }) {
-  return <Links isLogin={isLogin} onSetIsLogin={onSetIsLogin} />;
+function Navbar() {
+  return <Links />;
 }
 
 export default Navbar;

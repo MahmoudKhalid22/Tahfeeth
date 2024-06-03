@@ -32,7 +32,6 @@ function NewUser({ isLogin, role }) {
   };
 
   const submitLogin = (data) => {
-    console.log(data);
     loginUser({
       email: data["email-1"],
       password: data["pass-1"],

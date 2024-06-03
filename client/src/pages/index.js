@@ -8,6 +8,7 @@ import Verification from "./Verification";
 import Verified from "./Verified";
 import RedirectPage from "./redirectedPage";
 import ForgetPassword from "./ForgetPassword";
+import ProfilePage from "./Details/Profile";
 
 export {
   Register,
@@ -20,4 +21,5 @@ export {
   Verified,
   RedirectPage,
   ForgetPassword,
+  ProfilePage,
 };

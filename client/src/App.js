@@ -4,8 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
 import "react-image-crop/dist/ReactCrop.css";
-import Details from "./components/Details";
-import Teacher from "./components/Teacher/Teacher";
 import { AppLayout, Home } from "./ui/index";
 import {
   Register,
@@ -18,11 +16,19 @@ import {
   ForgetPassword,
   RedirectPage,
   ResetPasswordForm,
+  ProfilePage,
 } from "./pages/index";
+import Teacher from "./features/teacher/Teacher";
 import { AuthProvider } from "./utils/context";
 import useMedia from "./utils/toastQuery";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 86400000,
+    },
+  },
+});
 
 function App() {
   const bigScreen = useMedia("(min-width: 768px)");
@@ -37,7 +43,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/verify" element={<Verification />} />
               <Route path="/verified" element={<Verified />} />
-              <Route path="/details" element={<Details />} />
+              <Route path="/details" element={<ProfilePage />} />
               <Route path="/register" element={<Register />} />
               <Route path="/details/:id" element={<Student />} />
               <Route path="/teacher/:id" element={<Teacher />} />

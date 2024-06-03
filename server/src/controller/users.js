@@ -104,12 +104,12 @@ const loginUser = async (req, res) => {
     );
 
     if (!user) {
-      return res.status(404).send({ message: "invalid credentials" });
+      return res.status(404).send({ message: "معلومات خاطئة" });
     }
 
     const accessToken = await user.createAuthToken();
     const refreshToken = await user.createRefreshToken();
-    res.send({ user, accessToken, refreshToken });
+    res.send({ accessToken, refreshToken });
   } catch (error) {
     res.status(401).send({ message: error.message });
   }

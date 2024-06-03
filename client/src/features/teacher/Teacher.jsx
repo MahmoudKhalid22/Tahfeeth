@@ -1,49 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import StudentCard from "../StudentCard";
+import StudentCard from "../../components/StudentCard";
 import Spinner from "../../ui/utils/Spinner";
+import { useTeacher } from "./useTeacher";
 
 const data = JSON.parse(localStorage.getItem("data"));
 const adminToken = data?.user?.role === "admin" ? data?.accessToken : null;
 
 const Teacher = () => {
   const { id } = useParams();
+
+  const { isPending, data: teacherData, error } = useTeacher(id);
+
   const [search] = useSearchParams();
+
   const isAdmin = search.get("admin");
 
-  const [teacherData, setTeacherData] = useState({});
   const [loading, setLoading] = useState(false);
   const [loadingJoin, setLoadingJoin] = useState(false);
   const [errJoin, setErrJoin] = useState(false);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   // STUDENTS
   const [stds, setStds] = useState([]);
   const [loadingStd, setLoadingStd] = useState(false);
   const [errStd, setErrStd] = useState(false);
 
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    const getOneTeacher = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          "https://tahfeeth-system.onrender.com/user/teacher/" + id
-        );
-        if (!response.ok) {
-          throw new Error();
-        }
-
-        const result = await response.json();
-        setTeacherData(result);
-      } catch (err) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getOneTeacher();
-  }, [id]);
 
   const joinToTeacher = async () => {
     try {
@@ -95,12 +77,12 @@ const Teacher = () => {
     }
   };
   return (
-    <div className="w-full mb-[11.5] md:mb-0 md:w-[80%] absolute left-0 h-full mt-8">
+    <div className="w-full mb-[11.5] md:mb-0 md:w-[75%]  absolute left-0 h-full mt-8">
       {error ? (
         <p className="text-red-600 font-semibold text-2xl w-full mx-auto text-center">
           حدث بعض الخطأ
         </p>
-      ) : loading ? (
+      ) : isPending ? (
         <p className="text-slate-600 font-semibold text-2xl w-full mx-auto text-center">
           تحميل...
         </p>

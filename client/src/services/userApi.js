@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 async function newUser(data) {
   try {
     const res = await axios.post(
@@ -38,9 +39,30 @@ async function loginUserApi(data) {
 }
 
 async function logoutUser() {
-  localStorage.clear();
+  Cookies.remove("accessToken");
 }
 
-async function getUser() {}
+async function getUser(accessToken) {
+  const res = await axios.get("https://tahfeeth-system.onrender.com/user/me", {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  return res.data;
+}
 
-export { newUser, loginUserApi, logoutUser };
+async function getAvatar(token) {
+  try {
+    const res = await axios.get(
+      "https://tahfeeth-system.onrender.com/user/avatar",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {}
+}
+
+export { newUser, loginUserApi, logoutUser, getAvatar, getUser };

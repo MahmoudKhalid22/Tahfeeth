@@ -1,5 +1,5 @@
 import React from "react";
-import NewUser from "../../features/auth/NewUser";
+import NewUser from "../../features/auth/AuthUser";
 import { useParams, useSearchParams } from "react-router-dom";
 
 function Register({ onSetIsLogin }) {
