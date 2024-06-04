@@ -132,7 +132,7 @@ justify-center flex-col gap-6 p-4 ${
               </Link>
             </div>
           )}
-          {!isLogin && (
+          {/* {!isLogin && (
             <div className=" flex flex-row-reverse w-full justify-between items-start  ">
               <div className="w-full">
                 <select
@@ -160,8 +160,8 @@ justify-center flex-col gap-6 p-4 ${
                 التسجيل كدورك
               </label>
             </div>
-          )}
-          {!isLogin && isTeacher && (
+          )} */}
+          {/* {!isLogin && isTeacher && (
             <>
               <div className=" flex flex-row-reverse w-full justify-center items-start ">
                 <select
@@ -183,9 +183,9 @@ justify-center flex-col gap-6 p-4 ${
                 >
                   هل أنت مجاز
                 </label>
-              </div>
+              </div> */}
 
-              <div className=" flex flex-row-reverse w-full justify-between items-start ">
+          {/* <div className=" flex flex-row-reverse w-full justify-between items-start ">
                 <div className="w-full">
                   <input
                     type="number"
@@ -207,8 +207,8 @@ justify-center flex-col gap-6 p-4 ${
                 >
                   مقدار الأجر الذي تتقاضاه
                 </label>
-              </div>
-              <div className=" flex flex-row-reverse w-full justify-center items-start ">
+              </div> */}
+          {/* <div className=" flex flex-row-reverse w-full justify-center items-start ">
                 <div>
                   <textarea
                     type="number"
@@ -230,9 +230,9 @@ justify-center flex-col gap-6 p-4 ${
                 >
                   معلومات عن كيفية تعليم الطلاب
                 </label>
-              </div>
-            </>
-          )}
+              </div> */}
+          {/* </> */}
+          {/* )} */}
         </div>
         <button
           className="md:py-4 py-2 px-4 md:px-0 bg-[#9F8565] hover:bg-[#8a7762] text-md md:text-2xl text-[#ececec] 
