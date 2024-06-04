@@ -365,9 +365,9 @@ const getTeachers = async (req, res) => {
         professional: teachers[i].professional,
         price: teachers[i].price,
         information: teachers[i].information,
+        avatar: teachers[i].avatar,
       });
     }
-
     res.send(result);
   } catch (err) {
     res.status(500).send({ err: err.message });
