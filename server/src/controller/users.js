@@ -356,10 +356,21 @@ const getOneUser = async (req, res) => {
 const getTeachers = async (req, res) => {
   try {
     const teachers = await getAllTeachers();
+    const result = [];
+    for (let i = 0; i < teachers.length; i++) {
+      result.push({
+        _id: teachers[i]._id,
+        name: teachers[i].name,
+        role: teachers[i].role,
+        professional: teachers[i].professional,
+        price: teachers[i].price,
+        information: teachers[i].information,
+      });
+    }
 
-    res.send(teachers);
+    res.send(result);
   } catch (err) {
-    res.status(500).send({ err });
+    res.status(500).send({ err: err.message });
   }
 };
 

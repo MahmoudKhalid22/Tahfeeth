@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./Student.module.css";
@@ -8,10 +8,13 @@ import { formatDate } from "../../utils/dateFormat";
 import { useUser } from "../../features/user/useUser";
 import Cookies from "js-cookie";
 import { useGetTable } from "./useTable";
+import { AuthContext } from "../../utils/context";
+import BadRequest from "../../ui/utils/BadRequest";
 
 function Student() {
   const { id } = useParams();
   const [showformTable, setShowFormTable] = useState(false);
+  const { isLogin } = useContext(AuthContext);
 
   // const [loadingTables, setLoadingTables] = useState(true);
   const [loadingDelMap, setLoadingDelMap] = useState({});
@@ -52,6 +55,10 @@ function Student() {
     data: tablesData,
     error: errorData,
   } = useGetTable(token, studentId);
+
+  if (!isLogin) {
+    return <BadRequest />;
+  }
 
   return (
     <div className="w-full mb-[11.5rem] md:mb-0 md:w-[75%] absolute left-0">

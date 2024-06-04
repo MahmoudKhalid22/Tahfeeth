@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "./AddUserForm.module.css";
+import Cookies from "js-cookie";
+import { useUser } from "../user/useUser";
 
 function AddUserForm({ role, admin, teachers }) {
   const [name, setName] = useState("");
@@ -14,19 +16,20 @@ function AddUserForm({ role, admin, teachers }) {
   const [professional, setProfessional] = useState(false);
   const [information, setInformation] = useState("");
 
-  const data = localStorage.getItem("data")
-    ? JSON.parse(localStorage.getItem("data"))
-    : null;
+  const tokenA = Cookies.get("accessToken");
 
-  const teacherToken = data?.user.role === "teacher" ? data.accessToken : null;
-  const adminToken = data?.user?.role === "admin" ? data?.accessToken : null;
+  let { data } = useUser(tokenA);
+  data = data[0];
+
+  const teacherToken = data?.role === "teacher" ? tokenA : null;
+  const adminToken = data?.role === "admin" ? tokenA : null;
   const token = teacherToken ? teacherToken : adminToken;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/teacher/signup",
+        "https://tahfeeth-system.onrender.com/user/teacher/signup",
         {
           method: "POST",
           body: JSON.stringify({

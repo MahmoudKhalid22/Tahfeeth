@@ -16,4 +16,20 @@ const getTables = async (token, stdId) => {
   }
 };
 
-export { getTables };
+const addTable = async (token, stdId, body) => {
+  try {
+    const res = await axios.post(
+      "https://tahfeeth-system.onrender.com/table/" + stdId,
+      {
+        body: {},
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+  } catch (err) {
+    throw new Error("حدث بعض الخطأ");
+  }
+};
+
+export { getTables, addTable };
