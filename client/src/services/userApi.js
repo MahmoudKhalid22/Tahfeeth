@@ -17,8 +17,7 @@ async function newUser(data) {
 
     return res.data;
   } catch (err) {
-    console.log(err);
-    throw new Error("couldn't register please try again!");
+    throw new Error(err.response.data.message);
   }
 }
 
@@ -33,7 +32,6 @@ async function loginUserApi(data) {
     );
     return res.data;
   } catch (err) {
-    console.log(err);
     throw new Error(err.response.data.message);
   }
 }
@@ -54,7 +52,7 @@ async function getUser(accessToken) {
     );
     return res.data;
   } catch (err) {
-    throw new Error("خطأ داخلي");
+    throw new Error(err.response.data.message);
   }
 }
 
@@ -69,7 +67,9 @@ async function getAvatar(token) {
       }
     );
     return res.data;
-  } catch (err) {}
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
 }
 
 export { newUser, loginUserApi, logoutUserApi, getAvatar, getUser };

@@ -32,7 +32,7 @@ function useLogin() {
       navigate("/details");
     },
     onError: (err) => {
-      toast.error(err.message);
+      toast.error(err?.message);
     },
   });
 

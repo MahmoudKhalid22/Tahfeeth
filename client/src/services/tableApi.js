@@ -12,7 +12,7 @@ const getTables = async (token, stdId) => {
     );
     return res.data;
   } catch (err) {
-    throw new Error("حدث بعض الخطأ");
+    throw new Error(err.response.data.message);
   }
 };
 
@@ -28,7 +28,7 @@ const addTable = async (token, stdId, body) => {
       }
     );
   } catch (err) {
-    throw new Error("حدث بعض الخطأ");
+    throw new Error(err.response.data.message);
   }
 };
 
