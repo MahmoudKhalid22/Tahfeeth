@@ -90,7 +90,7 @@ const deleteItem = async (req, res) => {
       if (!task) return res.status(404).send({ error: "Item is not found" });
       res.send({ message: "Item has been deleted" });
     } else {
-      res.status(400).send("You're not a teacher");
+      res.status(400).send({ err: "You're not a teacher" });
     }
   } catch (err) {
     res.status(500).send({ err: err.message });

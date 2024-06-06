@@ -12,6 +12,7 @@ function useAddTable() {
         queryKey: ["tables"],
       });
       toast.success("تمت إضافة الجدول بنجاح");
+      window.location.reload();
     },
     onError: () => {
       toast.error("حدث بعض الخطأ");

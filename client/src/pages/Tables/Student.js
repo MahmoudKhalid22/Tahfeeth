@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./Student.module.css";
@@ -12,6 +12,7 @@ import { AuthContext } from "../../utils/context";
 import BadRequest from "../../ui/utils/BadRequest";
 import { useAddStudent } from "../../features/teacher/useAddStudent";
 import { useAddTable } from "./useAddTable";
+import useDeleteTable from "./useDeleteTable";
 
 function Student() {
   const { id } = useParams();
@@ -75,6 +76,9 @@ function Student() {
       studentId: id,
     });
   };
+
+  const { isDeletingTable, deleteTable } = useDeleteTable();
+
   if (!isLogin) {
     return <BadRequest />;
   }
@@ -133,7 +137,9 @@ function Student() {
                         !isStudent && (
                           <td
                             className={styles.delete}
-                            // onClick={() => deleteTable(std._id)}
+                            onClick={() =>
+                              deleteTable({ teacherToken, tableId: std._id })
+                            }
                           >
                             <RiChatDeleteLine />
                           </td>

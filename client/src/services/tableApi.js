@@ -38,4 +38,22 @@ const addTable = async (data) => {
   }
 };
 
-export { getTables, addTable };
+const deleteTable = async (data) => {
+  try {
+    console.log(data);
+    const res = await axios.delete(
+      "https://tahfeeth-system.onrender.com/table/" + data?.tableId,
+      {
+        headers: {
+          Authorization: "Bearer " + data?.teacherToken,
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err.response.data.message);
+  }
+};
+
+export { getTables, addTable, deleteTable };

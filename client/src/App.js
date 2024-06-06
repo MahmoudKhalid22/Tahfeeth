@@ -22,13 +22,7 @@ import Teacher from "./features/teacher/Teacher";
 import { AuthProvider } from "./utils/context";
 import useMedia from "./utils/toastQuery";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 function App() {
   const bigScreen = useMedia("(min-width: 768px)");
