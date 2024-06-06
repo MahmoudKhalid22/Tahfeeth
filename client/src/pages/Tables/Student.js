@@ -11,6 +11,7 @@ import { useGetTable } from "./useTable";
 import { AuthContext } from "../../utils/context";
 import BadRequest from "../../ui/utils/BadRequest";
 import { useAddStudent } from "../../features/teacher/useAddStudent";
+import { useAddTable } from "./useAddTable";
 
 function Student() {
   const { id } = useParams();
@@ -58,7 +59,22 @@ function Student() {
   } = useGetTable(token, studentId);
 
   const isTeacher = userData?.role === "teacher";
+  let teacherToken = "";
+  if (isTeacher) teacherToken = token;
+  const {
+    isPending: isPendingAdd,
+    mutate: addTable,
+    error: errAdd,
+  } = useAddTable();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addTable({
+      tableUser,
+      token: teacherToken,
+      studentId: id,
+    });
+  };
   if (!isLogin) {
     return <BadRequest />;
   }
@@ -136,10 +152,7 @@ function Student() {
           </button>
         )}
         {showformTable && (
-          <form
-            className={`${styles.addTable}`}
-            // onSubmit={handleSubmit}
-          >
+          <form className={`${styles.addTable}`} onSubmit={handleSubmit}>
             <select
               name="day"
               id="day"

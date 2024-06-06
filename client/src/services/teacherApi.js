@@ -10,7 +10,6 @@ const getStudents = async (teacherId, token) => {
         },
       }
     );
-    console.log(res.data);
     return res.data.students;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -19,7 +18,6 @@ const getStudents = async (teacherId, token) => {
 
 const addStudent = async (data) => {
   try {
-    console.log(data.token);
     const res = await axios.post(
       "https://tahfeeth-system.onrender.com/user/teacher/signup",
       {

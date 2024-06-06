@@ -1,19 +1,24 @@
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import { addTable } from "../../services/tableApi";
+import toast from "react-hot-toast";
 
 function useAddTable() {
   const queryClient = new QueryClient();
 
-  const { isPending, data, error } = useMutation({
+  const { isPending, mutate, error } = useMutation({
     mutationFn: addTable,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["tables"],
       });
+      toast.success("تمت إضافة الجدول بنجاح");
+    },
+    onError: () => {
+      toast.error("حدث بعض الخطأ");
     },
   });
 
-  return { isPending, data, error };
+  return { isPending, mutate, error };
 }
 
 export { useAddTable };

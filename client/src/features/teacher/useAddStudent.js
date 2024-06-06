@@ -6,7 +6,7 @@ function useAddStudent() {
   const queryClient = new QueryClient();
   const { isPending, mutate, error } = useMutation({
     mutationFn: addStudent,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["students"],
       });

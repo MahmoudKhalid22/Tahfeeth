@@ -16,19 +16,24 @@ const getTables = async (token, stdId) => {
   }
 };
 
-const addTable = async (token, stdId, body) => {
+const addTable = async (data) => {
   try {
     const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/table/" + stdId,
+      "https://tahfeeth-system.onrender.com/table/create-table",
+
       {
-        body: body,
+        ...data?.tableUser,
+        ownerId: data?.studentId,
+      },
+      {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + data?.token,
         },
       }
     );
     return res.data;
   } catch (err) {
+    console.log(err);
     throw new Error(err.response.data.message);
   }
 };
