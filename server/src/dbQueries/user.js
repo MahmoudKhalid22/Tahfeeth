@@ -95,7 +95,11 @@ const addStudentToTeacher = async (teacherId, studentId) => {
 
 const findStudents = async (teacherId) => {
   const teacher = await getUserById(teacherId);
-  const students = await User.find({ _id: { $in: teacher.students } });
+  const students = await User.find({
+    _id: { $in: teacher.students },
+    role: "student",
+  });
+
   return students;
 };
 

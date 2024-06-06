@@ -14,8 +14,6 @@ function NewUser({ isLogin, role }) {
   const { errors } = formState;
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isTeacher, setIsTeacher] = useState(false);
-
   const { isPending, createNewUser } = useNewUser();
   const { isPending: isLogging, loginUser } = useLogin();
 

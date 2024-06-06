@@ -21,12 +21,13 @@ const addTable = async (token, stdId, body) => {
     const res = await axios.post(
       "https://tahfeeth-system.onrender.com/table/" + stdId,
       {
-        body: {},
+        body: body,
         headers: {
           Authorization: "Bearer " + token,
         },
       }
     );
+    return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
   }

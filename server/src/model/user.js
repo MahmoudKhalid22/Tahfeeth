@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: ["admin", "teacher", "student"],
+      default: "student",
     },
     professional: {
       type: Boolean,
@@ -48,7 +49,7 @@ const userSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["verified, pending, blocked"],
-      default: "pending",
+      default: "verified",
     },
     avatar: {
       type: String,

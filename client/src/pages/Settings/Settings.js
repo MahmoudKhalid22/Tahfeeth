@@ -68,7 +68,6 @@ const Settings = () => {
 
   // get user info
   let { isPending, data: userData, error: errorInfo } = useUser(token);
-  console.log(userData);
   userData = userData ? userData[0] : null;
 
   // get teacher info
@@ -216,8 +215,8 @@ const Settings = () => {
                       حدث بعض الخطأ الداخلي.
                     </p>
                   ) : (
-                    students.length > 0 &&
-                    students.map((student) => (
+                    students?.length > 0 &&
+                    students?.map((student) => (
                       <StudentCard
                         key={student._id}
                         student={student}

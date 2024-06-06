@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { useGetTable } from "./useTable";
 import { AuthContext } from "../../utils/context";
 import BadRequest from "../../ui/utils/BadRequest";
+import { useAddStudent } from "../../features/teacher/useAddStudent";
 
 function Student() {
   const { id } = useParams();
@@ -55,6 +56,8 @@ function Student() {
     data: tablesData,
     error: errorData,
   } = useGetTable(token, studentId);
+
+  const isTeacher = userData?.role === "teacher";
 
   if (!isLogin) {
     return <BadRequest />;
@@ -111,12 +114,14 @@ function Student() {
                       {loadingDelMap[std._id] ? (
                         <Spinner />
                       ) : (
-                        <td
-                          className={styles.delete}
-                          // onClick={() => deleteTable(std._id)}
-                        >
-                          <RiChatDeleteLine />
-                        </td>
+                        !isStudent && (
+                          <td
+                            className={styles.delete}
+                            // onClick={() => deleteTable(std._id)}
+                          >
+                            <RiChatDeleteLine />
+                          </td>
+                        )
                       )}
                     </tr>
                   ))}

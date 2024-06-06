@@ -67,7 +67,7 @@ tbody tr td {
 .container form {
   display: flex;
   flex-direction: column;
-  background-color: #111142;
+  background-color: #9f8565;
   color: #fff;
   padding: 3rem 2rem 0rem;
   font-size: 2rem;
@@ -84,7 +84,7 @@ tbody tr td {
   padding: 1rem;
   border: none;
   outline: none;
-  background-color: #58587b;
+  background-color: #43766c;
   color: #fff;
   border-radius: 12px;
 }
@@ -100,7 +100,7 @@ tbody tr td {
   opacity: 1;
 } */
 .container form .btn {
-  background-color: #1f1fc7;
+  background-color: #295f54;
 }
 .notes {
   white-space: pre;

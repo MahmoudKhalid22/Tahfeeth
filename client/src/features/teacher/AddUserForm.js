@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import styles from "./AddUserForm.module.css";
 import Cookies from "js-cookie";
 import { useUser } from "../user/useUser";
+import { useAddStudent } from "./useAddStudent";
+import { useForm } from "react-hook-form";
+import Error from "../../ui/utils/Error";
 
 function AddUserForm({ role, admin, teachers }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [info, setInfo] = useState("");
   const [teacherId, setTeacherId] = useState("");
   const [age, setAge] = useState(null);
@@ -25,93 +28,130 @@ function AddUserForm({ role, admin, teachers }) {
   const adminToken = data?.role === "admin" ? tokenA : null;
   const token = teacherToken ? teacherToken : adminToken;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/teacher/signup",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            name: name,
-            email: email,
-            password: password,
-            age: age,
-            status: "verified",
-            verified: true,
-            role: admin ? role : "student",
-            price: admin ? (role === "teacher" ? price : null) : null,
-            professional: admin
-              ? role === "teacher"
-                ? professional
-                : null
-              : null,
-            information: admin
-              ? role === "teacher"
-                ? information
-                : null
-              : null,
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await fetch(
+  //       "https://tahfeeth-system.onrender.com/user/teacher/signup",
+  //       {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           name: name,
+  //           email: email,
+  //           password: password,
+  //           age: age,
+  //           status: "verified",
+  //           verified: true,
+  //           role: admin ? role : "student",
+  //           price: admin ? (role === "teacher" ? price : null) : null,
+  //           professional: admin
+  //             ? role === "teacher"
+  //               ? professional
+  //               : null
+  //             : null,
+  //           information: admin
+  //             ? role === "teacher"
+  //               ? information
+  //               : null
+  //             : null,
 
-            id: admin ? (role === "student" ? teacherId : null) : null,
-          }),
-          headers: {
-            "Content-Type": "application/json",
+  //           id: admin ? (role === "student" ? teacherId : null) : null,
+  //         }),
+  //         headers: {
+  //           "Content-Type": "application/json",
 
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+  //           Authorization: "Bearer " + token,
+  //         },
+  //       }
+  //     );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log(errorData);
-        throw new Error(errorData.error);
-      }
-      setName("");
-      setEmail("");
-      setPassword("");
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       console.log(errorData);
+  //       throw new Error(errorData.error);
+  //     }
+  //     setName("");
+  //     setEmail("");
+  //     setPassword("");
 
-      setInfo(await response.json());
-      setTimeout(() => setInfo(false), 2000);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     setInfo(await response.json());
+  //     setTimeout(() => setInfo(false), 2000);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const { register, formState, handleSubmit: handleSubmitForm } = useForm();
+
+  const {
+    isPending: isPendingAddStd,
+    mutate: addStdData,
+    error: addStdErr,
+  } = useAddStudent();
+
+  function submitNewStudent(data) {
+    addStdData({
+      name: data["name-2"],
+      email: data["email-2"],
+      password: data["pass-2"],
+      age: data["age-2"],
+      token: teacherToken,
+    });
+  }
 
   return (
     <>
       <form
         className={`${styles.container} flex flex-col gap-6 w-fit py-4 px-6 rounded-md my-4 transition-all bg-[#9F8565]`}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitForm(submitNewStudent)}
       >
         <input
           className="text-[#ececec] text-xl border-none outline-none rounded-md py-2 px-3 bg-[#43766c]"
           type="text"
           placeholder="الاسم"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          id="name-2"
+          {...register("name-2", {
+            required: "من فضلك أدخل اسم الطالب",
+          })}
         />
+        {formState.errors["name-2"]?.message && (
+          <Error type={"add"}>{formState.errors["name-2"].message}</Error>
+        )}
         <input
           className="text-[#ececec] text-xl border-none outline-none rounded-md py-2 px-3 bg-[#43766c]"
           type="text"
           placeholder="الايميل"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          id="email-2"
+          {...register("email-2", {
+            required: "من فضلك أدخل ايميل الطالب",
+          })}
         />
+        {formState.errors["email-2"]?.message && (
+          <Error type={"add"}>{formState.errors["email-2"].message}</Error>
+        )}{" "}
         <input
           className="text-[#ececec] text-xl border-none outline-none rounded-md py-2 px-3 bg-[#43766c]"
           type="password"
           placeholder="كلمة السر"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          id="pass-2"
+          {...register("pass-2", {
+            required: "من فضلك أدخل كلمة سر الطالب",
+          })}
         />
+        {formState.errors["pass-2"]?.message && (
+          <Error type={"add"}>{formState.errors["pass-2"].message}</Error>
+        )}
         <input
           className="text-[#ececec] text-xl border-none outline-none rounded-md py-2 px-3 bg-[#43766c]"
           type="السن"
-          placeholder="كم عمرك"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
+          placeholder="عمر الطالب"
+          {...register("age-2", {
+            required: "من فضلك أدخل عمر الطالب",
+          })}
         />
+        {formState.errors["age-2"]?.message && (
+          <Error type={"add"}>{formState.errors["age-2"].message}</Error>
+        )}
         {admin && role === "student" && (
           <select
             className="cursor-pointer text-[#ececec] text-xl border-none outline-none rounded-md py-2 px-3 bg-[#43766c]"
@@ -152,8 +192,9 @@ function AddUserForm({ role, admin, teachers }) {
         <button
           type="submit"
           className="p-2 border-none outline-none text-xl cursor-pointer rounded-md text-[#ececec] transition-colors text-center bg-[#7f6a51] hover:bg-[#5f503d] duration-300"
+          disabled={isPendingAddStd}
         >
-          تسجيل
+          {isPendingAddStd ? "تحميل..." : "تسجيل"}
         </button>
       </form>
       {info && <h4 className="text-2xl mt-6 text-[#9F8565]">{info.message}</h4>}

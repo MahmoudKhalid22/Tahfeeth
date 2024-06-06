@@ -64,18 +64,19 @@ const verificationEmail = async (req, res) => {
 
 const internalSignup = async (req, res) => {
   try {
-    const { name, email, password, role, verified, status } = req.body;
-    if (!name || !email || !password || !role || !verified || !status) {
-      return res.status(400).send("يجب إدخال البيانات أولا");
+    const { name, email, password, age } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).send({ err: "يجب إدخال البيانات أولا" });
     }
     if (req.body.role === "student") {
       const student = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        role: req.body.role,
-        verified: req.body.verified,
-        status: req.body.status,
+        age: req.body.age,
+        role: "student",
+        verified: true,
+        status: "verified",
       });
       const isTeacher = req.user[0].role === "teacher";
       let teacherId;
@@ -283,7 +284,17 @@ const getStudents = async (req, res) => {
 
     const teacherId = req.params.id;
     const students = await findStudents(teacherId);
-    res.send({ students });
+    const result = [];
+    students.forEach((student) => {
+      result.push({
+        _id: student._id,
+        name: student.name,
+        email: student.email,
+        role: student.role,
+        avatar: student.avatar,
+      });
+    });
+    res.send({ students: result });
   } catch (err) {
     res.status(500).send({ err });
   }
@@ -402,7 +413,15 @@ const getOneTeacher = async (req, res) => {
     if (!teacher) {
       res.status(500).send({ error: "this is not a teacher" });
     }
-    res.send({ teacher: teacher, studentsNumber: teacher.students.length });
+    let result = {};
+    result._id = teacher._id;
+    result.name = teacher.name;
+    result.role = teacher.role;
+    result.professional = teacher.professional;
+    result.price = teacher.price;
+    result.information = teacher.information;
+    result.avatar = teacher.avatar;
+    res.send({ teacher: result, studentsNumber: teacher.students.length });
   } catch (err) {
     res.status(500).send({ err: err.message });
   }
