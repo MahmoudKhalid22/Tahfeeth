@@ -1,17 +1,20 @@
 import React, { useContext, useRef, useState } from "react";
-import Spinner from "../ui/utils/Spinner";
+import Spinner from "../../ui/utils/Spinner";
 import styles from "./edit.module.css";
 import ReactCrop, {
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
-import useCanvasPreview from "../utils/useCanvasPreview";
-import BadRequest from "../ui/utils/BadRequest";
-import { AuthContext } from "../utils/context";
+import useCanvasPreview from "../../utils/useCanvasPreview";
+import BadRequest from "../../ui/utils/BadRequest";
+import { AuthContext } from "../../utils/context";
+import { useUser } from "../../features/user/useUser";
+import { useUpdateUsername } from "./useUpdateUsername";
+import Cookies from "js-cookie";
 
-const data = JSON.parse(localStorage.getItem("data"))
-  ? JSON.parse(localStorage.getItem("data"))
-  : null;
+// const data = JSON.parse(localStorage.getItem("data"))
+//   ? JSON.parse(localStorage.getItem("data"))
+//   : null;
 
 const ASPECT_RATION = 1;
 const MIN_DIMENSION = 150;
@@ -49,13 +52,15 @@ function Edit() {
 
   const { isLogin } = useContext(AuthContext);
 
+  const token = Cookies.get("accessToken");
+  let { isPending, data, error: errorUserData } = useUser();
+  data = data ? data[0] : null;
+
+  const { isUpdating, mutate } = useUpdateUsername();
+
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
-
-  if (!isLogin) {
-    return <BadRequest />;
-  }
 
   const uploadAvatar = async (e) => {
     e.preventDefault();
@@ -131,43 +136,51 @@ function Edit() {
     }
   };
 
-  const updateUsername = async (e) => {
+  const handleUpdateUsername = (e) => {
     e.preventDefault();
-    try {
-      setLoadingName(true);
-      const response = await fetch(
-        `https://tahfeeth-production.up.railway.app/user/update-username`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + data?.accessToken,
-          },
-          body: JSON.stringify({
-            name: username.trim().length > 0 ? username : null,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(await response.json());
-      }
-
-      const updatedData = await response.json();
-      // console.log(updatedData);
-
-      const existingData = JSON.parse(localStorage.getItem("data"));
-      existingData.user.name = updatedData.name;
-
-      const updatedDataStr = JSON.stringify(existingData);
-      localStorage.setItem("data", updatedDataStr);
-      window.location.reload();
-    } catch (e) {
-      setError(true);
-    } finally {
-      setLoadingName(false);
-    }
+    mutate({
+      name: username,
+      token: token,
+    });
   };
+
+  // const updateUsername = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     setLoadingName(true);
+  //     const response = await fetch(
+  //       `https://tahfeeth-production.up.railway.app/user/update-username`,
+  //       {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: "Bearer " + data?.accessToken,
+  //         },
+  //         body: JSON.stringify({
+  //           name: username.trim().length > 0 ? username : null,
+  //         }),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error(await response.json());
+  //     }
+
+  //     const updatedData = await response.json();
+  //     // console.log(updatedData);
+
+  //     const existingData = JSON.parse(localStorage.getItem("data"));
+  //     existingData.user.name = updatedData.name;
+
+  //     const updatedDataStr = JSON.stringify(existingData);
+  //     localStorage.setItem("data", updatedDataStr);
+  //     window.location.reload();
+  //   } catch (e) {
+  //     setError(true);
+  //   } finally {
+  //     setLoadingName(false);
+  //   }
+  // };
 
   const imageCropper = (src) => {
     const file = src;
@@ -212,6 +225,10 @@ function Edit() {
     setCrop(crop);
   }
 
+  if (!isLogin) {
+    return <BadRequest />;
+  }
+
   return (
     <>
       {modal && (
@@ -221,9 +238,7 @@ function Edit() {
         <h2 className="text-lg md:text-3xl font-semibold">المعلومات الشخصية</h2>
         <div className="flex flex-col items-center">
           <img
-            src={
-              data?.user?.avatar ? data?.user?.avatar : "/assets/dummyImage.jpg"
-            }
+            src={data?.avatar ? data?.avatar : "/assets/dummyImage.jpg"}
             alt="user img"
             className="rounded-full w-40 h-40 object-cover"
           />
@@ -345,12 +360,12 @@ function Edit() {
           )}
           {loading && <Spinner />}
         </div>
-        <form onSubmit={updateUsername}>
+        <form onSubmit={handleUpdateUsername}>
           {loadingName ? (
             <Spinner />
           ) : (
             <h2 className="mx-auto text-2xl text-center mt-6 mb-6">
-              {data?.user?.name}
+              {data?.name}
             </h2>
           )}
 
