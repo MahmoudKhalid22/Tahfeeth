@@ -13,6 +13,9 @@ const useDeleteTable = (token, tableId) => {
       toast.success("تم حذف الجدول بنجاح");
       window.location.reload();
     },
+    onError: () => {
+      console.log("حدث بعض الخطأ");
+    },
   });
 
   return { isDeletingTable, deleteTable };

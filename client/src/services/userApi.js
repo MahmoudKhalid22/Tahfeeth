@@ -73,7 +73,6 @@ async function getAvatar(token) {
 }
 
 async function updateUsername(data) {
-  console.log(data);
   try {
     const res = await axios.put(
       "https://tahfeeth-system.onrender.com/user/update-username",
@@ -95,10 +94,23 @@ async function updateUsername(data) {
   }
 }
 
-async function updatePassword() {
+async function updatePassword(data) {
   try {
+    const res = await axios.put(
+      "https://tahfeeth-system.onrender.com/user/update-password",
+      {
+        oldPassword: data?.oldPassword,
+        newPassword: data?.newPassword,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + data?.token,
+        },
+      }
+    );
+    return res.data;
   } catch (err) {
-    throw new Error("حدث بعض الخطأ");
+    throw new Error(err.response.data.error);
   }
 }
 
@@ -111,4 +123,6 @@ export {
   getAvatar,
   getUser,
   updateUsername,
+  updatePassword,
+  uploadAvatar,
 };

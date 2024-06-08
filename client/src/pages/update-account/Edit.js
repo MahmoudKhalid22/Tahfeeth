@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Spinner from "../../ui/utils/Spinner";
 import styles from "./edit.module.css";
 import ReactCrop, {
@@ -11,6 +11,7 @@ import { AuthContext } from "../../utils/context";
 import { useUser } from "../../features/user/useUser";
 import { useUpdateUsername } from "./useUpdateUsername";
 import Cookies from "js-cookie";
+import { useUpdatePassword } from "./useUpdatePassword";
 
 // const data = JSON.parse(localStorage.getItem("data"))
 //   ? JSON.parse(localStorage.getItem("data"))
@@ -48,7 +49,6 @@ function Edit() {
   const [loadingPass, setLoadingPass] = useState(false);
   // NAME
   const [username, setUsername] = useState("");
-  const [loadingName, setLoadingName] = useState(false);
 
   const { isLogin } = useContext(AuthContext);
 
@@ -57,6 +57,10 @@ function Edit() {
   data = data ? data[0] : null;
 
   const { isUpdating, mutate } = useUpdateUsername();
+
+  const { isPending: isUpdatingPassword, updatePassword } = useUpdatePassword();
+
+  console.log(isUpdatingPassword);
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
@@ -101,40 +105,40 @@ function Edit() {
     }
   };
 
-  const updatePassword = async (e) => {
-    e.preventDefault();
-    try {
-      setLoadingPass(true);
-      const res = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/update-password",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + data?.accessToken,
-          },
-          body: JSON.stringify({
-            oldPassword: oldPassword,
-            newPassword: newPassword,
-          }),
-        }
-      );
-      const result = await res.json();
-      if (!res.ok) {
-        // console.log(result);
-        throw new Error(result.error);
-      }
-      setModal(false);
-      setMsg(result.message);
-      setTimeout(() => {
-        setMsg("");
-      }, 3000);
-    } catch (err) {
-      setErrPass(err.message);
-    } finally {
-      setLoadingPass(false);
-    }
-  };
+  // const updatePassword = async (e) => {
+  // e.preventDefault();
+  // try {
+  //   setLoadingPass(true);
+  //   const res = await fetch(
+  //     "https://tahfeeth-production.up.railway.app/user/update-password",
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + data?.accessToken,
+  //       },
+  //       body: JSON.stringify({
+  //         oldPassword: oldPassword,
+  //         newPassword: newPassword,
+  //       }),
+  //     }
+  //   );
+  //   const result = await res.json();
+  //   if (!res.ok) {
+  //     // console.log(result);
+  //     throw new Error(result.error);
+  //   }
+  //   setModal(false);
+  //   setMsg(result.message);
+  //   setTimeout(() => {
+  //     setMsg("");
+  //   }, 3000);
+  // } catch (err) {
+  //   setErrPass(err.message);
+  // } finally {
+  //   setLoadingPass(false);
+  // }
+  // };
 
   const handleUpdateUsername = (e) => {
     e.preventDefault();
@@ -143,6 +147,20 @@ function Edit() {
       token: token,
     });
   };
+
+  const hanldeUpdatePassword = (e) => {
+    e.preventDefault();
+    updatePassword({
+      token: token,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    });
+    console.log(isUpdatingPassword);
+  };
+
+  // useEffect(() => {
+  //   setModal(isUpdatingPassword);
+  // }, [isUpdatingPassword]);
 
   // const updateUsername = async (e) => {
   //   e.preventDefault();
@@ -361,7 +379,7 @@ function Edit() {
           {loading && <Spinner />}
         </div>
         <form onSubmit={handleUpdateUsername}>
-          {loadingName ? (
+          {isUpdating ? (
             <Spinner />
           ) : (
             <h2 className="mx-auto text-2xl text-center mt-6 mb-6">
@@ -393,7 +411,7 @@ function Edit() {
         {msg && <p className="mx-auto text-2xl text-[#43766C]">{msg}</p>}
         {modal && (
           <form
-            onSubmit={updatePassword}
+            onSubmit={hanldeUpdatePassword}
             className={`absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
            flex flex-col gap-8 bg-[#ececec] rounded-md py-12 px-4 z-20 w-[80%] md:w-[50%] xl:w-[32rem] items-start justify-start
            ${styles.form}
@@ -425,8 +443,9 @@ function Edit() {
             <button
               type="submit"
               className="bg-[#8A7A5F] hover:bg-[#6e624c] transition-colors duration-300 text-[#ececec] rounded-md px-4 py-2 mx-auto"
+              disabled={isUpdatingPassword}
             >
-              تأكيد
+              {isUpdatingPassword ? "تحميل..." : "تأكيد"}
             </button>
           </form>
         )}
