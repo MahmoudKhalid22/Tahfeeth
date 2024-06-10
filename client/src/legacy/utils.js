@@ -117,3 +117,31 @@
 //   setLoadingPass(false);
 // }
 // };
+
+// const joinToTeacher = async () => {
+//   try {
+//     setLoadingJoin(true);
+//     const response = await fetch(
+//       "https://tahfeeth-system.onrender.com/user/join/" + id,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: "Bearer " + data?.accessToken,
+//         },
+//       }
+//     );
+//     if (!response.ok) {
+//       const err = await response.json();
+//       throw new Error(err.err);
+//     }
+//     const result = await response.json();
+//     if (result) {
+//       setMessage("تمت إضافتك للمعلم");
+//     }
+//   } catch (err) {
+//     setErrJoin(err.message);
+//   } finally {
+//     setLoadingJoin(false);
+//   }
+// };

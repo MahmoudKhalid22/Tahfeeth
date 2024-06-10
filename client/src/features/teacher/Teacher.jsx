@@ -5,6 +5,7 @@ import Spinner from "../../ui/utils/Spinner";
 import { useTeacher } from "./useTeacher";
 import { useGetStudents } from "../settings/useGetStudents";
 import Cookies from "js-cookie";
+import { useJoin } from "./useJoin";
 
 const Teacher = () => {
   const { id } = useParams();
@@ -15,39 +16,7 @@ const Teacher = () => {
 
   const isAdmin = search.get("admin");
 
-  const [loadingJoin, setLoadingJoin] = useState(false);
-  const [errJoin, setErrJoin] = useState(false);
   const [stdDisplay, setStdDisplay] = useState(false);
-
-  const [message, setMessage] = useState("");
-
-  // const joinToTeacher = async () => {
-  //   try {
-  //     setLoadingJoin(true);
-  //     const response = await fetch(
-  //       "https://tahfeeth-system.onrender.com/user/join/" + id,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: "Bearer " + data?.accessToken,
-  //         },
-  //       }
-  //     );
-  //     if (!response.ok) {
-  //       const err = await response.json();
-  //       throw new Error(err.err);
-  //     }
-  //     const result = await response.json();
-  //     if (result) {
-  //       setMessage("تمت إضافتك للمعلم");
-  //     }
-  //   } catch (err) {
-  //     setErrJoin(err.message);
-  //   } finally {
-  //     setLoadingJoin(false);
-  //   }
-  // };
 
   const {
     isPending: isPendingStd,
@@ -55,8 +24,17 @@ const Teacher = () => {
     error: stdErr,
   } = useGetStudents(id, Cookies.get("accessToken"));
 
+  const { isJoining, joinToTeacher } = useJoin();
+
+  const handleJoin = () => {
+    joinToTeacher({
+      teacherId: id,
+      token: Cookies.get("accessToken"),
+    });
+  };
+
   return (
-    <div className="w-full mb-[11.5] md:mb-0 md:w-[75%]  absolute left-0 h-auto min-h-full mt-8">
+    <div className="w-full md:mb-0 md:w-[75%]  absolute left-0 h-[48rem] min-h-screen mt-8 mb-20">
       {error ? (
         <p className="text-red-600 font-semibold text-2xl w-full mx-auto text-center">
           حدث بعض الخطأ
@@ -136,24 +114,16 @@ const Teacher = () => {
             </div>
           ) : (
             <button
-              className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors ml-6 mt-4 text-white text-md sm:text-lg py-1 px-2 rounded-md mb-16"
-              // onClick={joinToTeacher}
+              className="bg-[#9F8565] hover:bg-[#7f6a51] transition-colors md:ml-6 mt-4 text-white text-md sm:text-lg py-1 px-2 rounded-md"
+              onClick={handleJoin}
             >
               انضمام إلى المعلم
             </button>
           )}
 
           <div className="mt-2">
-            {errJoin && !loadingJoin && (
-              <p className="text-red-600 md:text-2xl w-fit text-center ml-6">
-                {errJoin}
-              </p>
-            )}
-            {loadingJoin && (
-              <p className="text-2xl font-semibold ml-6">تحميل...</p>
-            )}
-            {!loadingJoin && message && (
-              <p className="text-2xl font-semibold ml-6">{message}</p>
+            {isJoining && (
+              <p className="text-2xl font-semibold md:ml-6">تحميل...</p>
             )}
           </div>
         </div>

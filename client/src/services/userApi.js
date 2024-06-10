@@ -18,7 +18,8 @@ async function newUser(data) {
 
     return res.data;
   } catch (err) {
-    throw new Error(err.response.data.message);
+    console.log(err);
+    throw new Error(err.response.data.message || err.response.data.err);
   }
 }
 

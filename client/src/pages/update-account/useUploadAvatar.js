@@ -16,8 +16,8 @@ function useUploadAvatar() {
       });
       toast.success("تم تغيير الصورة بنجاح");
     },
-    onError: () => {
-      toast.error("حدث بعض الخطأ");
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
 

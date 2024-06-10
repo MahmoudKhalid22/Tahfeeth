@@ -41,4 +41,24 @@ const addStudent = async (data) => {
   }
 };
 
-export { getStudents, addStudent };
+const joinStudent = async (data) => {
+  console.log(data);
+  try {
+    const res = await axios.post(
+      "https://tahfeeth-system.onrender.com/user/join/" + data.teacherId,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + data?.token,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err.response.data.err || err.response.data.error);
+  }
+};
+
+export { getStudents, addStudent, joinStudent };
