@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+
 async function newUser(data) {
   try {
     const res = await axios.post(
@@ -40,18 +41,19 @@ function logoutUserApi() {
   Cookies.remove("accessToken");
 }
 
-async function getUser(accessToken) {
+async function getUser(token) {
   try {
     const res = await axios.get(
       "https://tahfeeth-system.onrender.com/user/me",
       {
         headers: {
-          Authorization: "Bearer " + accessToken,
+          Authorization: "Bearer " + token,
         },
       }
     );
     return res.data;
   } catch (err) {
+    console.log(err);
     throw new Error(err.response.data.message);
   }
 }
@@ -114,7 +116,25 @@ async function updatePassword(data) {
   }
 }
 
-async function uploadAvatar() {}
+async function uploadAvatarApi(data) {
+  try {
+    console.log([...data.formData.entries()]);
+    const res = await axios.post(
+      "https://tahfeeth-system.onrender.com/user/upload-avatar",
+      data?.formData,
+      {
+        headers: {
+          Authorization: "Bearer " + data?.token,
+        },
+      }
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err.response.data.error);
+  }
+}
 
 export {
   newUser,
@@ -124,5 +144,5 @@ export {
   getUser,
   updateUsername,
   updatePassword,
-  uploadAvatar,
+  uploadAvatarApi,
 };

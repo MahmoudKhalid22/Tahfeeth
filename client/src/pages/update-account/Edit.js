@@ -8,10 +8,11 @@ import ReactCrop, {
 import useCanvasPreview from "../../utils/useCanvasPreview";
 import BadRequest from "../../ui/utils/BadRequest";
 import { AuthContext } from "../../utils/context";
-import { useUser } from "../../features/user/useUser";
+import { useAvatar, useUser } from "../../features/user/useUser";
 import { useUpdateUsername } from "./useUpdateUsername";
 import Cookies from "js-cookie";
 import { useUpdatePassword } from "./useUpdatePassword";
+import { useUploadAvatar } from "./useUploadAvatar";
 
 // const data = JSON.parse(localStorage.getItem("data"))
 //   ? JSON.parse(localStorage.getItem("data"))
@@ -25,8 +26,7 @@ function Edit() {
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [modal, setModal] = useState(false);
   // IMAGE CROP
@@ -44,66 +44,68 @@ function Edit() {
   // PASSWORD
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [msg, setMsg] = useState("");
-  const [errPass, setErrPass] = useState("");
-  const [loadingPass, setLoadingPass] = useState(false);
+
   // NAME
   const [username, setUsername] = useState("");
 
   const { isLogin } = useContext(AuthContext);
 
   const token = Cookies.get("accessToken");
-  let { isPending, data, error: errorUserData } = useUser();
+  // GET USER DATA
+  let { data } = useUser(token);
   data = data ? data[0] : null;
+  // GET AVATAR
+  let { avatar: userAvatar, avatarErr, isPendingAvatar } = useAvatar(token);
 
+  // HANDLE UPDATE USERNAME
   const { isUpdating, mutate } = useUpdateUsername();
-
+  // HANDLE UPDATE PASSWORD
   const { isPending: isUpdatingPassword, updatePassword } = useUpdatePassword();
-
-  console.log(isUpdatingPassword);
+  // HANDLE UPDATE USER AVATAR
+  const { isUploadingAvatar, uploadAvatar } = useUploadAvatar();
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
 
-  const uploadAvatar = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
+  // const uploadAvatar = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const formData = new FormData();
 
-      formData.append("avatar", avatar);
-      setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/upload-avatar",
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: "Bearer " + data?.accessToken,
-          },
-        }
-      );
-      if (!response.ok) {
-        // console.log(await response.json());
-        throw new Error();
-      }
+  //     formData.append("avatar", avatar);
+  //     setLoading(true);
+  //     const response = await fetch(
+  //       "https://tahfeeth-system.onrender.com/user/upload-avatar",
+  //       {
+  //         method: "POST",
+  //         body: formData,
+  //         headers: {
+  //           Authorization: "Bearer " + token,
+  //         },
+  //       }
+  //     );
+  //     if (!response.ok) {
+  //       // console.log(await response.json());
+  //       throw new Error();
+  //     }
 
-      const result = await response.json();
+  //     const result = await response.json();
 
-      const userAvatar = result?.user?.avatar;
-      const userData = JSON.parse(localStorage.getItem("data"));
-      console.log(userData);
-      userData.user.avatar = userAvatar;
-      const updatedData = JSON.stringify(userData);
-      localStorage.setItem("data", updatedData);
-      window.location.reload();
-    } catch (err) {
-      // console.log(err);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const userAvatar = result?.user?.avatar;
+  //     const userData = JSON.parse(localStorage.getItem("data"));
+  //     console.log(userData);
+  //     userData.user.avatar = userAvatar;
+  //     const updatedData = JSON.stringify(userData);
+  //     localStorage.setItem("data", updatedData);
+  //     window.location.reload();
+  //   } catch (err) {
+  //     // console.log(err);
+  //     setError(true);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // const updatePassword = async (e) => {
   // e.preventDefault();
@@ -156,6 +158,19 @@ function Edit() {
       newPassword: newPassword,
     });
     console.log(isUpdatingPassword);
+  };
+
+  const handleUploadAvatar = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+
+    uploadAvatar({
+      formData: formData,
+      token: token,
+    });
+
+    setChosed(false);
   };
 
   // useEffect(() => {
@@ -256,7 +271,7 @@ function Edit() {
         <h2 className="text-lg md:text-3xl font-semibold">المعلومات الشخصية</h2>
         <div className="flex flex-col items-center">
           <img
-            src={data?.avatar ? data?.avatar : "/assets/dummyImage.jpg"}
+            src={userAvatar ? userAvatar : "/assets/dummyImage.jpg"}
             alt="user img"
             className="rounded-full w-40 h-40 object-cover"
           />
@@ -326,11 +341,11 @@ function Edit() {
             />
           )}
 
-          {error && (
+          {/* {error && (
             <p className="mx-auto text-center text-red-600 text-2xl">
               حدث بعض الخطأ
             </p>
-          )}
+          )} */}
           <div className="flex gap-6 text-2xl justify-center mt-6">
             <button
               className="bg-[#8A7A5F] hover:bg-[#6e624c] transition-colors duration-300 text-[#ececec] rounded-md px-4 py-2 "
@@ -362,7 +377,7 @@ function Edit() {
             <>
               <form
                 className="flex gap-4 items-center mt-6"
-                onSubmit={uploadAvatar}
+                onSubmit={handleUploadAvatar}
               >
                 <p className="text-2xl font-semibold z-10 block relative bg-white py-2 px-4">
                   أنت اخترت: {avatar.name}
@@ -376,7 +391,7 @@ function Edit() {
               </form>
             </>
           )}
-          {loading && <Spinner />}
+          {isUploadingAvatar && <Spinner />}
         </div>
         <form onSubmit={handleUpdateUsername}>
           {isUpdating ? (
@@ -408,7 +423,6 @@ function Edit() {
         >
           تغيير كلمة السر
         </button>
-        {msg && <p className="mx-auto text-2xl text-[#43766C]">{msg}</p>}
         {modal && (
           <form
             onSubmit={hanldeUpdatePassword}
@@ -433,12 +447,12 @@ function Edit() {
                 onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
-            {loadingPass && <Spinner />}
-            {errPass && (
+            {/* {loadingPass && <Spinner />} */}
+            {/* {errPass && (
               <p className="text-center text-2xl text-red-600 mx-auto">
                 {errPass}
               </p>
-            )}
+            )} */}
 
             <button
               type="submit"

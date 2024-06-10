@@ -24,7 +24,10 @@ function useAvatar(token) {
     queryKey: ["avatar", token],
     queryFn: () => getAvatar(token),
     onSuccess: () => {
-      console.log("test");
+      // console.log("test");
+    },
+    onError: () => {
+      toast.error("حدث بعض الخطأ");
     },
   });
 
