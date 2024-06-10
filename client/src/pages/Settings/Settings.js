@@ -11,6 +11,7 @@ import { useUser } from "../../features/user/useUser";
 import Cookies from "js-cookie";
 import { useGetTeachers } from "../../features/settings/useGetTeachers";
 import { useGetStudents } from "../../features/settings/useGetStudents";
+import { useAddTeacher } from "../../features/settings/useAddTeacher";
 
 const initialState = {
   showTeacherForm: false,
@@ -39,30 +40,6 @@ const Settings = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { isLogin } = useContext(AuthContext);
-  // const getData = async () => {
-  //   try {
-  //     setLoadingData(true);
-  //     const response = await fetch(
-  //       "https://tahfeeth-production.up.railway.app/user/me",
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: "Bearer " + data?.accessToken,
-  //         },
-  //       }
-  //     );
-  //     const result = await response.json();
-  //     if (!response.ok) {
-  //       throw new Error(await response.json());
-  //     }
-  //     setUserData(result);
-  //   } catch (err) {
-  //     setError(true);
-  //   } finally {
-  //     setLoadingData(false);
-  //   }
-  // };
 
   const token = Cookies.get("accessToken");
 
@@ -90,33 +67,11 @@ const Settings = () => {
   const adminToken = userData?.role === "admin" ? token : null;
   const teacherToken = userData?.role === "teacher" ? token : null;
 
-  // const getStudents = async () => {
-  //   try {
-  //     const isTeacher = userData?.role === "teacher";
-  //     let id;
-  //     if (isTeacher) id = userData._id;
-  //     setLoading(true);
-  //     const response = await fetch(
-  //       "https://tahfeeth-production.up.railway.app/user/students/" + id,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: "Bearer " + teacherToken,
-  //         },
-  //       }
-  //     );
-  //     const students = await response.json();
-  //     if (!response.ok) {
-  //       throw new Error(students);
-  //     }
-  //     dispatch({ type: "students", payload: students?.students });
-  //   } catch (err) {
-  //     setError(true);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  // ADD TEACHER
+
+  const { isPending: isAddingTeacher, mutate } = useAddTeacher();
+
+  // ADD STUDENT TO TEACHER
 
   if (!isLogin) {
     return <BadRequest />;
@@ -159,6 +114,7 @@ const Settings = () => {
                         admin={true}
                         id={user?._id}
                         adminToken={adminToken}
+                        avatar={user?.avatar}
                       />
                     ))}
                   </div>

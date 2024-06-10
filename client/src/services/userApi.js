@@ -18,7 +18,6 @@ async function newUser(data) {
 
     return res.data;
   } catch (err) {
-    console.log(err);
     throw new Error(err.response.data.message || err.response.data.err);
   }
 }
@@ -54,7 +53,6 @@ async function getUser(token) {
     );
     return res.data;
   } catch (err) {
-    console.log(err);
     throw new Error(err.response.data.message);
   }
 }
@@ -92,7 +90,6 @@ async function updateUsername(data) {
 
     return res.data;
   } catch (err) {
-    console.log(err);
     throw new Error(err.response.data.err);
   }
 }
@@ -129,10 +126,8 @@ async function uploadAvatarApi(data) {
         },
       }
     );
-    console.log(res.data);
     return res.data;
   } catch (err) {
-    console.log(err);
     throw new Error(err.response.data.error);
   }
 }

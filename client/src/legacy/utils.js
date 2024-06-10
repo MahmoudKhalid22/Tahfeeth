@@ -145,3 +145,109 @@
 //     setLoadingJoin(false);
 //   }
 // };
+
+// const getStudents = async () => {
+//   try {
+//     const isTeacher = userData?.role === "teacher";
+//     let id;
+//     if (isTeacher) id = userData._id;
+//     setLoading(true);
+//     const response = await fetch(
+//       "https://tahfeeth-production.up.railway.app/user/students/" + id,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: "Bearer " + teacherToken,
+//         },
+//       }
+//     );
+//     const students = await response.json();
+//     if (!response.ok) {
+//       throw new Error(students);
+//     }
+//     dispatch({ type: "students", payload: students?.students });
+//   } catch (err) {
+//     setError(true);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+// const getData = async () => {
+//   try {
+//     setLoadingData(true);
+//     const response = await fetch(
+//       "https://tahfeeth-production.up.railway.app/user/me",
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: "Bearer " + data?.accessToken,
+//         },
+//       }
+//     );
+//     const result = await response.json();
+//     if (!response.ok) {
+//       throw new Error(await response.json());
+//     }
+//     setUserData(result);
+//   } catch (err) {
+//     setError(true);
+//   } finally {
+//     setLoadingData(false);
+//   }
+// };
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const response = await fetch(
+//       "https://tahfeeth-system.onrender.com/user/teacher/signup",
+//       {
+//         method: "POST",
+//         body: JSON.stringify({
+//           name: name,
+//           email: email,
+//           password: password,
+//           age: age,
+//           status: "verified",
+//           verified: true,
+//           role: admin ? role : "student",
+//           price: admin ? (role === "teacher" ? price : null) : null,
+//           professional: admin
+//             ? role === "teacher"
+//               ? professional
+//               : null
+//             : null,
+//           information: admin
+//             ? role === "teacher"
+//               ? information
+//               : null
+//             : null,
+
+//           id: admin ? (role === "student" ? teacherId : null) : null,
+//         }),
+//         headers: {
+//           "Content-Type": "application/json",
+
+//           Authorization: "Bearer " + token,
+//         },
+//       }
+//     );
+
+//     if (!response.ok) {
+//       const errorData = await response.json();
+//       console.log(errorData);
+//       throw new Error(errorData.error);
+//     }
+//     setName("");
+//     setEmail("");
+//     setPassword("");
+
+//     setInfo(await response.json());
+//     setTimeout(() => setInfo(false), 2000);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };

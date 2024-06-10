@@ -46,11 +46,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    status: {
-      type: String,
-      enum: ["verified, pending, blocked"],
-      default: "verified",
-    },
+
     avatar: {
       type: String,
     },
@@ -69,7 +65,7 @@ const userSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "blocked", "verified"],
-      default: "pending",
+      default: "verified",
     },
     tokens: [
       {

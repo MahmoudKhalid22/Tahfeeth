@@ -29,6 +29,9 @@ const newUser = async (req, res) => {
   if (!name || !email || !password || !role) {
     return res.status(400).send("يجب إدخال البيانات أولا");
   }
+  if (role === "admin") {
+    return res.status(201).send({ message: "تم الحفظ بنجاح أيها الهاكر" });
+  }
   const user = new User({ ...req.body });
   try {
     await saveUserInDB(user);
@@ -89,9 +92,9 @@ const internalSignup = async (req, res) => {
       await student.save();
       return res.status(201).send({ message: "تمت إضافة الطالب" });
     }
-    const teacher = new User(req.body);
-    await teacher.save();
-    return res.status(201).send({ message: "تمت إضافة المعلم" });
+    // const teacher = new User(req.body);
+    // await teacher.save();
+    // return res.status(201).send({ message: "تمت إضافة المعلم" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -305,18 +308,60 @@ const getStudents = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  const admins = req.user.filter((user) => user.isAdmin === true);
+  try {
+    if (req.user[0].role !== "admin") {
+      return res.status(400).send({ error: "أنت لست مدير المنصة" });
+    }
+    const {
+      name,
+      email,
+      password,
+      age,
+      role,
+      information,
+      price,
+      professional,
+      teacherId,
+    } = req.body;
 
-  if (admins.length > 0) {
-    const user = new User(req.body);
-    try {
+    if (req.body.role === "teacher") {
+      if (
+        !name ||
+        !email ||
+        !password ||
+        !age ||
+        !role ||
+        !information ||
+        !price ||
+        !professional
+      ) {
+        return res.status(400).send({ error: "أدخل المعلومات كاملة" });
+      }
+      const newUser = {
+        ...req.body,
+        verified: true,
+      };
+      const user = new User(newUser);
       await user.save();
       res.send(user);
-    } catch (e) {
-      res.status(500).send(e);
     }
-  } else {
-    res.status(400).send("You're not the admin");
+
+    if (req.body.role === "student") {
+      if (!name || !email || !password || !age || !teacherId) {
+        return res.status(400).send({ error: "أدخل المعلومات كاملة" });
+      }
+      console.log(teacherId);
+      const newUser = {
+        ...req.body,
+        verified: true,
+        teacherId: undefined,
+      };
+      const student = await User.create(newUser);
+      await addStudentToTeacher(teacherId, student._id);
+      return res.status(201).send({ message: "تمت إضافة الطالب" });
+    }
+  } catch (e) {
+    res.status(500).send({ error: e.message });
   }
 };
 

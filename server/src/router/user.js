@@ -165,7 +165,7 @@ router.delete("/:id", auth, deleteUser);
 
 router.get("/admin/:id", getOneUser);
 router.get("/admin/message", auth, getMessages);
-router.post("", auth, addUser);
+router.post("/admin/add-user", auth, addUser);
 
 // FOR TEACHER
 router.get("/join/student", auth, joinStudent);
