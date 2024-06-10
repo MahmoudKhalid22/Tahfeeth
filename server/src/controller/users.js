@@ -429,15 +429,23 @@ const getOneTeacher = async (req, res) => {
 
 const uploadAvatar = async (req, res) => {
   try {
-    // const base64Data = req.file.buffer.toString("base64");
-    // imgsrc = `data:${req.file.mimetype};base64,${base64Data}`;
+    const base64Data = req.file.buffer.toString("base64");
+    imgsrc = `data:${req.file.mimetype};base64,${base64Data}`;
 
-    req.user[0].avatar = req.file.buffer;
+    // console.log(req.file);
+
+    req.user[0].avatar = imgsrc;
     await req.user[0].save();
 
+    let user = {};
+    // user = req.user[0];
+
+    user.avatar = req.user[0].avatar;
+
+    // res.set({ "Content-Type": "image/jpeg" });
     res.send({
       message: "image has been uploaded",
-      user: req.user[0],
+      user,
     });
   } catch (err) {
     res.status(500).send({ err: err.message });
