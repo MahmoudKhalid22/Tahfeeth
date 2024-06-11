@@ -22,8 +22,6 @@ const {
   joinStudent,
   joinToTeacher,
   getTeachers,
-  messageForm,
-  getMessages,
   getOneTeacher,
   uploadAvatar,
   deleteStd,
@@ -36,7 +34,7 @@ const { getTables, getTablesStd } = require("../controller/tables");
 const auth = require("../middleware/auth");
 const authByRefreshToken = require("../middleware/authRefreshToken");
 const multer = require("multer");
-const { getAllTeachers } = require("../dbQueries/user");
+const { getAllTeachers } = require("../dbQueries/queries");
 const User = require("../model/user");
 
 // START AUTHENTICATION //
@@ -103,7 +101,7 @@ router.get("/me", auth, getUser);
 
 // GET AN AVATAR
 router.get("/avatar", auth, async (req, res) => {
-  console.log(req.user);
+  // console.log(req.user);
   const user = await User.findOne(req.user[0]._id);
   res.set({ "Content-Type": "image/*" });
   res.send(user.avatar); // which has the type buffer
@@ -154,7 +152,6 @@ router.get(
 // END OF AUTHENTICATION //
 // FOR ALL
 router.get("/teachers", getTeachers);
-router.post("/message", messageForm);
 router.get("/teacher/:id", getOneTeacher);
 router.get("/search", getTeacherSearch);
 
@@ -164,7 +161,6 @@ router.get("/admin/teachers", auth, getAllStatusTeachers);
 router.delete("/:id", auth, deleteUser);
 
 router.get("/admin/:id", getOneUser);
-router.get("/admin/message", auth, getMessages);
 router.post("/admin/add-user", auth, addUser);
 
 // FOR TEACHER

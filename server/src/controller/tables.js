@@ -1,4 +1,4 @@
-const { getUserById } = require("../dbQueries/user");
+const { getUserById } = require("../dbQueries/queries");
 const Table = require("../model/table");
 
 const getTables = async (req, res) => {

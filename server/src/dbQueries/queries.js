@@ -103,11 +103,6 @@ const findStudents = async (teacherId) => {
   return students;
 };
 
-const findAllMessages = async () => {
-  const messages = Message.find({});
-  return messages;
-};
-
 const getTeacher = async (id) => {
   const teacher = await User.findById(id);
   if (teacher.role !== "teacher") return false;
@@ -158,7 +153,6 @@ module.exports = {
   getAllTeachers,
   addStudentToTeacher,
   findStudents,
-  findAllMessages,
   getTeacher,
   deleteStudent,
   getTeachersRolesFromDB,

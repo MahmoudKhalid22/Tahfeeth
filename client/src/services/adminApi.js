@@ -56,4 +56,19 @@ const addStudent = async (data) => {
   }
 };
 
-export { addTeacher, addStudent };
+const getMessages = async (adminToken) => {
+  try {
+    const res = await axios.get("http://localhost:5000/message", {
+      headers: {
+        Authorization: "Bearer " + adminToken,
+      },
+    });
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err.response.data.error);
+  }
+};
+
+export { addTeacher, addStudent, getMessages };

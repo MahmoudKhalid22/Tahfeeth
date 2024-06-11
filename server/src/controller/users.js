@@ -10,12 +10,11 @@ const {
   getAllTeachers,
   addStudentToTeacher,
   findStudents,
-  findAllMessages,
   getTeacher,
   deleteStudent,
   getTeachersRolesFromDB,
   findTeacherByName,
-} = require("../dbQueries/user");
+} = require("../dbQueries/queries");
 const { resetPasswordEmail } = require("../middleware/resetPasswordEmail");
 const { sendVerificationEmail } = require("../middleware/verificationEmail");
 const { verifyToken } = require("../middleware/verifyToken");
@@ -350,7 +349,7 @@ const addUser = async (req, res) => {
       if (!name || !email || !password || !age || !teacherId) {
         return res.status(400).send({ error: "أدخل المعلومات كاملة" });
       }
-      console.log(teacherId);
+      // console.log(teacherId);
       const newUser = {
         ...req.body,
         verified: true,
@@ -396,7 +395,7 @@ const joinStudent = async (req, res) => {
     const { studentId, teacherId } = req.body;
 
     const user = await User.findOne({ _id: studentId });
-    console.log(user.role);
+    // console.log(user.role);
     if (user.role !== "student") {
       return res.status(400).send({ error: "you are not a student" });
     }
@@ -436,27 +435,6 @@ const getTeachers = async (req, res) => {
       });
     }
     res.send(result);
-  } catch (err) {
-    res.status(500).send({ err: err.message });
-  }
-};
-
-const messageForm = async (req, res) => {
-  try {
-    const { name, email, msg } = req.body;
-    const message = new Message({ name, email, msg });
-    await saveUserInDB(message);
-
-    res.send({ msg: "your message has been sent" });
-  } catch (err) {
-    res.status(500).send({ error: "internal server error" });
-  }
-};
-
-const getMessages = async (req, res) => {
-  try {
-    const messages = await findAllMessages();
-    res.send(messages);
   } catch (err) {
     res.status(500).send({ err: err.message });
   }
@@ -561,15 +539,12 @@ module.exports = {
   getUsers,
   addUser,
   deleteUser,
-  // updateUser,
   getUser,
   getOneUser,
   getStudents,
   joinStudent,
   joinToTeacher,
   getTeachers,
-  messageForm,
-  getMessages,
   getOneTeacher,
   uploadAvatar,
   deleteStd,

@@ -12,11 +12,15 @@ import Cookies from "js-cookie";
 import { useGetTeachers } from "../../features/settings/useGetTeachers";
 import { useGetStudents } from "../../features/settings/useGetStudents";
 import { useAddTeacher } from "../../features/settings/useAddTeacher";
+import { useGetMessages } from "../../features/settings/useGetMessages";
+import Error from "../../ui/utils/Error";
+import MessageCard from "./MessageCard";
 
 const initialState = {
   showTeacherForm: false,
   showStudentForm: false,
   stdShow: false,
+  messages: false,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -28,6 +32,8 @@ const reducer = (state, action) => {
       return { ...state, info: !state.info };
     case "displayStudents":
       return { ...state, stdShow: !state.stdShow };
+    case "messages":
+      return { ...state, messages: !state.messages };
     default:
       break;
   }
@@ -73,6 +79,15 @@ const Settings = () => {
 
   // ADD STUDENT TO TEACHER
 
+  // GET MESSAGES FOR ADMIN
+  const {
+    isPending: isLoadingMessages,
+    data: messages,
+    error: msgError,
+  } = useGetMessages(adminToken);
+
+  console.log(messages);
+
   if (!isLogin) {
     return <BadRequest />;
   }
@@ -87,7 +102,6 @@ const Settings = () => {
               <button
                 className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg"
                 onClick={() => {
-                  // getTeachers();
                   dispatch({ type: "allTeachers" });
                 }}
               >
@@ -120,6 +134,33 @@ const Settings = () => {
                   </div>
                 )
               )}
+            </div>
+            <div>
+              <button
+                className="bg-[#43766C] hover:bg-[#365e56] transition-colors duration-300 text-white px-4 py-2 text-lg"
+                onClick={() => {
+                  dispatch({ type: "messages" });
+                }}
+              >
+                عرض الرسائل
+              </button>
+              {state.messages &&
+                (isLoadingMessages ? (
+                  <Spinner />
+                ) : msgError ? (
+                  <Error>حدث بعض الخطأ</Error>
+                ) : (
+                  <div className="flex items-center flex-wrap">
+                    {messages?.map((message) => (
+                      <MessageCard
+                        key={message?._id}
+                        name={message?.name}
+                        email={message?.email}
+                        msg={message?.msg}
+                      />
+                    ))}
+                  </div>
+                ))}
             </div>
             <div>
               <button

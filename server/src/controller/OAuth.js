@@ -35,7 +35,7 @@ const oauth = passport.use(
         await user.save();
         done(null, user);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         done(err);
       }
     }

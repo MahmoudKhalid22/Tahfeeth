@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: "test.env" });
 
-console.log(process.env.PORT);
+// console.log(process.env.PORT);
 
 const fahrenheitToCelsius = (temp) => {
   return (temp - 32) / 1.8;

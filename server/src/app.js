@@ -10,6 +10,7 @@ require("./config/dbConnection");
 require("./controller/OAuth");
 const userRouter = require("./router/user");
 const tableRouter = require("./router/tables");
+const messageRouter = require("./router/message");
 const { docs } = require("./utils/swagger");
 
 const app = express();
@@ -39,6 +40,7 @@ app.use(passport.session());
 
 app.use("/user", userRouter);
 app.use("/table", tableRouter);
+app.use("/message", messageRouter);
 
 docs(app);
 

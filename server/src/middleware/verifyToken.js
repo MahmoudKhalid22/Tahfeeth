@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { getUserById } = require("../dbQueries/user");
+const { getUserById } = require("../dbQueries/queries");
 
 const verifyToken = async (token, secret) => {
   try {
