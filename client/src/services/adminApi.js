@@ -58,11 +58,14 @@ const addStudent = async (data) => {
 
 const getMessages = async (adminToken) => {
   try {
-    const res = await axios.get("http://localhost:5000/message", {
-      headers: {
-        Authorization: "Bearer " + adminToken,
-      },
-    });
+    const res = await axios.get(
+      "https://tahfeeth-system.onrender.com/message",
+      {
+        headers: {
+          Authorization: "Bearer " + adminToken,
+        },
+      }
+    );
     console.log(res.data);
     return res.data;
   } catch (err) {
