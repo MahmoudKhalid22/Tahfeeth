@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ name, email, message }) => {
+const Card = ({ name, email, msg }) => {
   return (
     <div
       className="bg-white shadow-md rounded-lg p-6 w-80 mx-auto my-4 border-l-4"
@@ -20,8 +20,8 @@ const Card = ({ name, email, message }) => {
         </p>
       </div>
       <div>
-        <p className="text-gray-700">
-          <strong>Message:</strong> {message}
+        <p className="text-gray-700 overflow-x-scroll">
+          <strong>message:</strong> {msg}
         </p>
       </div>
     </div>
