@@ -11,7 +11,6 @@ import { useUser } from "../../features/user/useUser";
 import Cookies from "js-cookie";
 import { useGetTeachers } from "../../features/settings/useGetTeachers";
 import { useGetStudents } from "../../features/settings/useGetStudents";
-import { useAddTeacher } from "../../features/settings/useAddTeacher";
 import { useGetMessages } from "../../features/settings/useGetMessages";
 import Error from "../../ui/utils/Error";
 import MessageCard from "./MessageCard";
@@ -73,20 +72,12 @@ const Settings = () => {
   const adminToken = userData?.role === "admin" ? token : null;
   const teacherToken = userData?.role === "teacher" ? token : null;
 
-  // ADD TEACHER
-
-  const { isPending: isAddingTeacher, mutate } = useAddTeacher();
-
-  // ADD STUDENT TO TEACHER
-
   // GET MESSAGES FOR ADMIN
   const {
     isPending: isLoadingMessages,
     data: messages,
     error: msgError,
   } = useGetMessages(adminToken);
-
-  console.log(messages);
 
   if (!isLogin) {
     return <BadRequest />;

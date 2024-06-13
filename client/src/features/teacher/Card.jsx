@@ -16,29 +16,29 @@ function Card({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const deleteTeacher = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://tahfeeth-system.onrender.com/user/" + id,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + adminToken,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error(await response.json());
-      }
-      window.location.reload();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const deleteTeacher = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await fetch(
+  //       "https://tahfeeth-system.onrender.com/user/" + id,
+  //       {
+  //         method: "DELETE",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: "Bearer " + adminToken,
+  //         },
+  //       }
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error(await response.json());
+  //     }
+  //     window.location.reload();
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <>

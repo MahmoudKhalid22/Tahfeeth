@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Error from "../../ui/utils/Error";
 import { useAddTeacher, useAddStudent } from "../settings/useAddTeacher";
 import { useGetTeachers } from "../settings/useGetTeachers";
+import { useAddStudentFromTeacher } from "./useAddStudent";
 
 function AddUserForm({ role, admin }) {
   // const [name, setName] = useState("");
@@ -13,7 +14,6 @@ function AddUserForm({ role, admin }) {
   // const [password, setPassword] = useState("");
 
   const [info, setInfo] = useState("");
-  const [teacherId, setTeacherId] = useState("");
 
   const tokenA = Cookies.get("accessToken");
 
@@ -90,12 +90,33 @@ function AddUserForm({ role, admin }) {
     });
   }
 
+  // TEACHER ADDS STUDENT
+  // TEACHER ADDS STUDENT
+  const {
+    isPending: isAddingStudentFromTeacher,
+    mutate: addStudentFromTeacher,
+  } = useAddStudentFromTeacher();
+
+  function submitNewStudentTeacher(data) {
+    // console.log(data);
+    addStudentFromTeacher({
+      name: data["name-2"],
+      email: data["email-2"],
+      password: data["pass-2"],
+      age: data["age-2"],
+      teacherId: data["teacherId"],
+      token: teacherToken,
+    });
+  }
+
   return (
     <>
       <form
         className={`${styles.container} flex flex-col gap-6 w-fit py-4 px-6 rounded-md my-4 transition-all bg-[#9F8565]`}
         onSubmit={handleSubmitForm(
-          admin && role === "teacher"
+          data?.role === "teacher"
+            ? submitNewStudentTeacher
+            : data?.role === "admin" && role === "teacher"
             ? submitNewTeacher
             : admin && role !== "teacher"
             ? submitNewStudentAdmin
@@ -235,7 +256,10 @@ function AddUserForm({ role, admin }) {
           className="p-2 border-none outline-none text-xl cursor-pointer rounded-md text-[#ececec] transition-colors text-center bg-[#7f6a51] hover:bg-[#5f503d] duration-300"
           disabled={isPendingAddStd}
         >
-          {isPendingAddStd || isPending || isAddingStudent
+          {isPendingAddStd ||
+          isPending ||
+          isAddingStudent ||
+          isAddingStudentFromTeacher
             ? "تحميل..."
             : "تسجيل"}
         </button>

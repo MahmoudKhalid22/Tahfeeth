@@ -2,7 +2,7 @@ import { QueryClient, useMutation } from "@tanstack/react-query";
 import { addStudent } from "../../services/teacherApi";
 import toast from "react-hot-toast";
 
-function useAddStudent() {
+function useAddStudentFromTeacher() {
   const queryClient = new QueryClient();
   const { isPending, mutate, error } = useMutation({
     mutationFn: addStudent,
@@ -20,4 +20,4 @@ function useAddStudent() {
   return { isPending, mutate, error };
 }
 
-export { useAddStudent };
+export { useAddStudentFromTeacher };

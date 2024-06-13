@@ -95,7 +95,7 @@ const Teacher = () => {
                   لا يوجد طلاب حتى الآن
                 </p>
               )}
-              {isPendingStd ? (
+              {isPendingStd && stdDisplay ? (
                 <Spinner />
               ) : stdErr ? (
                 <p className="text-red-600 font-semibold text-2xl">

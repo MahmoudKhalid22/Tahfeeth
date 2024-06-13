@@ -2,14 +2,11 @@ import axios from "axios";
 
 const getTables = async (token, stdId) => {
   try {
-    const res = await axios.get(
-      "https://tahfeeth-system.onrender.com/table/" + stdId,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+    const res = await axios.get("http://localhost:5000/table/" + stdId, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -19,7 +16,7 @@ const getTables = async (token, stdId) => {
 const addTable = async (data) => {
   try {
     const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/table/create-table",
+      "http://localhost:5000/table/create-table",
 
       {
         ...data?.tableUser,
@@ -42,7 +39,7 @@ const deleteTable = async (data) => {
   try {
     console.log(data);
     const res = await axios.delete(
-      "https://tahfeeth-system.onrender.com/table/" + data?.tableId,
+      "http://localhost:5000/table/" + data?.tableId,
       {
         headers: {
           Authorization: "Bearer " + data?.teacherToken,
