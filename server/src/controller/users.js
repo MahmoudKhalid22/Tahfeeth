@@ -181,6 +181,8 @@ const resetPassword = async (req, res) => {
 
     await updatePassword(user._id, req.body.password);
 
+    user.resetPasswordToken = undefined;
+
     res.send({ message: "password has been updated" });
   } catch (error) {
     res.status(500).send({ error: error.message });
