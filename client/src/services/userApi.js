@@ -21,17 +21,16 @@ async function newUser(data) {
 
 async function loginUserApi(data) {
   try {
-    const res = await axios.post("http://localhost:5001/user/login", {
-      email: data.email,
-      password: data.password,
-    });
+    const res = await axios.post(
+      "https://tahfeeth-system.onrender.com/user/login",
+      {
+        email: data.email,
+        password: data.password,
+      }
+    );
     return res.data;
   } catch (err) {
-    throw new Error(
-      err.response.data.message === "يجب تفعيل الحساب أولا"
-        ? err.response.data.message
-        : "internal server error"
-    );
+    throw new Error(err.message ? err.message : err.response.data.message);
   }
 }
 
