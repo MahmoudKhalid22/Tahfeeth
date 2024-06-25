@@ -3,7 +3,7 @@ import axios from "axios";
 const getStudents = async (teacherId, token) => {
   try {
     const res = await axios.get(
-      "http://localhost:5000/user/students/" + teacherId,
+      "http://localhost:5001/user/students/" + teacherId,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -20,7 +20,7 @@ const addStudent = async (data) => {
   console.log(data);
   try {
     const res = await axios.post(
-      "http://localhost:5000/user/teacher/signup",
+      "http://localhost:5001/user/teacher/signup",
       {
         name: data.name,
         email: data.email,
@@ -46,7 +46,7 @@ const joinStudent = async (data) => {
   console.log(data);
   try {
     const res = await axios.post(
-      "http://localhost:5000/user/join/" + data.teacherId,
+      "http://localhost:5001/user/join/" + data.teacherId,
       {},
       {
         headers: {

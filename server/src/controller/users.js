@@ -144,18 +144,15 @@ const forgetPassword = async (req, res) => {
         .status(400)
         .send({ message: "هذا البريد الإلكتروني غير مسجل" });
     }
-    const token = jwt.sign(
-      { id: user._id.toString() },
-      process.env.RESET_PASSWORD_SECRET,
-      { expiresIn: "1h" }
-    );
-    resetPasswordEmail(email, token);
+
+    const token = await user.createResetPasswordToken();
+    resetPasswordEmail(email, token, user.name);
     res.send({
       message:
         "تم إرسال ايميل إلى عنوان بريدك الإلكتروني من فضلك اذهب إلى بريدك الإلكتروني لإعادة تعيين كلمة السر",
     });
   } catch (err) {
-    res.status(500).send({ err });
+    res.status(500).send({ error: err.message });
   }
 };
 let user = null;
@@ -175,8 +172,15 @@ const verifyResetPasswordToken = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
+    const token = req.header("Authorization").replace("Bearer ", "");
+    const decoded = jwt.verify(token, process.env.RESET_PASSWORD_SECRET);
+
+    const user = await User.findOne({ _id: decoded._id });
+
     if (!user) return res.status(400).send({ error: "user is not exist" });
+
     await updatePassword(user._id, req.body.password);
+
     res.send({ message: "password has been updated" });
   } catch (error) {
     res.status(500).send({ error: error.message });

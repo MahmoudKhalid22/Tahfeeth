@@ -1,7 +1,7 @@
 import axios from "axios";
 async function addMessage(data) {
   try {
-    const res = await axios.post("http://localhost:5000/message/new", {
+    const res = await axios.post("http://localhost:5001/message/new", {
       name: data.name,
       email: data.email,
       msg: data.message,

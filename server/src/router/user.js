@@ -57,8 +57,6 @@ router.post("/logout", auth, logoutUser);
 // forget password
 router.post("/forget-password", forgetPassword);
 
-// get token from email
-router.get("/get-forget-password/:token", verifyResetPasswordToken);
 
 // reset password
 router.post("/reset-password", resetPassword);

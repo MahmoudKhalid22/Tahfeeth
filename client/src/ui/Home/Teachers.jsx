@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useGetTeachers } from "../../features/settings/useGetTeachers";
 
 function Teachers() {
-  const { isPending, data: teachers, error } = useGetTeachers();
+  const { isPending, data: teachers = [], error } = useGetTeachers();
 
   return (
     <div id="teachers" className="py-8 ">
@@ -14,7 +14,7 @@ function Teachers() {
       </h3>
       {!error && !isPending && (
         <div className="flex flex-wrap gap-4 lg:gap-8 justify-center">
-          {teachers.length > 0 ? (
+          {teachers?.length > 0 ? (
             teachers?.map((teacher) => (
               <Card
                 key={teacher._id}

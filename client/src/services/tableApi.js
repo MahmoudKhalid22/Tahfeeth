@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getTables = async (token, stdId) => {
   try {
-    const res = await axios.get("http://localhost:5000/table/" + stdId, {
+    const res = await axios.get("http://localhost:5001/table/" + stdId, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -16,7 +16,7 @@ const getTables = async (token, stdId) => {
 const addTable = async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:5000/table/create-table",
+      "http://localhost:5001/table/create-table",
 
       {
         ...data?.tableUser,
@@ -39,7 +39,7 @@ const deleteTable = async (data) => {
   try {
     console.log(data);
     const res = await axios.delete(
-      "http://localhost:5000/table/" + data?.tableId,
+      "http://localhost:5001/table/" + data?.tableId,
       {
         headers: {
           Authorization: "Bearer " + data?.teacherToken,

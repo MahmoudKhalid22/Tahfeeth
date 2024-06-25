@@ -14,24 +14,24 @@ const ForgetPassword = () => {
     try {
       setLoading(true);
       setErr(false);
-      const res = await fetch(
-        "https://tahfeeth.onrender.com/user/forget-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-          }),
-        }
-      );
+      const res = await fetch("http://localhost:5001/user/forget-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
       const result = await res.json();
+      console.log(result);
       if (!res.ok) {
         throw new Error(result.message);
       }
+      console.log(res);
       setInform(true);
     } catch (e) {
+      console.log(e);
       setErr(e.message);
     } finally {
       setLoading(false);

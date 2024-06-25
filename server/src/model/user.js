@@ -97,6 +97,7 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 20,
     },
+    resetPasswordToken: String,
   },
   {
     timestamps: true,
@@ -122,6 +123,7 @@ userSchema.methods.toJSON = function () {
   delete userObj.teachers;
   delete userObj.admins;
   delete userObj.avatar;
+  delete userObj.resetPasswordToken;
 
   return userObj;
 };
@@ -148,6 +150,18 @@ userSchema.methods.createRefreshToken = async function () {
   );
   user.tokens = user.tokens.concat({ token });
   await user.save();
+  return token;
+};
+
+// CREATE RESET PASSWORD TOKEN
+userSchema.methods.createResetPasswordToken = async function () {
+  const token = jwt.sign(
+    { _id: this._id.toString() },
+    process.env.RESET_PASSWORD_SECRET,
+    { expiresIn: "1h" }
+  );
+  this.resetPasswordToken = token;
+  await this.save();
   return token;
 };
 

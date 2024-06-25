@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ResetPasswordForm = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -9,6 +11,11 @@ const ResetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const token = searchParams.get("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,20 +26,19 @@ const ResetPasswordForm = () => {
         return;
       }
       setLoading(true);
-      const res = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/reset-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            password: newPassword,
-          }),
-        }
-      );
+      const res = await fetch("http://localhost:5001/user/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          password: newPassword,
+        }),
+      });
       const result = await res.json();
-      console.log(result);
+      toast.success(result.message);
+      navigate("/register?mode=login");
     } catch (err) {
       setErr(false);
     } finally {

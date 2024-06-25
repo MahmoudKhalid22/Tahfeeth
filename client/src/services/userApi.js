@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 async function newUser(data) {
   try {
-    const res = await axios.post("http://localhost:5000/user/signup", {
+    const res = await axios.post("http://localhost:5001/user/signup", {
       name: data.name,
       email: data.email,
       password: data.password,
@@ -21,13 +21,17 @@ async function newUser(data) {
 
 async function loginUserApi(data) {
   try {
-    const res = await axios.post("http://localhost:5000/user/login", {
+    const res = await axios.post("http://localhost:5001/user/login", {
       email: data.email,
       password: data.password,
     });
     return res.data;
   } catch (err) {
-    throw new Error(err.response.data.message);
+    throw new Error(
+      err.response.data.message === "يجب تفعيل الحساب أولا"
+        ? err.response.data.message
+        : "internal server error"
+    );
   }
 }
 
@@ -37,7 +41,7 @@ function logoutUserApi() {
 
 async function getUser(token) {
   try {
-    const res = await axios.get("http://localhost:5000/user/me", {
+    const res = await axios.get("http://localhost:5001/user/me", {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -50,7 +54,7 @@ async function getUser(token) {
 
 async function getAvatar(token) {
   try {
-    const res = await axios.get("http://localhost:5000/user/avatar", {
+    const res = await axios.get("http://localhost:5001/user/avatar", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -64,7 +68,7 @@ async function getAvatar(token) {
 async function updateUsername(data) {
   try {
     const res = await axios.put(
-      "http://localhost:5000/user/update-username",
+      "http://localhost:5001/user/update-username",
 
       {
         name: data?.name,
@@ -85,7 +89,7 @@ async function updateUsername(data) {
 async function updatePassword(data) {
   try {
     const res = await axios.put(
-      "http://localhost:5000/user/update-password",
+      "http://localhost:5001/user/update-password",
       {
         oldPassword: data?.oldPassword,
         newPassword: data?.newPassword,
@@ -106,7 +110,7 @@ async function uploadAvatarApi(data) {
   try {
     console.log([...data.formData.entries()]);
     const res = await axios.post(
-      "http://localhost:5000/user/upload-avatar",
+      "http://localhost:5001/user/upload-avatar",
       data?.formData,
       {
         headers: {
