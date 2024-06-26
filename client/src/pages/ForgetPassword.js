@@ -14,15 +14,18 @@ const ForgetPassword = () => {
     try {
       setLoading(true);
       setErr(false);
-      const res = await fetch("http://localhost:5001/user/forget-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-        }),
-      });
+      const res = await fetch(
+        "https://tahfeeth-production-36fe.up.railway.app/user/forget-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+          }),
+        }
+      );
       const result = await res.json();
       console.log(result);
       if (!res.ok) {

@@ -26,16 +26,19 @@ const ResetPasswordForm = () => {
         return;
       }
       setLoading(true);
-      const res = await fetch("http://localhost:5001/user/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          password: newPassword,
-        }),
-      });
+      const res = await fetch(
+        "https://tahfeeth-production-36fe.up.railway.app/user/reset-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            password: newPassword,
+          }),
+        }
+      );
       const result = await res.json();
       toast.success(result.message);
       navigate("/register?mode=login");

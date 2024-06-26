@@ -2,11 +2,14 @@ import axios from "axios";
 
 const getTables = async (token, stdId) => {
   try {
-    const res = await axios.get("http://localhost:5001/table/" + stdId, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+    const res = await axios.get(
+      "https://tahfeeth-production-36fe.up.railway.app/table/" + stdId,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -16,7 +19,7 @@ const getTables = async (token, stdId) => {
 const addTable = async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:5001/table/create-table",
+      "https://tahfeeth-production-36fe.up.railway.app/table/create-table",
 
       {
         ...data?.tableUser,
@@ -39,7 +42,7 @@ const deleteTable = async (data) => {
   try {
     console.log(data);
     const res = await axios.delete(
-      "http://localhost:5001/table/" + data?.tableId,
+      "https://tahfeeth-production-36fe.up.railway.app/table/" + data?.tableId,
       {
         headers: {
           Authorization: "Bearer " + data?.teacherToken,

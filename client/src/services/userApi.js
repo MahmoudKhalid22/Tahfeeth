@@ -3,15 +3,18 @@ import Cookies from "js-cookie";
 
 async function newUser(data) {
   try {
-    const res = await axios.post("http://localhost:5001/user/signup", {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      role: data.role || "student",
-      professional: data?.professional || undefined,
-      price: data?.price || undefined,
-      information: data?.information || undefined,
-    });
+    const res = await axios.post(
+      "https://tahfeeth-production-36fe.up.railway.app/user/signup",
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        role: data.role || "student",
+        professional: data?.professional || undefined,
+        price: data?.price || undefined,
+        information: data?.information || undefined,
+      }
+    );
 
     return res.data;
   } catch (err) {
@@ -22,7 +25,7 @@ async function newUser(data) {
 async function loginUserApi(data) {
   try {
     const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/login",
+      "https://tahfeeth-production-36fe.up.railway.app/user/login",
       {
         email: data.email,
         password: data.password,
@@ -40,11 +43,14 @@ function logoutUserApi() {
 
 async function getUser(token) {
   try {
-    const res = await axios.get("http://localhost:5001/user/me", {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+    const res = await axios.get(
+      "https://tahfeeth-production-36fe.up.railway.app/user/me",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -53,11 +59,14 @@ async function getUser(token) {
 
 async function getAvatar(token) {
   try {
-    const res = await axios.get("http://localhost:5001/user/avatar", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await axios.get(
+      "https://tahfeeth-production-36fe.up.railway.app/user/avatar",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -67,7 +76,7 @@ async function getAvatar(token) {
 async function updateUsername(data) {
   try {
     const res = await axios.put(
-      "http://localhost:5001/user/update-username",
+      "https://tahfeeth-production-36fe.up.railway.app/user/update-username",
 
       {
         name: data?.name,
@@ -88,7 +97,7 @@ async function updateUsername(data) {
 async function updatePassword(data) {
   try {
     const res = await axios.put(
-      "http://localhost:5001/user/update-password",
+      "https://tahfeeth-production-36fe.up.railway.app/user/update-password",
       {
         oldPassword: data?.oldPassword,
         newPassword: data?.newPassword,
@@ -109,7 +118,7 @@ async function uploadAvatarApi(data) {
   try {
     console.log([...data.formData.entries()]);
     const res = await axios.post(
-      "http://localhost:5001/user/upload-avatar",
+      "https://tahfeeth-production-36fe.up.railway.app/user/upload-avatar",
       data?.formData,
       {
         headers: {
