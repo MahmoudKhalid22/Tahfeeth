@@ -5,7 +5,7 @@ const sgMail = require("@sendgrid/mail");
 
 const sendVerificationEmail = async (email, token) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  const verificationLink = `http://tahfeeth-production-36fe.up.railway.app/user/verify/${token}`;
+  const verificationLink = `https://tahfeeth-production-36fe.up.railway.app/user/verify/${token}`;
 
   const msg = {
     to: email, // Change to your recipient
