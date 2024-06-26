@@ -164,7 +164,7 @@ const verifyResetPasswordToken = async (req, res) => {
       throw new Error("token has been expired");
     }
     user = await User.findOne({ _id: decoded._id });
-    res.redirect("http://localhost:3000/reset-password");
+    res.redirect("https://tahfeeth.vercel.app/reset-password");
   } catch (err) {
     res.status(500).send({ err: err.message });
   }

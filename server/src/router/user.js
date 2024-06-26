@@ -57,7 +57,6 @@ router.post("/logout", auth, logoutUser);
 // forget password
 router.post("/forget-password", forgetPassword);
 
-
 // reset password
 router.post("/reset-password", resetPassword);
 
@@ -143,7 +142,9 @@ router.get(
 
     // Handle the user data as needed
     // For example, redirect to dashboard and pass user data
-    res.redirect(`http://localhost:3000/redirect?user=${JSON.stringify(user)}`);
+    res.redirect(
+      `https://tahfeeth.vercel.app/redirect?user=${JSON.stringify(user)}`
+    );
   }
 );
 

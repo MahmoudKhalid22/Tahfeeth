@@ -15,10 +15,15 @@ async function newUser(data) {
         information: data?.information || undefined,
       }
     );
-
     return res.data;
   } catch (err) {
-    throw new Error(err.response.data.message || err.response.data.err);
+    let error = "";
+    if (err.response.data.err[0] === "E") {
+      error = "هذا الحساب موجود مسبقا حاول بحساب آخر";
+    }
+    throw new Error(
+      error || err.response.data.message || err.response.data.err
+    );
   }
 }
 
