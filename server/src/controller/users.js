@@ -60,7 +60,7 @@ const verificationEmail = async (req, res) => {
     }
     res.redirect("https://tahfeeth.vercel.app/verified");
   } catch (e) {
-    res.status(500).send(e);
+    res.status(500).send({ error: e.message });
   }
 };
 

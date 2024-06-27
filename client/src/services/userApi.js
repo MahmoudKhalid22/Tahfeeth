@@ -38,7 +38,7 @@ async function loginUserApi(data) {
     );
     return res.data;
   } catch (err) {
-    throw new Error(err.message ? err.message : err.response.data.message);
+    throw new Error(err.response.data.message);
   }
 }
 
