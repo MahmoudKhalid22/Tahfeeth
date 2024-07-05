@@ -27,7 +27,7 @@ const ResetPasswordForm = () => {
       }
       setLoading(true);
       const res = await fetch(
-        "https://tahfeeth-production-36fe.up.railway.app/user/reset-password",
+        "https://tahfeeth-system.onrender.com/user/reset-password",
         {
           method: "POST",
           headers: {

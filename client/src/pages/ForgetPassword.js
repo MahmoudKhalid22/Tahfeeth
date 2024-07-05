@@ -15,7 +15,7 @@ const ForgetPassword = () => {
       setLoading(true);
       setErr(false);
       const res = await fetch(
-        "https://tahfeeth-production-36fe.up.railway.app/user/forget-password",
+        "https://tahfeeth-system.onrender.com/user/forget-password",
         {
           method: "POST",
           headers: {

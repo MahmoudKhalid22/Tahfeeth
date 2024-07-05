@@ -3,7 +3,7 @@ import axios from "axios";
 const addTeacher = async (data) => {
   try {
     const res = await axios.post(
-      "https://tahfeeth-production-36fe.up.railway.app/user/admin/add-user",
+      "https://tahfeeth-system.onrender.com/user/admin/add-user",
       {
         name: data.name,
         email: data.email,
@@ -33,7 +33,7 @@ const addStudent = async (data) => {
   console.log(data);
   try {
     const res = await axios.post(
-      "https://tahfeeth-production-36fe.up.railway.app/user/admin/add-user",
+      "https://tahfeeth-system.onrender.com/user/admin/add-user",
       {
         name: data.name,
         email: data.email,
@@ -59,7 +59,7 @@ const addStudent = async (data) => {
 const getMessages = async (adminToken) => {
   try {
     const res = await axios.get(
-      "https://tahfeeth-production-36fe.up.railway.app/message",
+      "https://tahfeeth-system.onrender.com/message",
       {
         headers: {
           Authorization: "Bearer " + adminToken,

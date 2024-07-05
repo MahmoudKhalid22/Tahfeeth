@@ -3,7 +3,7 @@ import axios from "axios";
 async function getTeachers() {
   try {
     const res = await axios.get(
-      "https://tahfeeth-production-36fe.up.railway.app/user/teachers"
+      "https://tahfeeth-system.onrender.com/user/teachers"
     );
     return res.data;
   } catch (err) {
@@ -14,7 +14,7 @@ async function getTeachers() {
 async function getTeacher(id) {
   try {
     const res = await axios.get(
-      "https://tahfeeth-production-36fe.up.railway.app/user/teacher/" + id
+      "https://tahfeeth-system.onrender.com/user/teacher/" + id
     );
     return res.data;
   } catch (err) {

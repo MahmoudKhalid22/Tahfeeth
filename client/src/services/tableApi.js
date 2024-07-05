@@ -42,7 +42,7 @@ const deleteTable = async (data) => {
   try {
     console.log(data);
     const res = await axios.delete(
-      "https://tahfeeth-production-36fe.up.railway.app/table/" + data?.tableId,
+      "https://tahfeeth-system.onrender.com/table/" + data?.tableId,
       {
         headers: {
           Authorization: "Bearer " + data?.teacherToken,

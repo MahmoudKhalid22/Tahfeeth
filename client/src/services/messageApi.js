@@ -2,7 +2,7 @@ import axios from "axios";
 async function addMessage(data) {
   try {
     const res = await axios.post(
-      "https://tahfeeth-production-36fe.up.railway.app/message/new",
+      "https://tahfeeth-system.onrender.com/message/new",
       {
         name: data.name,
         email: data.email,

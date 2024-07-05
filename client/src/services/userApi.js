@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 async function newUser(data) {
   try {
     const res = await axios.post(
-      "https://tahfeeth-production-36fe.up.railway.app/user/signup",
+      "https://tahfeeth-system.onrender.com/user/signup",
       {
         name: data.name,
         email: data.email,
@@ -30,7 +30,7 @@ async function newUser(data) {
 async function loginUserApi(data) {
   try {
     const res = await axios.post(
-      "https://tahfeeth-production-36fe.up.railway.app/user/login",
+      "https://tahfeeth-system.onrender.com/user/login",
       {
         email: data.email,
         password: data.password,
@@ -49,7 +49,7 @@ function logoutUserApi() {
 async function getUser(token) {
   try {
     const res = await axios.get(
-      "https://tahfeeth-production-36fe.up.railway.app/user/me",
+      "https://tahfeeth-system.onrender.com/user/me",
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -65,7 +65,7 @@ async function getUser(token) {
 async function getAvatar(token) {
   try {
     const res = await axios.get(
-      "https://tahfeeth-production-36fe.up.railway.app/user/avatar",
+      "https://tahfeeth-system.onrender.com/user/avatar",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -81,7 +81,7 @@ async function getAvatar(token) {
 async function updateUsername(data) {
   try {
     const res = await axios.put(
-      "https://tahfeeth-production-36fe.up.railway.app/user/update-username",
+      "https://tahfeeth-system.onrender.com/user/update-username",
 
       {
         name: data?.name,
@@ -102,7 +102,7 @@ async function updateUsername(data) {
 async function updatePassword(data) {
   try {
     const res = await axios.put(
-      "https://tahfeeth-production-36fe.up.railway.app/user/update-password",
+      "https://tahfeeth-system.onrender.com/user/update-password",
       {
         oldPassword: data?.oldPassword,
         newPassword: data?.newPassword,
@@ -123,7 +123,7 @@ async function uploadAvatarApi(data) {
   try {
     console.log([...data.formData.entries()]);
     const res = await axios.post(
-      "https://tahfeeth-production-36fe.up.railway.app/user/upload-avatar",
+      "https://tahfeeth-system.onrender.com/user/upload-avatar",
       data?.formData,
       {
         headers: {
