@@ -1,13 +1,13 @@
 const express = require("express");
 require("dotenv").config();
-const passport = require("passport");
+// const passport = require("passport");
 const session = require("express-session");
 const cors = require("cors");
 const path = require("path");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 require("./config/dbConnection");
-require("./controller/OAuth");
+// require("./controller/OAuth");
 const userRouter = require("./router/user");
 const tableRouter = require("./router/tables");
 const messageRouter = require("./router/message");
@@ -35,8 +35,8 @@ app.use(
     cookie: { secure: true },
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use("/user", userRouter);
 app.use("/table", tableRouter);
