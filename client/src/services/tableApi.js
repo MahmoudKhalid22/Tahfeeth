@@ -3,7 +3,7 @@ import axios from "axios";
 const getTables = async (token, stdId) => {
   try {
     const res = await axios.get(
-      "https://tahfeeth-production-36fe.up.railway.app/table/" + stdId,
+      "https://tahfeeth-system.onrender.com/table/" + stdId,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -19,7 +19,7 @@ const getTables = async (token, stdId) => {
 const addTable = async (data) => {
   try {
     const res = await axios.post(
-      "https://tahfeeth-production-36fe.up.railway.app/table/create-table",
+      "https://tahfeeth-system.onrender.com/table/create-table",
 
       {
         ...data?.tableUser,

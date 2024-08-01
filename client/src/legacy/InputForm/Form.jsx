@@ -13,7 +13,7 @@ function Form({ onSetIsLogin }) {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/signup",
+        "https://tahfeeth-system.onrender.com/user/signup",
         {
           method: "POST",
           headers: {
@@ -70,7 +70,7 @@ function Form({ onSetIsLogin }) {
       setLoading(true);
       setError(null);
       const response = await fetch(
-        "https://tahfeeth-production.up.railway.app/user/login",
+        "https://tahfeeth-system.onrender.com/user/login",
         {
           method: "POST",
           headers: {

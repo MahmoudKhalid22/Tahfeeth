@@ -14,7 +14,7 @@ const options = {
         email: "m.khalid.samra@gmail.com",
       },
     },
-    servers: [{ url: "https://tahfeeth-production-36fe.up.railway.app/" }],
+    servers: [{ url: "https://tahfeeth-system.onrender.com/" }],
   },
   apis: ["./src/utils/*.js", "./src/model/*.js"],
 };
