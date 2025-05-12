@@ -10,9 +10,9 @@ const sendVerificationEmail = async (email, token) => {
   const msg = {
     to: email, // Change to your recipient
     from: "mahmoud0122549@gmail.com", // Change to your verified sender
-    subject: "تفعيل حساب منصة نحيا بالقرآن",
+    subject: "تفعيل حساب منصة قبس",
     html: `
-    <p style="font-size:1.75rem; font-weight:600;text-align:center;">مرحبا بك في منصة نحيا بالقرآن لتعليم قراءة القرآن الكريم</p>
+    <p style="font-size:1.75rem; font-weight:600;text-align:center;">مرحبا بك في منصة قبس لتعليم قراءة القرآن الكريم</p>
     <p style="font-size:1.25rem; font-weight:500;text-align:center;">حتى يكتمل تسجيل حسابك وتستفيد من المنصة , من فضلك اضغط على الزر في الأسفل 👇🏾 لتفعيل الحساب</p>    
     <a href="${verificationLink}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; display: block; border-radius: 5px;text-align:center;width:fit-content;margin:0 auto;">Verify Email</a>
     `,

@@ -58,10 +58,7 @@ function Proposal({ onSetActiveLink, observer }) {
       <div className="px-6 z-10 text-[#f5f5f5]">
         <h1 className="text-right font-bold text-xl sm:text-3xl block">
           منصة
-          <span className="text-[#8a7762] text-2xl sm:text-4xl">
-            {" "}
-            نَحْيَا بِالْقُرْآن{" "}
-          </span>
+          <span className="text-[#8a7762] text-2xl sm:text-4xl"> قَــبَس </span>
           لتعليم قراءة القرآن الكريم
         </h1>
         <p className="mt-8 leading-[1.5rem] sm:leading-[2.5rem]  text-sm sm:text-[1.5rem] w-[85%] lg:w-[60%] ">
