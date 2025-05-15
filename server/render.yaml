@@ -1,0 +1,3 @@
+build:
+  environment:
+    nodeVersion: 18
