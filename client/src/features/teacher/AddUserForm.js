@@ -60,7 +60,7 @@ function AddUserForm({ role, admin }) {
   const { isPending, mutate: addTeacher } = useAddTeacher();
 
   function submitNewTeacher(data) {
-    // console.log(data);
+    // // console.log(data);
     addTeacher({
       name: data["name-2"],
       email: data["email-2"],
@@ -79,7 +79,7 @@ function AddUserForm({ role, admin }) {
   const { isPending: isAddingStudent, mutate: addstudent } = useAddStudent();
 
   function submitNewStudentAdmin(data) {
-    // console.log(data);
+    // // console.log(data);
     addstudent({
       name: data["name-2"],
       email: data["email-2"],
@@ -98,7 +98,7 @@ function AddUserForm({ role, admin }) {
   } = useAddStudentFromTeacher();
 
   function submitNewStudentTeacher(data) {
-    // console.log(data);
+    // // console.log(data);
     addStudentFromTeacher({
       name: data["name-2"],
       email: data["email-2"],

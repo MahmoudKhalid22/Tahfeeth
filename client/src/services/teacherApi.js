@@ -14,7 +14,7 @@ const getStudents = async (teacherId, token) => {
 };
 
 const addStudent = async (data) => {
-  console.log(data);
+  // // console.log(data);
   try {
     const res = await api.post(
       "/user/teacher/signup",
@@ -31,16 +31,16 @@ const addStudent = async (data) => {
         },
       }
     );
-    // console.log(res.data);
+    // // console.log(res.data);
     return res.data;
   } catch (err) {
-    // console.log(err);
+    // // console.log(err);
     throw new Error(err.response.data.err || err.response.data.error);
   }
 };
 
 const joinStudent = async (data) => {
-  console.log(data);
+  // // console.log(data);
   try {
     const res = await api.post(
       "/user/join/" + data.teacherId,
@@ -54,7 +54,7 @@ const joinStudent = async (data) => {
 
     return res.data;
   } catch (err) {
-    console.log(err);
+    // // console.log(err);
     throw new Error(err.response.data.err || err.response.data.error);
   }
 };

@@ -27,14 +27,14 @@ const ForgetPassword = () => {
         }
       );
       const result = await res.json();
-      console.log(result);
+      // // console.log(result);
       if (!res.ok) {
         throw new Error(result.message);
       }
-      console.log(res);
+      // // console.log(res);
       setInform(true);
     } catch (e) {
-      console.log(e);
+      // // console.log(e);
       setErr(e.message);
     } finally {
       setLoading(false);

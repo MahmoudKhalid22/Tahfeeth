@@ -21,7 +21,7 @@ function useUploadAvatar() {
     },
   });
 
-  console.log(isUploadingAvatar);
+  // // console.log(isUploadingAvatar);
   return { isUploadingAvatar, uploadAvatar, error };
 }
 

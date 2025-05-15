@@ -35,7 +35,7 @@ const oauth = passport.use(
         await user.save();
         done(null, user);
       } catch (err) {
-        // console.log(err);
+        // // console.log(err);
         done(err);
       }
     }
@@ -50,11 +50,11 @@ passport.use(
       callbackURL: "/user/auth/facebook/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
-      // console.log(profile);
+      // // console.log(profile);
       try {
         const existingUser = await User.findOne({ facebookId: profile.id });
         if (existingUser) {
-          // console.log(existingUser);
+          // // console.log(existingUser);
           return cb(null, { existingUser, refreshToken, accessToken });
         }
         const user = new User({
@@ -64,7 +64,7 @@ passport.use(
           verified: true,
         });
         await user.save();
-        // console.log(user);
+        // // console.log(user);
         cb(null, { user, refreshToken, accessToken });
       } catch (err) {
         cb(err);

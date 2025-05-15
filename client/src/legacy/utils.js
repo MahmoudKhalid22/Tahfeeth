@@ -25,7 +25,7 @@
 //     }
 
 //     const updatedData = await response.json();
-//     // console.log(updatedData);
+//     // // console.log(updatedData);
 
 //     const existingData = JSON.parse(localStorage.getItem("data"));
 //     existingData.user.name = updatedData.name;
@@ -62,7 +62,7 @@
 //       }
 //     );
 //     if (!response.ok) {
-//       // console.log(await response.json());
+//       // // console.log(await response.json());
 //       throw new Error();
 //     }
 
@@ -70,13 +70,13 @@
 
 //     const userAvatar = result?.user?.avatar;
 //     const userData = JSON.parse(localStorage.getItem("data"));
-//     console.log(userData);
+//     // console.log(userData);
 //     userData.user.avatar = userAvatar;
 //     const updatedData = JSON.stringify(userData);
 //     localStorage.setItem("data", updatedData);
 //     window.location.reload();
 //   } catch (err) {
-//     // console.log(err);
+//     // // console.log(err);
 //     setError(true);
 //   } finally {
 //     setLoading(false);
@@ -103,7 +103,7 @@
 //   );
 //   const result = await res.json();
 //   if (!res.ok) {
-//     // console.log(result);
+//     // // console.log(result);
 //     throw new Error(result.error);
 //   }
 //   setModal(false);
@@ -238,7 +238,7 @@
 
 //     if (!response.ok) {
 //       const errorData = await response.json();
-//       console.log(errorData);
+//       // console.log(errorData);
 //       throw new Error(errorData.error);
 //     }
 //     setName("");
@@ -248,6 +248,6 @@
 //     setInfo(await response.json());
 //     setTimeout(() => setInfo(false), 2000);
 //   } catch (err) {
-//     console.log(err);
+//     // console.log(err);
 //   }
 // };

@@ -109,7 +109,7 @@ async function updatePassword(data) {
 
 async function uploadAvatarApi(data) {
   try {
-    console.log([...data.formData.entries()]);
+    // // console.log([...data.formData.entries()]);
     const res = await api.post("/user/upload-avatar", data?.formData, {
       headers: {
         Authorization: "Bearer " + data?.token,

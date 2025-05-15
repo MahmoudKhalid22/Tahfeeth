@@ -14,7 +14,7 @@ const useDeleteTable = (token, tableId) => {
       window.location.reload();
     },
     onError: () => {
-      console.log("حدث بعض الخطأ");
+      // // console.log("حدث بعض الخطأ");
     },
   });
 

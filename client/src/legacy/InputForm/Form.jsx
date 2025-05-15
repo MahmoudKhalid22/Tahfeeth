@@ -34,7 +34,7 @@ function Form({ onSetIsLogin }) {
       if (!response.ok) {
         setLoading(false);
         const errorData = await response.json();
-        // console.log(errorData);
+        // // console.log(errorData);
         throw new Error(errorData.err);
       }
       setName("");
@@ -44,10 +44,10 @@ function Form({ onSetIsLogin }) {
       setLoading(false);
 
       // const dataUser = await response.json();
-      // console.log(dataUser);
+      // // console.log(dataUser);
       navigate("/verify");
     } catch (err) {
-      // console.log(err.message);
+      // // console.log(err.message);
 
       setError(
         err.message[0] === "E"
@@ -59,7 +59,7 @@ function Form({ onSetIsLogin }) {
     }
   };
 
-  // console.log(isLogin);
+  // // console.log(isLogin);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,7 +95,7 @@ function Form({ onSetIsLogin }) {
       navigate("/details");
       // Reset the form data
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -108,9 +108,9 @@ function Form({ onSetIsLogin }) {
   //       "https://tahfeeth-production.up.railway.app/user/auth/google";
 
   //     // const result = await response.json();
-  //     // console.log(result);
+  //     // // console.log(result);
   //   } catch (err) {
-  //     console.log(err);
+  //     // console.log(err);
   //     setError(true);
   //   } finally {
   //     setLoading(false);
@@ -122,7 +122,7 @@ function Form({ onSetIsLogin }) {
   //     // window.location.href = ;
   //     window.open("http://localhost:5000/user/auth/facebook", "_self");
   //   } catch (err) {
-  //     console.log(err);
+  //     // console.log(err);
   //   }
   // };
 

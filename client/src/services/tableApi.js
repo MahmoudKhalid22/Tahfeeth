@@ -30,14 +30,14 @@ const addTable = async (data) => {
     );
     return res.data;
   } catch (err) {
-    console.log(err);
+    // // console.log(err);
     throw new Error(err.response.data.message);
   }
 };
 
 const deleteTable = async (data) => {
   try {
-    console.log(data);
+    // // console.log(data);
     const res = await api.delete("/table/" + data?.tableId, {
       headers: {
         Authorization: "Bearer " + data?.teacherToken,
@@ -45,7 +45,7 @@ const deleteTable = async (data) => {
     });
     return res.data;
   } catch (err) {
-    console.log(err);
+    // // console.log(err);
     throw new Error(err.response.data.message);
   }
 };

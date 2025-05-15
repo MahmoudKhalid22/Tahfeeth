@@ -79,7 +79,7 @@ function Edit() {
       oldPassword: oldPassword,
       newPassword: newPassword,
     });
-    console.log(isUpdatingPassword);
+    // // console.log(isUpdatingPassword);
   };
 
   const handleUploadAvatar = (e) => {

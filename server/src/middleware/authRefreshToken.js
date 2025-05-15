@@ -5,7 +5,7 @@ const authByRefreshToken = async (req, res, next) => {
   try {
     const refreshToken = req.header("Authorization").replace("Bearer ", "");
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-    // console.log(decoded);
+    // // console.log(decoded);
 
     const user = await User.find({
       _id: decoded._id,

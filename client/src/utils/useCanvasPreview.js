@@ -3,9 +3,9 @@ const useCanvasPreview = (
   canvas, // HTMLCanvasElement
   crop // PixelCrop
 ) => {
-  console.log(image);
-  console.log(canvas);
-  console.log(crop);
+  // console.log(image);
+  // console.log(canvas);
+  // console.log(crop);
 
   const ctx = canvas?.getContext("2d");
   if (!ctx) {

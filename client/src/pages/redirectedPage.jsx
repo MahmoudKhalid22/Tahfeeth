@@ -8,7 +8,7 @@ const RedirectPage = ({ onSetIsLogin }) => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const user = JSON.parse(searchParams.get("user"));
-    console.log(user);
+    // // console.log(user);
 
     const userData = {
       user: user?.existingUser || user?.user,
@@ -16,7 +16,7 @@ const RedirectPage = ({ onSetIsLogin }) => {
       accessToken: user.accessToken,
     };
 
-    console.log(userData);
+    // // console.log(userData);
 
     localStorage.setItem("data", JSON.stringify(userData));
 

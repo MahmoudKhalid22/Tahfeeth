@@ -21,7 +21,7 @@ const addTeacher = async (data) => {
       }
     );
 
-    console.log(res.data);
+    // // console.log(res.data);
 
     return res.data;
   } catch (err) {
@@ -30,7 +30,7 @@ const addTeacher = async (data) => {
 };
 
 const addStudent = async (data) => {
-  console.log(data);
+  // // console.log(data);
   try {
     const res = await api.post(
       "/user/admin/add-user",
@@ -48,10 +48,10 @@ const addStudent = async (data) => {
         },
       }
     );
-    console.log(res.data);
+    // // console.log(res.data);
     return res.data;
   } catch (err) {
-    console.log(err);
+    // // console.log(err);
     throw new Error(err.response.data.error);
   }
 };
@@ -63,10 +63,10 @@ const getMessages = async (adminToken) => {
         Authorization: "Bearer " + adminToken,
       },
     });
-    console.log(res.data);
+    // // console.log(res.data);
     return res.data;
   } catch (err) {
-    console.log(err);
+    // // console.log(err);
     throw new Error(err.response.data.error);
   }
 };

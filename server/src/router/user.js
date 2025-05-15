@@ -79,7 +79,7 @@ const upload = multer({
     fileSize: 1000000,
   },
   // fileFilter(req, file, cb) {
-  //   console.log(file);
+  //   // console.log(file);
   //   if (!file.originalname.endsWith("jpg" || "png" || "jpeg")) {
   //     return cb(new Error("please upload jpg or png or jpeg file"));
   //   }
@@ -98,7 +98,7 @@ router.get("/me", auth, getUser);
 
 // GET AN AVATAR
 router.get("/avatar", auth, async (req, res) => {
-  // console.log(req.user);
+  // // console.log(req.user);
   const user = await User.findOne(req.user[0]._id);
   res.set({ "Content-Type": "image/*" });
   res.send(user.avatar); // which has the type buffer

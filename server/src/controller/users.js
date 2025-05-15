@@ -52,7 +52,7 @@ const newUser = async (req, res) => {
 const verificationEmail = async (req, res) => {
   try {
     const token = req.params.token;
-    // console.log(token);
+    // // console.log(token);
     const tokenVerified = await verificationToken(token);
 
     if (!tokenVerified) {
@@ -258,7 +258,7 @@ const getUsers = async (req, res) => {
       res.status(400).send({ message: "you're not the admin" });
     }
   } catch (e) {
-    // console.log(e);
+    // // console.log(e);
     res.status(500).send({ e: e.message });
   }
 };
@@ -267,18 +267,18 @@ const joinToTeacher = async (req, res) => {
   try {
     const teacherId = req.params.id;
     const studentId = req.user[0]._id;
-    // console.log(teacherId, studentId);
+    // // console.log(teacherId, studentId);
 
     if (req.user[0].role !== "student") {
       return res.status(400).send({ error: "أنت لست طالبا" });
     }
 
     const newStudents = await addStudentToTeacher(teacherId, studentId);
-    // console.log(newStudents);
+    // // console.log(newStudents);
 
     res.send({ newStudents });
   } catch (err) {
-    // console.log(err);
+    // // console.log(err);
     res.status(500).send({ err: err.message });
   }
 };
@@ -355,7 +355,7 @@ const addUser = async (req, res) => {
       if (!name || !email || !password || !age || !teacherId) {
         return res.status(400).send({ error: "أدخل المعلومات كاملة" });
       }
-      // console.log(teacherId);
+      // // console.log(teacherId);
       const newUser = {
         ...req.body,
         verified: true,
@@ -401,7 +401,7 @@ const joinStudent = async (req, res) => {
     const { studentId, teacherId } = req.body;
 
     const user = await User.findOne({ _id: studentId });
-    // console.log(user.role);
+    // // console.log(user.role);
     if (user.role !== "student") {
       return res.status(400).send({ error: "you are not a student" });
     }
@@ -409,7 +409,7 @@ const joinStudent = async (req, res) => {
     await addStudentToTeacher(studentId, teacherId);
     res.send({ message: "you have been added to this teacher" });
   } catch (err) {
-    // console.log(err);
+    // // console.log(err);
     res.status(500).send({ err: err.messaga });
   }
 };
@@ -417,10 +417,10 @@ const joinStudent = async (req, res) => {
 const getOneUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    // console.log(user);
+    // // console.log(user);
     res.send(user);
   } catch (err) {
-    // console.log(err);
+    // // console.log(err);
     res.status(500).send(err);
   }
 };
@@ -472,7 +472,7 @@ const uploadAvatar = async (req, res) => {
     const base64Data = req.file.buffer.toString("base64");
     imgsrc = `data:${req.file.mimetype};base64,${base64Data}`;
 
-    // console.log(req.file);
+    // // console.log(req.file);
 
     req.user[0].avatar = imgsrc;
     await req.user[0].save();
@@ -502,7 +502,7 @@ const deleteStd = async (req, res) => {
     }
     const users = await deleteStudent(teacher._id, stdId);
     if (!users) return res.status(400).send({ error: "Student is not found" });
-    // console.log(users);
+    // // console.log(users);
     res.send({ message: "user has been deleted" });
   } catch (err) {
     res.status(500).send({ err: err.message });
