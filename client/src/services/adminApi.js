@@ -1,9 +1,9 @@
-import axios from "axios";
+import api from "./api";
 
 const addTeacher = async (data) => {
   try {
-    const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/admin/add-user",
+    const res = await api.post(
+      "/user/admin/add-user",
       {
         name: data.name,
         email: data.email,
@@ -32,8 +32,8 @@ const addTeacher = async (data) => {
 const addStudent = async (data) => {
   console.log(data);
   try {
-    const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/admin/add-user",
+    const res = await api.post(
+      "/user/admin/add-user",
       {
         name: data.name,
         email: data.email,
@@ -58,14 +58,11 @@ const addStudent = async (data) => {
 
 const getMessages = async (adminToken) => {
   try {
-    const res = await axios.get(
-      "https://tahfeeth-system.onrender.com/message",
-      {
-        headers: {
-          Authorization: "Bearer " + adminToken,
-        },
-      }
-    );
+    const res = await api.get("/message", {
+      headers: {
+        Authorization: "Bearer " + adminToken,
+      },
+    });
     console.log(res.data);
     return res.data;
   } catch (err) {

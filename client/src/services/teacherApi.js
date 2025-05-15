@@ -1,15 +1,12 @@
-import axios from "axios";
+import api from "./api";
 
 const getStudents = async (teacherId, token) => {
   try {
-    const res = await axios.get(
-      "https://tahfeeth-system.onrender.com/user/students/" + teacherId,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+    const res = await api.get("/user/students/" + teacherId, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
     return res.data.students;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -19,8 +16,8 @@ const getStudents = async (teacherId, token) => {
 const addStudent = async (data) => {
   console.log(data);
   try {
-    const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/teacher/signup",
+    const res = await api.post(
+      "/user/teacher/signup",
       {
         name: data.name,
         email: data.email,
@@ -45,8 +42,8 @@ const addStudent = async (data) => {
 const joinStudent = async (data) => {
   console.log(data);
   try {
-    const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/join/" + data.teacherId,
+    const res = await api.post(
+      "/user/join/" + data.teacherId,
       {},
       {
         headers: {

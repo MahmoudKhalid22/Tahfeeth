@@ -1,20 +1,17 @@
-import axios from "axios";
+import api from "./api";
 import Cookies from "js-cookie";
 
 async function newUser(data) {
   try {
-    const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/signup",
-      {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        role: data.role || "student",
-        professional: data?.professional || undefined,
-        price: data?.price || undefined,
-        information: data?.information || undefined,
-      }
-    );
+    const res = await api.post("/user/signup", {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      role: data.role || "student",
+      professional: data?.professional || undefined,
+      price: data?.price || undefined,
+      information: data?.information || undefined,
+    });
     return res.data;
   } catch (err) {
     let error = "";
@@ -29,13 +26,10 @@ async function newUser(data) {
 
 async function loginUserApi(data) {
   try {
-    const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/login",
-      {
-        email: data.email,
-        password: data.password,
-      }
-    );
+    const res = await api.post("/user/login", {
+      email: data.email,
+      password: data.password,
+    });
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -48,14 +42,11 @@ function logoutUserApi() {
 
 async function getUser(token) {
   try {
-    const res = await axios.get(
-      "https://tahfeeth-system.onrender.com/user/me",
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+    const res = await api.get("/user/me", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -64,14 +55,11 @@ async function getUser(token) {
 
 async function getAvatar(token) {
   try {
-    const res = await axios.get(
-      "https://tahfeeth-system.onrender.com/user/avatar",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await api.get("/user/avatar", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -80,8 +68,8 @@ async function getAvatar(token) {
 
 async function updateUsername(data) {
   try {
-    const res = await axios.put(
-      "https://tahfeeth-system.onrender.com/user/update-username",
+    const res = await api.put(
+      "/user/update-username",
 
       {
         name: data?.name,
@@ -101,8 +89,8 @@ async function updateUsername(data) {
 
 async function updatePassword(data) {
   try {
-    const res = await axios.put(
-      "https://tahfeeth-system.onrender.com/user/update-password",
+    const res = await api.put(
+      "/user/update-password",
       {
         oldPassword: data?.oldPassword,
         newPassword: data?.newPassword,
@@ -122,15 +110,11 @@ async function updatePassword(data) {
 async function uploadAvatarApi(data) {
   try {
     console.log([...data.formData.entries()]);
-    const res = await axios.post(
-      "https://tahfeeth-system.onrender.com/user/upload-avatar",
-      data?.formData,
-      {
-        headers: {
-          Authorization: "Bearer " + data?.token,
-        },
-      }
-    );
+    const res = await api.post("/user/upload-avatar", data?.formData, {
+      headers: {
+        Authorization: "Bearer " + data?.token,
+      },
+    });
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.error);

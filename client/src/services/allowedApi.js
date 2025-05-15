@@ -1,10 +1,8 @@
-import axios from "axios";
+import api from "./api";
 
 async function getTeachers() {
   try {
-    const res = await axios.get(
-      "https://tahfeeth-system.onrender.com/user/teachers"
-    );
+    const res = await api.get("/user/teachers");
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
@@ -13,9 +11,7 @@ async function getTeachers() {
 
 async function getTeacher(id) {
   try {
-    const res = await axios.get(
-      "https://tahfeeth-system.onrender.com/user/teacher/" + id
-    );
+    const res = await api.get("/user/teacher/" + id);
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
