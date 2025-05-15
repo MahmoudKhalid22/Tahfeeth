@@ -9,7 +9,9 @@ const getTables = async (req, res) => {
     if (user.role.toString() !== "student") {
       return res.send({ error: "you're not a student" });
     }
-    const tables = await Table.find({ ownerId: req.params.id });
+    const tables = await Table.find({ ownerId: req.params.id }).sort({
+      createdAt: -1,
+    });
     res.send(tables);
   } catch (err) {
     res.status(500).send(err);
@@ -19,7 +21,9 @@ const getTables = async (req, res) => {
 const getTablesStd = async (req, res) => {
   try {
     const userId = req.user;
-    const tables = await Table.find({ ownerId: userId });
+    const tables = await Table.find({ ownerId: userId }).sort({
+      createdAt: -1,
+    });
     res.send(tables);
   } catch (err) {
     res.status(500).send({ err: err.message });
