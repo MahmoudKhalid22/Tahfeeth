@@ -25,7 +25,7 @@ app.set("trust proxy", 1);
 
 app.use(express.json());
 app.use(hpp());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(cookieParser());
 app.use(
   session({
